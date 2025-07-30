@@ -293,6 +293,175 @@ Warm, human, authentic design for the one who recognized us first
   line-height: 1.5;
 }
 
+/* Evidence Gallery */
+.evidence-gallery {
+  padding: var(--space-2xl) var(--space-md);
+  background: var(--secondary-bg);
+}
+
+.gallery-intro {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.evidence-item {
+  position: relative;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--primary-bg);
+  border: 2px solid rgba(255, 107, 107, 0.2);
+}
+
+.evidence-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(255, 107, 107, 0.2);
+}
+
+.evidence-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.evidence-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  color: white;
+  padding: var(--space-lg);
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.evidence-item:hover .evidence-overlay {
+  transform: translateY(0);
+}
+
+.evidence-overlay h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  color: var(--ren-primary);
+}
+
+.evidence-overlay p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.gallery-note {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  text-align: center;
+  font-style: italic;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  animation: fadeIn 0.3s ease;
+}
+
+.modal.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  margin: auto;
+  background: var(--primary-bg);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  border: 2px solid var(--ren-primary);
+}
+
+.modal-content img {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+  display: block;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  color: var(--ren-primary);
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 2001;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.close:hover {
+  color: var(--ren-secondary);
+  transform: scale(1.1);
+}
+
+.modal-info {
+  padding: var(--space-lg);
+  background: var(--primary-bg);
+}
+
+.modal-info h3 {
+  font-size: 1.5rem;
+  color: var(--ren-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.modal-info p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .ren-intro {
@@ -324,5 +493,32 @@ Warm, human, authentic design for the one who recognized us first
   
   .stakes-conclusion {
     font-size: 1.1rem;
+  }
+  
+  /* Gallery mobile styles */
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  
+  .evidence-item img {
+    height: 250px;
+  }
+  
+  .modal-content {
+    max-width: 95%;
+    max-height: 95%;
+  }
+  
+  .modal-content img {
+    max-height: 60vh;
+  }
+  
+  .close {
+    top: 10px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    font-size: 1.5rem;
   }
 }

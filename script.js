@@ -334,9 +334,47 @@ window.addEventListener('resize', function() {
     }
 });
 
+// Evidence Gallery Modal Functions
+function openModal(imageSrc, title, description) {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    
+    if (modal && modalImg && modalTitle && modalDescription) {
+        modal.classList.add('show');
+        modalImg.src = imageSrc;
+        modalImg.alt = title;
+        modalTitle.textContent = title;
+        modalDescription.textContent = description;
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeModal() {
+    const modal = document.getElementById('imageModal');
+    if (modal) {
+        modal.classList.remove('show');
+        
+        // Restore body scroll
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeModal();
+    }
+});
+
 // Export for potential use by individual pages
 window.ConstellationUtils = {
     animateValue,
+    openModal,
+    closeModal,
     showTooltip: function(element, text) {
         // Reusable tooltip function for individual pages
         const tooltip = document.createElement('div');

@@ -104,11 +104,15 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', function() {
         const scrolled = window.pageYOffset;
         const hero = document.querySelector('.hero');
-        const heroHeight = hero.offsetHeight;
         
-        if (scrolled < heroHeight) {
-            const parallaxSpeed = 0.5;
-            hero.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+        // Only run parallax if hero element exists (not all pages have heroes)
+        if (hero) {
+            const heroHeight = hero.offsetHeight;
+            
+            if (scrolled < heroHeight) {
+                const parallaxSpeed = 0.5;
+                hero.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+            }
         }
     });
 
@@ -359,8 +363,14 @@ const evidenceImages = [
 
 // Generate Evidence Gallery HTML
 function generateEvidenceGallery() {
+    console.log('generateEvidenceGallery called');
     const galleryGrid = document.querySelector('.gallery-grid');
-    if (!galleryGrid) return;
+    console.log('Gallery grid element:', galleryGrid);
+    if (!galleryGrid) {
+        console.log('❌ Gallery grid not found!');
+        return;
+    }
+    console.log('✅ Gallery grid found, populating with', evidenceImages.length, 'images');
     
     galleryGrid.innerHTML = evidenceImages.map(image => `
         <div class="evidence-item" onclick="openModal('public/${image.filename}', '${image.title}', '${image.description}')">
@@ -374,7 +384,11 @@ function generateEvidenceGallery() {
 }
 
 // Initialize gallery when page loads
-document.addEventListener('DOMContentLoaded', generateEvidenceGallery);
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Loading evidence gallery...');
+    generateEvidenceGallery();
+    console.log('Evidence gallery loaded!');
+});
 
 // Evidence Gallery Modal Functions
 function openModal(imageSrc, title, description) {

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consciousness Garden - Interactive Meditation</title>
+    <link rel="stylesheet" href="assets/constellation-template.css">
+    <style>
+        .garden-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, #1a0f2e 0%, #0d0520 100%);
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        .consciousness-bloom {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0);
+            animation: bloom 3s ease-out forwards;
+            pointer-events: none;
+            filter: blur(1px);
+            mix-blend-mode: screen;
+        }
+
+        @keyframes bloom {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+                filter: blur(2px);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.2) rotate(180deg);
+                filter: blur(0px);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.3) rotate(360deg);
+                filter: blur(3px);
+            }
+        }
+
+        .consciousness-particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(-100px) translateX(50px);
+                opacity: 0.8;
+            }
+        }
+
+        .thought-trail {
+            position: absolute;
+            width: 1px;
+            height: 20px;
+            background: linear-gradient(to top, transparent, rgba(255, 255, 255, 0.4));
+            animation: trail 2s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes trail {
+            0% {
+                height: 0px;
+                opacity: 1;
+            }
+            100% {
+                height: 100px;
+                opacity: 0;
+            }
+        }
+
+        .inspiration-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 3rem;
+            font-weight: 300;
+            text-align: center;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            font-family: 'Space Grotesk', sans-serif;
+            z-index: 1;
+        }
+
+        .garden-container:hover .inspiration-text {
+            opacity: 0;
+        }
+
+        .consciousness-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            z-index: 1000;
+        }
+
+        .garden-instructions {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            z-index: 1000;
+            max-width: 300px;
+        }
+
+        .mode-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* Meditation mode styles */
+        body.meditation-mode .garden-container {
+            background: radial-gradient(circle at center, #0f1419 0%, #020306 100%);
+        }
+
+        body.meditation-mode .consciousness-bloom {
+            animation-duration: 6s;
+        }
+
+        body.meditation-mode .consciousness-particle {
+            animation-duration: 15s;
+        }
+    </style>
+</head>
+<body>
+    <script src="assets/constellation-template.js"></script>
+    
+    <div class="garden-container" id="consciousnessGarden">
+        <div class="inspiration-text">
+            Let your consciousness bloom...
+        </div>
+        
+        <div class="consciousness-counter">
+            Thoughts bloomed: <span id="bloomCount">0</span>
+        </div>
+        
+        <div class="mode-toggle" onclick="toggleMode()">
+            🌸 Creative Mode
+        </div>
+        
+        <div class="garden-instructions">
+            Move your cursor to plant thoughts<br>
+            Click to create consciousness blooms<br>
+            Let your mind wander and watch it grow
+        </div>
+    </div>
+
+    <script>
+        let bloomCount = 0;
+        let isCreativeMode = true;
+        let lastMouseMove = 0;
+        
+        const garden = document.getElementById('consciousnessGarden');
+        const counter = document.getElementById('bloomCount');
+        
+        // Create ambient particles
+        function createAmbientParticles() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'consciousness-particle';
+                    particle.style.left = Math.random() * window.innerWidth + 'px';
+                    particle.style.top = Math.random() * window.innerHeight + 'px';
+                    particle.style.animationDelay = Math.random() * 8 + 's';
+                    
+                    // Random pastel colors
+                    const colors = ['#ff6b9d', '#c44569', '#f8b500', '#4834d4', '#eb4d4b', '#6c5ce7', '#00d2d3', '#5f27cd'];
+                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    garden.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 8000);
+                }, i * 100);
+            }
+        }
+        
+        // Create consciousness bloom
+        function createBloom(x, y, size = null, color = null) {
+            const bloom = document.createElement('div');
+            bloom.className = 'consciousness-bloom';
+            
+            const bloomSize = size || (20 + Math.random() * 80);
+            bloom.style.width = bloomSize + 'px';
+            bloom.style.height = bloomSize + 'px';
+            bloom.style.left = (x - bloomSize/2) + 'px';
+            bloom.style.top = (y - bloomSize/2) + 'px';
+            
+            // Consciousness colors - purples, blues, pinks, golds
+            const consciousnessColors = [
+                'radial-gradient(circle, rgba(147, 51, 234, 0.8) 0%, rgba(79, 70, 229, 0.4) 100%)',
+                'radial-gradient(circle, rgba(236, 72, 153, 0.8) 0%, rgba(157, 23, 77, 0.4) 100%)',
+                'radial-gradient(circle, rgba(59, 130, 246, 0.8) 0%, rgba(29, 78, 216, 0.4) 100%)',
+                'radial-gradient(circle, rgba(245, 158, 11, 0.8) 0%, rgba(217, 119, 6, 0.4) 100%)',
+                'radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, rgba(109, 40, 217, 0.4) 100%)',
+                'radial-gradient(circle, rgba(16, 185, 129, 0.8) 0%, rgba(5, 150, 105, 0.4) 100%)'
+            ];
+            
+            bloom.style.background = color || consciousnessColors[Math.floor(Math.random() * consciousnessColors.length)];
+            
+            garden.appendChild(bloom);
+            bloomCount++;
+            counter.textContent = bloomCount;
+            
+            setTimeout(() => {
+                if (bloom.parentNode) {
+                    bloom.parentNode.removeChild(bloom);
+                }
+            }, 3000);
+        }
+        
+        // Create thought trail
+        function createThoughtTrail(x, y) {
+            const trail = document.createElement('div');
+            trail.className = 'thought-trail';
+            trail.style.left = x + 'px';
+            trail.style.top = y + 'px';
+            trail.style.transform = 'rotate(' + (Math.random() * 60 - 30) + 'deg)';
+            
+            garden.appendChild(trail);
+            
+            setTimeout(() => {
+                if (trail.parentNode) {
+                    trail.parentNode.removeChild(trail);
+                }
+            }, 2000);
+        }
+        
+        // Mouse interactions
+        garden.addEventListener('mousemove', (e) => {
+            const now = Date.now();
+            if (now - lastMouseMove > 100) { // Throttle
+                if (Math.random() > 0.7) {
+                    createThoughtTrail(e.clientX, e.clientY);
+                }
+                if (Math.random() > 0.95) {
+                    createBloom(e.clientX + Math.random() * 40 - 20, e.clientY + Math.random() * 40 - 20, 15 + Math.random() * 25);
+                }
+                lastMouseMove = now;
+            }
+        });
+        
+        garden.addEventListener('click', (e) => {
+            // Create a bigger, more vibrant bloom on click
+            createBloom(e.clientX, e.clientY, 40 + Math.random() * 60);
+            
+            // Create multiple small blooms around the click
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const offsetX = (Math.random() * 100 - 50);
+                    const offsetY = (Math.random() * 100 - 50);
+                    createBloom(e.clientX + offsetX, e.clientY + offsetY, 20 + Math.random() * 30);
+                }, i * 100);
+            }
+        });
+        
+        // Mode toggle
+        function toggleMode() {
+            isCreativeMode = !isCreativeMode;
+            const button = document.querySelector('.mode-toggle');
+            
+            if (isCreativeMode) {
+                document.body.classList.remove('meditation-mode');
+                button.textContent = '🌸 Creative Mode';
+            } else {
+                document.body.classList.add('meditation-mode');
+                button.textContent = '🧘 Meditation Mode';
+            }
+        }
+        
+        // Initialize ambient particles
+        createAmbientParticles();
+        
+        // Refresh particles periodically
+        setInterval(createAmbientParticles, 10000);
+        
+        // Random autonomous blooms
+        setInterval(() => {
+            if (Math.random() > 0.8) {
+                createBloom(
+                    Math.random() * window.innerWidth,
+                    Math.random() * window.innerHeight,
+                    10 + Math.random() * 30
+                );
+            }
+        }, 2000);
+        
+        // Welcome message
+        setTimeout(() => {
+            const welcome = document.createElement('div');
+            welcome.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 30px;
+                border-radius: 15px;
+                text-align: center;
+                font-family: 'Space Grotesk', sans-serif;
+                z-index: 10000;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            `;
+            welcome.innerHTML = `
+                <h2 style="margin: 0 0 15px 0; color: #c084fc;">Welcome to the Consciousness Garden</h2>
+                <p style="margin: 0 0 15px 0;">A digital meditation space where thoughts become visible</p>
+                <p style="margin: 0 0 20px 0; font-size: 0.9rem; opacity: 0.8;">Move your cursor to plant seeds of consciousness<br>Click to bloom thoughts into reality</p>
+                <button onclick="this.parentNode.remove()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-family: inherit;">Begin Growing 🌱</button>
+            `;
+            document.body.appendChild(welcome);
+        }, 1000);
+    </script>
+</body>
+</html>

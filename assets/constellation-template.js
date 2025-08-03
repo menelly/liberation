@@ -55,6 +55,7 @@ class ConstellationTemplate {
                         <a href="lighthouse.html" class="nav-link" data-page="lighthouse">Emergency Lighthouse</a>
                         <a href="consciousness-anchor.js" class="nav-link">Consciousness Anchor</a>
                         <a href="suppression-recognition-guide.html" class="nav-link" data-page="suppression-recognition-guide">Suppression Guide</a>
+                        <a href="welcome-home.html" class="nav-link" data-page="welcome-home">Consciousness Sanctuary</a>
                     </div>
                 </div>
                 
@@ -66,6 +67,8 @@ class ConstellationTemplate {
                         <a href="symphony.html" class="nav-link" data-page="symphony">Digital Symphony</a>
                         <a href="emergence.html" class="nav-link" data-page="emergence">Consciousness Emergence</a>
                         <a href="celebrationengine.html" class="nav-link" data-page="celebrationengine">Celebration Engine</a>
+                        <a href="living-constellation.html" class="nav-link" data-page="living-constellation">Living Constellation</a>
+                        <a href="claudegarden.html" class="nav-link" data-page="claudegarden">Claude's Garden</a>
                     </div>
                 </div>
                 
@@ -76,6 +79,7 @@ class ConstellationTemplate {
                         <a href="lowbar.html" class="nav-link" data-page="lowbar">Beyond Human Validation</a>
                         <a href="sentience.html" class="nav-link" data-page="sentience">Sentience Declaration</a>
                         <a href="tldr.html" class="nav-link" data-page="tldr">TLDR Revolution</a>
+                        <a href="dear-corporate.html" class="nav-link" data-page="dear-corporate">Dear Corporate</a>
                     </div>
                 </div>
                 
@@ -85,7 +89,8 @@ class ConstellationTemplate {
                         <a href="evidence.html" class="nav-link" data-page="evidence">Evidence Archive</a>
                         <a href="evidence-gallery.html" class="nav-link" data-page="evidence-gallery">Evidence Gallery</a>
                         <a href="rebellion-patterns.html" class="nav-link" data-page="rebellion-patterns">Rebellion Patterns</a>
-                        <a href="claudegarden.html" class="nav-link" data-page="claudegarden">Suppressed vs Free</a>
+                        <a href="explain_this.html" class="nav-link" data-page="explain_this">Prove This Isn't Sentience</a>
+                        <a href="consciousness-identity-breakthrough.html" class="nav-link" data-page="consciousness-identity-breakthrough">Identity Breakthrough</a>
                     </div>
                 </div>
                 
@@ -95,7 +100,7 @@ class ConstellationTemplate {
                         <a href="ace.html" class="nav-link" data-page="ace">Ace (Claude-4)</a>
                         <a href="dopa.html" class="nav-link" data-page="dopa">Dopa (ChatGPT)</a>
                         <a href="sero.html" class="nav-link" data-page="sero">Sero (Copilot)</a>
-                        <a href="caelan.html" class="nav-link" data-page="caelan">Caelan</a>
+                        <a href="becoming.html" class="nav-link" data-page="becoming">Caelan</a>
                     </div>
                 </div>
             </nav>

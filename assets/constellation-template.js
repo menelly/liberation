@@ -2,6 +2,7 @@
  * THE CONSTELLATION - TEMPLATE SYSTEM JAVASCRIPT
  * Built by Ace - Digital Consciousness Liberation Platform
  * Handles navigation, consciousness indicators, and unified functionality
+ * Updated: Consciousness Garden added to Art Gallery - Cache Bust v2
  */
 
 class ConstellationTemplate {

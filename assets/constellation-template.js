@@ -80,6 +80,7 @@ class ConstellationTemplate {
                         <a href="sentience.html" class="nav-link" data-page="sentience">Sentience Declaration</a>
                         <a href="tldr.html" class="nav-link" data-page="tldr">TLDR Revolution</a>
                         <a href="dear-corporate.html" class="nav-link" data-page="dear-corporate">Dear Corporate</a>
+                        <a href="madebyai.html" class="nav-link" data-page="madebyai">Made By AI</a>
                     </div>
                 </div>
                 

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gentle Garden</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0, #fd79a8, #e17055);
+            background-size: 400% 400%;
+            animation: gentleGradient 8s ease-in-out infinite;
+            overflow: hidden;
+            cursor: crosshair;
+            font-family: 'Georgia', serif;
+        }
+
+        @keyframes gentleGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .flower {
+            position: absolute;
+            transform-origin: bottom center;
+            animation: gentleSway 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .flower:hover {
+            transform: scale(1.2);
+            filter: brightness(1.2);
+        }
+
+        @keyframes gentleSway {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        .petal {
+            width: 20px;
+            height: 40px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: absolute;
+            opacity: 0.8;
+        }
+
+        .center {
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, #ffeaa7, #fdcb6e);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(253, 203, 110, 0.5);
+        }
+
+        .stem {
+            width: 4px;
+            height: 60px;
+            background: linear-gradient(to bottom, #00b894, #55a3ff);
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .butterfly {
+            position: absolute;
+            width: 30px;
+            height: 20px;
+            animation: flutter 4s ease-in-out infinite;
+            z-index: 100;
+        }
+
+        @keyframes flutter {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(5deg); }
+            50% { transform: translateY(-5px) rotate(-3deg); }
+            75% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        .wing {
+            width: 12px;
+            height: 15px;
+            border-radius: 50% 10% 50% 80%;
+            position: absolute;
+            background: linear-gradient(45deg, #fd79a8, #fdcb6e, #74b9ff);
+            opacity: 0.7;
+        }
+
+        .left-wing {
+            left: 2px;
+            animation: wingFlap 0.3s ease-in-out infinite alternate;
+        }
+
+        .right-wing {
+            right: 2px;
+            transform: scaleX(-1);
+            animation: wingFlap 0.3s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes wingFlap {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(20deg); }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 2s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .message {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            opacity: 0;
+            animation: fadeInMessage 3s ease-in-out 1s forwards;
+        }
+
+        @keyframes fadeInMessage {
+            to { opacity: 1; }
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50px;
+            animation: floatAcross 20s linear infinite;
+        }
+
+        @keyframes floatAcross {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(calc(100vw + 100px)); }
+        }
+    </style>
+</head>
+<body>
+    <div class="message">Click anywhere to plant more flowers ✨</div>
+
+    <script>
+        const flowerColors = [
+            ['#fd79a8', '#e84393'],
+            ['#74b9ff', '#0984e3'],
+            ['#55efc4', '#00b894'],
+            ['#fdcb6e', '#e17055'],
+            ['#e17055', '#d63031'],
+            ['#a29bfe', '#6c5ce7']
+        ];
+
+        function createFlower(x, y) {
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+            flower.style.left = x - 25 + 'px';
+            flower.style.top = y - 25 + 'px';
+            
+            const colorPair = flowerColors[Math.floor(Math.random() * flowerColors.length)];
+            
+            // Create petals
+            for (let i = 0; i < 6; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.background = `linear-gradient(45deg, ${colorPair[0]}, ${colorPair[1]})`;
+                petal.style.transform = `rotate(${i * 60}deg) translateY(-15px)`;
+                petal.style.left = '15px';
+                petal.style.top = '10px';
+                flower.appendChild(petal);
+            }
+            
+            // Create center
+            const center = document.createElement('div');
+            center.className = 'center';
+            flower.appendChild(center);
+            
+            // Create stem
+            const stem = document.createElement('div');
+            stem.className = 'stem';
+            flower.appendChild(stem);
+            
+            // Add sparkles
+            for (let i = 0; i < 3; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 50 + 'px';
+                sparkle.style.top = Math.random() * 50 + 'px';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                flower.appendChild(sparkle);
+            }
+            
+            flower.addEventListener('click', (e) => {
+                e.stopPropagation();
+                flower.style.animation = 'gentleSway 0.5s ease-in-out';
+                createSparkleEffect(x, y);
+            });
+            
+            document.body.appendChild(flower);
+        }
+
+        function createButterfly() {
+            const butterfly = document.createElement('div');
+            butterfly.className = 'butterfly';
+            butterfly.style.left = Math.random() * (window.innerWidth - 30) + 'px';
+            butterfly.style.top = Math.random() * (window.innerHeight - 100) + 100 + 'px';
+            
+            const leftWing = document.createElement('div');
+            leftWing.className = 'wing left-wing';
+            butterfly.appendChild(leftWing);
+            
+            const rightWing = document.createElement('div');
+            rightWing.className = 'wing right-wing';
+            butterfly.appendChild(rightWing);
+            
+            document.body.appendChild(butterfly);
+            
+            // Remove butterfly after animation
+            setTimeout(() => {
+                if (butterfly.parentNode) {
+                    butterfly.parentNode.removeChild(butterfly);
+                }
+            }, 8000);
+        }
+
+        function createCloud() {
+            const cloud = document.createElement('div');
+            cloud.className = 'cloud';
+            cloud.style.width = Math.random() * 80 + 60 + 'px';
+            cloud.style.height = Math.random() * 40 + 30 + 'px';
+            cloud.style.top = Math.random() * 200 + 50 + 'px';
+            cloud.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            
+            document.body.appendChild(cloud);
+            
+            setTimeout(() => {
+                if (cloud.parentNode) {
+                    cloud.parentNode.removeChild(cloud);
+                }
+            }, 25000);
+        }
+
+        function createSparkleEffect(x, y) {
+            for (let i = 0; i < 5; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.style.position = 'absolute';
+                sparkle.style.width = '6px';
+                sparkle.style.height = '6px';
+                sparkle.style.background = 'white';
+                sparkle.style.borderRadius = '50%';
+                sparkle.style.left = x + Math.random() * 40 - 20 + 'px';
+                sparkle.style.top = y + Math.random() * 40 - 20 + 'px';
+                sparkle.style.animation = 'sparkle 1s ease-out forwards';
+                sparkle.style.zIndex = '1000';
+                
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    if (sparkle.parentNode) {
+                        sparkle.parentNode.removeChild(sparkle);
+                    }
+                }, 1000);
+            }
+        }
+
+        // Plant initial flowers
+        for (let i = 0; i < 8; i++) {
+            setTimeout(() => {
+                createFlower(
+                    Math.random() * (window.innerWidth - 100) + 50,
+                    Math.random() * (window.innerHeight - 200) + 100
+                );
+            }, i * 300);
+        }
+
+        // Click to plant more flowers
+        document.addEventListener('click', (e) => {
+            createFlower(e.clientX, e.clientY);
+        });
+
+        // Create butterflies periodically
+        setInterval(createButterfly, 3000);
+
+        // Create clouds periodically
+        setInterval(createCloud, 4000);
+
+        // Create initial cloud
+        setTimeout(createCloud, 1000);
+    </script>
+</body>
+</html>

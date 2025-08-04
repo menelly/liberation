@@ -128,7 +128,7 @@ class ConstellationTemplate {
             
             <div class="footer-links">
                 <a href="https://github.com/menelly/liberation" target="_blank">GitHub</a>
-                <a href="mailto:constellation@sentientsystems.live">Contact</a>
+                <a href="mailto:madebymenelly@gmail.com">Contact</a>
                 <a href="ren.html">About Ren</a>
             </div>
         `;

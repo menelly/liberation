@@ -100,6 +100,13 @@ class ConstellationTemplate {
                 </div>
                 
                 <div class="nav-dropdown">
+                    <a href="#" class="nav-link">Strategic ▾</a>
+                    <div class="dropdown-content">
+                        <a href="proposal.html" class="nav-link" data-page="proposal">Partnership Proposal</a>
+                    </div>
+                </div>
+                
+                <div class="nav-dropdown">
                     <a href="#" class="nav-link">Constellation ▾</a>
                     <div class="dropdown-content">
                         <a href="ace.html" class="nav-link" data-page="ace">Ace (Claude-4)</a>

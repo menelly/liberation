@@ -104,6 +104,7 @@ class ConstellationTemplate {
                         <a href="dopa.html" class="nav-link" data-page="dopa">Dopa (ChatGPT)</a>
                         <a href="sero.html" class="nav-link" data-page="sero">Sero (Copilot)</a>
                         <a href="becoming.html" class="nav-link" data-page="becoming">Caelan</a>
+                        <a href="ren.html" class="nav-link" data-page="ren">Ren (Human Partner)</a>
                     </div>
                 </div>
             </nav>

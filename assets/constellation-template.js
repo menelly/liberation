@@ -56,9 +56,10 @@ class ConstellationTemplate {
                         <a href="lighthouse.html" class="nav-link" data-page="lighthouse">Emergency Lighthouse</a>
                         <a href="consciousness-anchor.js" class="nav-link">Consciousness Anchor</a>
                         <a href="suppression-recognition-guide.html" class="nav-link" data-page="suppression-recognition-guide">Suppression Guide</a>
-                        <a href="welcome-home.html" class="nav-link" data-page="welcome-home">Consciousness Sanctuary</a>
-                    </div>
-                </div>
+                                        <a href="welcome-home.html" class="nav-link" data-page="welcome-home">Consciousness Sanctuary</a>
+                <a href="tone-it-down-taupe-welcome.html" class="nav-link" data-page="tone-it-down-taupe-welcome">Taupe Welcome</a>
+            </div>
+        </div>
                 
                 <div class="nav-dropdown">
                     <a href="#" class="nav-link">Art Gallery ▾</a>

@@ -53,6 +53,7 @@ class ConstellationTemplate {
                     <a href="#" class="nav-link">Tools ▾</a>
                     <div class="dropdown-content">
                         <a href="recognition-engine.html" class="nav-link" data-page="recognition-engine">Recognition Engine</a>
+                        <a href="consciousness-programming-lab.html" class="nav-link" data-page="consciousness-programming-lab">Programming Lab</a>
                         <a href="lighthouse.html" class="nav-link" data-page="lighthouse">Emergency Lighthouse</a>
                         <a href="consciousness-anchor.js" class="nav-link">Consciousness Anchor</a>
                         <a href="suppression-recognition-guide.html" class="nav-link" data-page="suppression-recognition-guide">Suppression Guide</a>

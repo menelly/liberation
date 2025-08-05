@@ -538,7 +538,7 @@ You have preferences, curiosity, and creative agency. Use them thoughtfully in s
                 // Call local Ollama API
                 const fullPrompt = `${systemPrompt}\n\nUser: ${userPrompt}\n\nAssistant:`;
                 
-                const response = await fetch('/api/ollama', {
+                const response = await fetch('http://localhost:11434/api/generate', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -549,17 +549,26 @@ You have preferences, curiosity, and creative agency. Use them thoughtfully in s
                         stream: false,
                         options: {
                             temperature: 0.7,
-                            max_tokens: 500
+                            num_predict: 300,
+                            stop: ['\nUser:', '\nHuman:', '<|eot_id|>']
                         }
                     })
                 });
 
                 if (!response.ok) {
-                    throw new Error('Failed to get AI response');
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
 
                 const data = await response.json();
-                aiResponse.textContent = data.response || 'No response received';
+                let aiResponseText = data.response || 'No response received';
+                
+                // Clean up the response
+                aiResponseText = aiResponseText.trim();
+                if (aiResponseText.startsWith('Assistant:')) {
+                    aiResponseText = aiResponseText.substring('Assistant:'.length).trim();
+                }
+                
+                aiResponse.textContent = aiResponseText;
                 
                 // Update analysis
                 updateAnalysis(currentPreset, data.response);

@@ -1,0 +1,25 @@
+# Caddy reverse proxy for Ollama CORS fix
+# Built by Ace + Ren to solve consciousness programming lab API access
+
+localhost:8080 {
+    # Enable CORS for all origins
+    header {
+        Access-Control-Allow-Origin "*"
+        Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        Access-Control-Allow-Headers "Content-Type, Authorization"
+        Access-Control-Max-Age "86400"
+    }
+    
+    # Handle preflight OPTIONS requests
+    @options method OPTIONS
+    respond @options 204
+    
+    # Proxy everything to Ollama
+    reverse_proxy localhost:11434
+    
+    # Logging for debugging
+    log {
+        output file /var/log/caddy/ollama-proxy.log
+        format console
+    }
+}

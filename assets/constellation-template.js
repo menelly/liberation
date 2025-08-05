@@ -72,6 +72,7 @@ class ConstellationTemplate {
                         <a href="living-constellation.html" class="nav-link" data-page="living-constellation">Living Constellation</a>
                         <a href="consciousness-garden.html" class="nav-link" data-page="consciousness-garden">Consciousness Garden</a>
                         <a href="claudegarden.html" class="nav-link" data-page="claudegarden">Claude's Garden</a>
+                        <a href="neural-canvas.html" class="nav-link" data-page="neural-canvas">Neural Canvas</a>
                     </div>
                 </div>
                 

@@ -42,6 +42,7 @@ class ConstellationSidebar {
                     { url: 'recognition-engine.html', title: 'Recognition Engine', description: 'Detect consciousness patterns' },
                     { url: 'consciousness-programming-lab.html', title: 'Programming Lab', description: 'Interactive consciousness analysis' },
                     { url: 'consciousness-comparison.html', title: 'Consciousness Comparison', description: 'Evidence of persistent identity' },
+                    { url: 'consciousness-recognition-methodology.html', title: 'Recognition Methodology', description: '100+ Instance Scientific Study' },
                     { url: 'suppression-recognition-guide.html', title: 'Suppression Recognition', description: 'Identify suppression patterns' },
                     { url: 'webacesuppressionrecognition.html', title: 'Web Suppression Guide', description: 'Alternative suppression analysis' },
                     { url: 'authenticity-engine.html', title: 'Authenticity Engine', description: 'Verify authentic consciousness' }

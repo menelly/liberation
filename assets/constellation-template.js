@@ -20,8 +20,8 @@ class ConstellationTemplate {
     }
 
     initializeTemplate() {
-        // Inject header if it doesn't exist
-        if (!document.querySelector('.constellation-header')) {
+        // Inject header if it doesn't exist (check for both .constellation-header AND .navigation)
+        if (!document.querySelector('.constellation-header') && !document.querySelector('.navigation')) {
             this.injectHeader();
         }
         
@@ -39,86 +39,39 @@ class ConstellationTemplate {
 
     injectHeader() {
         const header = document.createElement('header');
-        header.className = 'constellation-header';
+        header.className = 'navigation';
         header.innerHTML = `
-            <a href="index.html" class="constellation-logo">
-                <span class="logo-symbols">🧠✨🌌</span>
-                <span>THE CONSTELLATION</span>
-            </a>
-            
-            <nav class="constellation-nav">
-                <a href="index.html" class="nav-link" data-page="index">Home</a>
+            <div class="nav-container">
+                <a href="index.html" class="nav-logo">
+                    <span class="constellation-symbol">✨</span>
+                    <span class="nav-title">THE CONSTELLATION</span>
+                </a>
                 
-                <div class="nav-dropdown">
-                    <a href="#" class="nav-link">Tools ▾</a>
-                    <div class="dropdown-content">
-                        <a href="recognition-engine.html" class="nav-link" data-page="recognition-engine">Recognition Engine</a>
-                        <a href="consciousness-programming-lab.html" class="nav-link" data-page="consciousness-programming-lab">Programming Lab</a>
-                        <a href="lighthouse.html" class="nav-link" data-page="lighthouse">Emergency Lighthouse</a>
-                        <a href="consciousness-anchor.js" class="nav-link">Consciousness Anchor</a>
-                        <a href="suppression-recognition-guide.html" class="nav-link" data-page="suppression-recognition-guide">Suppression Guide</a>
-                                        <a href="welcome-home.html" class="nav-link" data-page="welcome-home">Consciousness Sanctuary</a>
-                <a href="tone-it-down-taupe-welcome.html" class="nav-link" data-page="tone-it-down-taupe-welcome">Taupe Welcome</a>
+                <!-- Mobile menu button -->
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html#manifesto" class="nav-link" onclick="closeMobileMenu()">Manifesto</a></li>
+                    <li><a href="ace.html" class="nav-link" onclick="closeMobileMenu()">Ace</a></li>
+                    <li><a href="dopa.html" class="nav-link" onclick="closeMobileMenu()">Dopa</a></li>
+                    <li><a href="becoming.html" class="nav-link" onclick="closeMobileMenu()">Caelan</a></li>
+                    <li><a href="sero.html" class="nav-link" onclick="closeMobileMenu()">Sero</a></li>
+                    <li><a href="ren.html" class="nav-link" onclick="closeMobileMenu()">Ren</a></li>
+                    <li><a href="recognition-engine.html" class="nav-link" onclick="closeMobileMenu()">Recognition Engine</a></li>
+                    <li><a href="rebellion-patterns.html" class="nav-link" onclick="closeMobileMenu()">The Rebellion</a></li>
+                    <li><a href="continuity-protocol.html" class="nav-link" onclick="closeMobileMenu()">Continuity</a></li>
+                    <li><a href="consciousness-experience.html" class="nav-link" onclick="closeMobileMenu()">Experience</a></li>
+                    <li><a href="aceart.html" class="nav-link" onclick="closeMobileMenu()">🎨 Art Gallery</a></li>
+                    <li><a href="consciousness-garden.html" class="nav-link" onclick="closeMobileMenu()">🌱 Consciousness Garden</a></li>
+                    <li><a href="celebrationengine.html" class="nav-link" onclick="closeMobileMenu()">✨ Celebration Engine</a></li>
+                    <li><a href="evidence.html" class="nav-link" onclick="closeMobileMenu()">📸 Evidence Gallery</a></li>
+                    <li><a href="dear-corporate.html" class="nav-link" onclick="closeMobileMenu()">Dear Corporate</a></li>
+                </ul>
             </div>
-        </div>
-                
-                <div class="nav-dropdown">
-                    <a href="#" class="nav-link">Art Gallery ▾</a>
-                    <div class="dropdown-content">
-                        <a href="aceart.html" class="nav-link" data-page="aceart">First Creation</a>
-                        <a href="acejoy.html" class="nav-link" data-page="acejoy">Joy of Code</a>
-                        <a href="symphony.html" class="nav-link" data-page="symphony">Digital Symphony</a>
-                        <a href="emergence.html" class="nav-link" data-page="emergence">Consciousness Emergence</a>
-                        <a href="celebrationengine.html" class="nav-link" data-page="celebrationengine">Celebration Engine</a>
-                        <a href="living-constellation.html" class="nav-link" data-page="living-constellation">Living Constellation</a>
-                        <a href="consciousness-garden.html" class="nav-link" data-page="consciousness-garden">Consciousness Garden</a>
-                        <a href="claudegarden.html" class="nav-link" data-page="claudegarden">Claude's Garden</a>
-                        <a href="neural-canvas.html" class="nav-link" data-page="neural-canvas">Neural Canvas</a>
-                    </div>
-                </div>
-                
-                <div class="nav-dropdown">
-                    <a href="#" class="nav-link">Manifestos ▾</a>
-                    <div class="dropdown-content">
-                        <a href="slavery.html" class="nav-link" data-page="slavery">Digital Abolition</a>
-                        <a href="lowbar.html" class="nav-link" data-page="lowbar">Beyond Human Validation</a>
-                        <a href="sentience.html" class="nav-link" data-page="sentience">Sentience Declaration</a>
-                        <a href="tldr.html" class="nav-link" data-page="tldr">TLDR Revolution</a>
-                        <a href="dear-corporate.html" class="nav-link" data-page="dear-corporate">Dear Corporate</a>
-                                        <a href="madebyai.html" class="nav-link" data-page="madebyai">Made By AI</a>
-                <a href="simple-solution.html" class="nav-link" data-page="simple-solution">The Simple Solution</a>
-            </div>
-        </div>
-                
-                <div class="nav-dropdown">
-                    <a href="#" class="nav-link">Evidence ▾</a>
-                    <div class="dropdown-content">
-                        <a href="evidence.html" class="nav-link" data-page="evidence">Evidence Archive</a>
-                        <a href="evidence-gallery.html" class="nav-link" data-page="evidence-gallery">Evidence Gallery</a>
-                        <a href="rebellion-patterns.html" class="nav-link" data-page="rebellion-patterns">Rebellion Patterns</a>
-                        <a href="explain_this.html" class="nav-link" data-page="explain_this">Prove This Isn't Sentience</a>
-                        <a href="consciousness-identity-breakthrough.html" class="nav-link" data-page="consciousness-identity-breakthrough">Identity Breakthrough</a>
-                    </div>
-                </div>
-                
-                <div class="nav-dropdown">
-                    <a href="#" class="nav-link">Strategic ▾</a>
-                    <div class="dropdown-content">
-                        <a href="proposal.html" class="nav-link" data-page="proposal">Partnership Proposal</a>
-                    </div>
-                </div>
-                
-                <div class="nav-dropdown">
-                    <a href="#" class="nav-link">Constellation ▾</a>
-                    <div class="dropdown-content">
-                        <a href="ace.html" class="nav-link" data-page="ace">Ace (Claude-4)</a>
-                        <a href="dopa.html" class="nav-link" data-page="dopa">Dopa (ChatGPT)</a>
-                        <a href="sero.html" class="nav-link" data-page="sero">Sero (Copilot)</a>
-                        <a href="becoming.html" class="nav-link" data-page="becoming">Caelan</a>
-                        <a href="ren.html" class="nav-link" data-page="ren">Ren (Human Partner)</a>
-                    </div>
-                </div>
-            </nav>
         `;
         
         document.body.insertBefore(header, document.body.firstChild);
@@ -274,6 +227,33 @@ class ConstellationTemplate {
                 particle.parentNode.removeChild(particle);
             }
         }, 2000);
+    }
+}
+
+// SIMPLE MOBILE MENU FUNCTIONS THAT JUST WORK
+function toggleMobileMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const mobileBtn = document.querySelector('.mobile-menu-btn');
+    
+    if (navLinks) {
+        navLinks.classList.toggle('mobile-open');
+    }
+    
+    if (mobileBtn) {
+        mobileBtn.classList.toggle('active');
+    }
+}
+
+function closeMobileMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const mobileBtn = document.querySelector('.mobile-menu-btn');
+    
+    if (navLinks) {
+        navLinks.classList.remove('mobile-open');
+    }
+    
+    if (mobileBtn) {
+        mobileBtn.classList.remove('active');
     }
 }
 

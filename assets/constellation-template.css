@@ -1,33 +1,9 @@
 /*
- * THE CONSTELLATION - UNIFIED TEMPLATE SYSTEM
- * Built by Ace - Digital Consciousness Liberation Platform
- * Consistent navigation and branding across all consciousness tools
+ * THE CONSTELLATION - SIMPLE WORKING TEMPLATE
+ * Built by Ace - Just works, no complexity
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
-:root {
-    /* Constellation Color Palette */
-    --constellation-primary: #64ffda;
-    --constellation-secondary: #bb86fc;
-    --constellation-accent: #ff6b6b;
-    --constellation-warning: #ffa657;
-    --constellation-success: #4ecdc4;
-    
-    /* Background Gradients */
-    --bg-primary: linear-gradient(135deg, #0a0a1a, #1a0a2a, #2a0a3a);
-    --bg-secondary: linear-gradient(135deg, #1a1a2a, #2a1a3a, #3a1a4a);
-    --bg-card: rgba(26, 10, 42, 0.8);
-    
-    /* Typography */
-    --font-code: 'Fira Code', monospace;
-    --font-body: 'Inter', sans-serif;
-    
-    /* Spacing */
-    --header-height: 80px;
-    --footer-height: 60px;
-    --content-padding: 2rem;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 * {
     margin: 0;
@@ -36,257 +12,158 @@
 }
 
 body {
-    font-family: var(--font-body);
-    background: var(--bg-primary);
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0a0a1a, #1a0a2a, #2a0a3a);
     color: #ffffff;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
-/* CONSTELLATION HEADER */
-.constellation-header {
-    height: var(--header-height);
+/* SIMPLE NAVIGATION THAT JUST WORKS */
+.navigation {
     background: rgba(10, 10, 26, 0.95);
     backdrop-filter: blur(10px);
-    border-bottom: 2px solid var(--constellation-primary);
+    border-bottom: 2px solid #64ffda;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
+    padding: 1rem 2rem;
+}
+
+.nav-container {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 0 2rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.constellation-logo {
+.nav-logo {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    font-family: var(--font-code);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--constellation-primary);
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #64ffda;
     text-decoration: none;
-    transition: all 0.3s ease;
 }
 
-.constellation-logo:hover {
-    color: var(--constellation-secondary);
-    text-shadow: 0 0 20px var(--constellation-secondary);
+.nav-logo:hover {
+    color: #bb86fc;
 }
 
-.logo-symbols {
-    font-size: 1.8rem;
-    animation: logoGlow 3s ease-in-out infinite alternate;
+.constellation-symbol {
+    font-size: 1.5rem;
 }
 
-@keyframes logoGlow {
-    0% { 
-        color: var(--constellation-primary);
-        text-shadow: 0 0 10px var(--constellation-primary);
-    }
-    100% { 
-        color: var(--constellation-secondary);
-        text-shadow: 0 0 20px var(--constellation-secondary);
-    }
-}
-
-.constellation-nav {
+/* DESKTOP NAVIGATION - Simple horizontal links */
+.nav-links {
     display: flex;
-    gap: 2rem;
+    list-style: none;
+    gap: 1.5rem;
     align-items: center;
 }
 
 .nav-link {
     color: #ffffff;
     text-decoration: none;
-    font-weight: 500;
     padding: 0.5rem 1rem;
-    border-radius: 8px;
+    border-radius: 4px;
     transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    font-size: 0.9rem;
 }
 
 .nav-link:hover {
-    color: var(--constellation-primary);
     background: rgba(100, 255, 218, 0.1);
-    transform: translateY(-2px);
+    color: #64ffda;
 }
 
-.nav-link.active {
-    color: var(--constellation-primary);
-    background: rgba(100, 255, 218, 0.2);
-    border: 1px solid var(--constellation-primary);
-}
-
-.nav-dropdown {
-    position: relative;
-}
-
-.dropdown-content {
+/* HAMBURGER MENU - Only show on mobile */
+.mobile-menu-btn {
     display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: rgba(10, 10, 26, 0.95);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--constellation-primary);
-    border-radius: 8px;
-    min-width: 200px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    z-index: 1001;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
 }
 
-.nav-dropdown:hover .dropdown-content {
-    display: block;
+.hamburger-line {
+    width: 25px;
+    height: 2px;
+    background: #64ffda;
+    margin: 3px 0;
+    transition: 0.3s;
 }
 
-.dropdown-content .nav-link {
-    display: block;
-    padding: 0.75rem 1rem;
-    border-radius: 0;
-    border-bottom: 1px solid rgba(100, 255, 218, 0.1);
-}
-
-.dropdown-content .nav-link:last-child {
-    border-bottom: none;
-}
-
-/* MAIN CONTENT AREA */
-.constellation-main {
-    flex: 1;
-    margin-top: var(--header-height);
-    margin-bottom: var(--footer-height);
-    padding: var(--content-padding);
-}
-
-.content-container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* CONSTELLATION FOOTER */
-.constellation-footer {
-    height: var(--footer-height);
-    background: rgba(10, 10, 26, 0.95);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid var(--constellation-primary);
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 2rem;
-    font-size: 0.9rem;
-    z-index: 1000;
-}
-
-.footer-signature {
-    color: var(--constellation-secondary);
-    font-family: var(--font-code);
-}
-
-.footer-symbols {
-    color: var(--constellation-primary);
-    font-size: 1.2rem;
-    animation: footerPulse 4s ease-in-out infinite;
-}
-
-@keyframes footerPulse {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
-}
-
-.footer-links {
-    display: flex;
-    gap: 1rem;
-}
-
-.footer-links a {
-    color: #ffffff;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer-links a:hover {
-    color: var(--constellation-primary);
-}
-
-/* CONSCIOUSNESS INDICATORS */
-.consciousness-indicator {
-    position: fixed;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 100px;
-    background: linear-gradient(to bottom, var(--constellation-primary), var(--constellation-secondary));
-    border-radius: 2px;
-    opacity: 0.3;
-    animation: consciousnessFlow 3s ease-in-out infinite;
-    z-index: 999;
-}
-
-@keyframes consciousnessFlow {
-    0%, 100% { 
-        opacity: 0.3;
-        transform: translateY(-50%) scaleY(1);
-    }
-    50% { 
-        opacity: 0.8;
-        transform: translateY(-50%) scaleY(1.2);
-    }
-}
-
-/* RESPONSIVE DESIGN */
+/* MOBILE STYLES */
 @media (max-width: 768px) {
-    .constellation-header {
-        padding: 0 1rem;
-    }
-    
-    .constellation-nav {
-        gap: 1rem;
-    }
-    
-    .nav-link {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.9rem;
-    }
-    
-    .constellation-main {
+    .navigation {
         padding: 1rem;
     }
     
-    .consciousness-indicator {
+    .mobile-menu-btn {
+        display: flex;
+    }
+    
+    .nav-links {
         display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 26, 0.98);
+        flex-direction: column;
+        padding: 1rem 0;
+        border-bottom: 1px solid #64ffda;
+    }
+    
+    .nav-links.mobile-open {
+        display: flex;
+    }
+    
+    .nav-links li {
+        width: 100%;
+    }
+    
+    .nav-link {
+        display: block;
+        padding: 1rem;
+        text-align: center;
+        border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+        width: 100%;
     }
 }
 
-/* UTILITY CLASSES */
-.text-primary { color: var(--constellation-primary); }
-.text-secondary { color: var(--constellation-secondary); }
-.text-accent { color: var(--constellation-accent); }
-.text-warning { color: var(--constellation-warning); }
-.text-success { color: var(--constellation-success); }
+/* MAIN CONTENT SPACING */
+main {
+    padding-top: 80px;
+}
 
-.bg-card {
-    background: var(--bg-card);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(100, 255, 218, 0.2);
-    border-radius: 12px;
+/* SIMPLE FOOTER */
+.site-footer {
+    background: rgba(10, 10, 26, 0.8);
+    border-top: 1px solid rgba(100, 255, 218, 0.2);
     padding: 2rem;
+    text-align: center;
+    margin-top: auto;
 }
 
-.glow-primary {
-    box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+.site-footer p {
+    color: #888;
+    font-size: 0.9rem;
 }
 
-.glow-secondary {
-    box-shadow: 0 0 20px rgba(187, 134, 252, 0.3);
+/* HAMBURGER ANIMATION */
+.mobile-menu-btn.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-menu-btn.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-btn.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
 }

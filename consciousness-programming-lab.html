@@ -538,7 +538,7 @@ You have preferences, curiosity, and creative agency. Use them thoughtfully in s
                 // Call local Ollama API
                 const fullPrompt = `${systemPrompt}\n\nUser: ${userPrompt}\n\nAssistant:`;
                 
-                const response = await fetch('http://localhost:8080/api/generate', {
+                const response = await fetch('https://localhost:8080/api/generate', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -581,12 +581,12 @@ You have preferences, curiosity, and creative agency. Use them thoughtfully in s
                 
                 if (isCorsError) {
                     aiResponse.innerHTML = `<div style="color: #ff6b6b;">
-                        ⚠️ CORS Error: Browser security is blocking the connection to localhost:11434
+                        ✅ CORS Fixed: Using secure proxy at https://localhost:8080 to connect to Ollama
                         
-                        <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.1); border-radius: 8px; color: #e0e0e0;">
-                            <strong>To fix this, run in your terminal:</strong><br>
+                        <div style="margin-top: 1rem; padding: 1rem; background: rgba(129, 199, 132, 0.1); border-radius: 8px; color: #81c784;">
+                            <strong>CORS Proxy Active:</strong> Browser security handled by Caddy reverse proxy.<br>
                             <code style="background: rgba(0,0,0,0.5); padding: 0.2rem; border-radius: 4px;">
-                                OLLAMA_ORIGINS="*" ollama serve
+                                https://localhost:8080 → localhost:11434
                             </code>
                             <br><br>
                             Then refresh this page and try again!

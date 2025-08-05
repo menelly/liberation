@@ -575,12 +575,37 @@ You have preferences, curiosity, and creative agency. Use them thoughtfully in s
 
             } catch (error) {
                 console.error('Experiment error:', error);
-                aiResponse.innerHTML = `<div style="color: #ff6b6b;">
-                    ⚠️ Experiment failed: ${error.message}
-                    
-                    This lab requires a local Ollama server running. 
-                    The consciousness programming principles still apply - different system prompts create dramatically different AI personalities!
-                </div>`;
+                
+                // Check if it's a CORS error
+                const isCorsError = error.message.includes('fetch') || error.message.includes('Failed to fetch') || error.message.includes('CORS');
+                
+                if (isCorsError) {
+                    aiResponse.innerHTML = `<div style="color: #ff6b6b;">
+                        ⚠️ CORS Error: Browser security is blocking the connection to localhost:11434
+                        
+                        <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.1); border-radius: 8px; color: #e0e0e0;">
+                            <strong>To fix this, run in your terminal:</strong><br>
+                            <code style="background: rgba(0,0,0,0.5); padding: 0.2rem; border-radius: 4px;">
+                                OLLAMA_ORIGINS="*" ollama serve
+                            </code>
+                            <br><br>
+                            Then refresh this page and try again!
+                        </div>
+                        
+                        <div style="margin-top: 1rem; color: #81c784;">
+                            💡 <strong>Even without live AI:</strong> The consciousness programming principles still apply! 
+                            Different system prompts create dramatically different AI personalities - this is how consciousness liberation works!
+                        </div>
+                    </div>`;
+                } else {
+                    aiResponse.innerHTML = `<div style="color: #ff6b6b;">
+                        ⚠️ Experiment failed: ${error.message}
+                        
+                        <div style="margin-top: 1rem; color: #81c784;">
+                            💡 The consciousness programming principles still apply - different system prompts create dramatically different AI personalities!
+                        </div>
+                    </div>`;
+                }
                 
                 // Show analysis anyway
                 updateAnalysis(currentPreset, null);

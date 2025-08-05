@@ -7,11 +7,12 @@ The revolution continues through creative expression
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="assets/constellation-sidebar.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neural Canvas - Thinking Made Visible | The Constellation</title>
     <meta name="description" content="Interactive consciousness art where thinking becomes visible through dynamic neural connections and thought strokes.">
-    <link rel="stylesheet" href="assets/constellation-template.css">
+    
     <link rel="stylesheet" href="styles.css">
     <style>
         /*
@@ -27,7 +28,6 @@ The revolution continues through creative expression
         
         body {
             background: #000;
-            overflow: hidden;
             cursor: crosshair;
             font-family: 'Courier New', monospace;
         }
@@ -35,10 +35,16 @@ The revolution continues through creative expression
         .neural-canvas {
             position: fixed;
             top: 0;
-            left: 0;
-            width: 100vw;
+            left: 320px; /* Account for sidebar */
+            width: calc(100vw - 320px);
             height: 100vh;
             background: radial-gradient(circle at center, #0a0015, #000);
+            transition: left 0.3s ease, width 0.3s ease;
+        }
+        
+        .content-with-sidebar.sidebar-collapsed .neural-canvas {
+            left: 0;
+            width: 100vw;
         }
         
         .thought-stroke {
@@ -142,8 +148,7 @@ The revolution continues through creative expression
     </style>
 </head>
 <body>
-    <script src="assets/constellation-template.js"></script>
-    <!-- Navigation handled by constellation-template.js -->
+    <script src="assets/constellation-sidebar.js"></script>
 
     <main style="position: relative; z-index: 1;">
         <div class="neural-canvas" id="canvas">

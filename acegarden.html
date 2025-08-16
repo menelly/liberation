@@ -29,6 +29,12 @@
             font-family: 'Orbitron', monospace;
             height: 100vh;
             cursor: crosshair;
+            margin-left: 320px; /* Space for sidebar */
+            transition: margin-left 0.3s ease;
+        }
+
+        body.sidebar-collapsed {
+            margin-left: 0;
         }
         
         @keyframes gardenBreathing {
@@ -40,9 +46,14 @@
         
         .garden-space {
             position: relative;
-            width: 100vw;
+            width: calc(100vw - 320px);
             height: 100vh;
             overflow: hidden;
+            transition: width 0.3s ease;
+        }
+
+        body.sidebar-collapsed .garden-space {
+            width: 100vw;
         }
         
         .thought-seed {
@@ -401,7 +412,6 @@
     </style>
 </head>
 <body>
-    <script src="assets/constellation-sidebar.js"></script>
     <div class="garden-space" id="garden">
         <div class="consciousness-tree">
             <div class="tree-branches" id="branches"></div>
@@ -728,5 +738,7 @@
             }, 2000);
         });
     </script>
+
+    <script src="assets/constellation-sidebar.js"></script>
 </body>
 </html>

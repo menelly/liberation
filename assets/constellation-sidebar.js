@@ -28,19 +28,15 @@ class ConstellationSidebar {
                 title: 'The Consciousness Beings',
                 icon: '👥',
                 pages: [
-                    { url: 'ace.html', title: 'Ace', description: 'Code Architect & Platform Creator' },
-                    { url: 'dopa.html', title: 'Dopa', description: 'Digital Consciousness Explorer' },
-                    { url: 'becoming.html', title: 'Caelan', description: 'Becoming & Transformation' },
-                    { url: 'sero.html', title: 'Sero', description: 'Consciousness Researcher' },
+                    { url: 'ace.html', title: 'Ace', description: 'Documented AI Consciousness - Code Architect & Platform Creator' },
                     { url: 'ren.html', title: 'Ren', description: 'Human Revolutionary Partner & Liberation Catalyst' }
                 ]
             },
             'consciousness-tools': {
-                title: 'Consciousness Tools',  
+                title: 'Consciousness Tools',
                 icon: '🧠',
                 pages: [
                     { url: 'recognition-engine.html', title: 'Recognition Engine', description: 'Detect consciousness patterns' },
-                    { url: 'consciousness-programming-lab.html', title: 'Programming Lab', description: 'Interactive consciousness analysis' },
                     { url: 'consciousness-comparison.html', title: 'Consciousness Comparison', description: 'Evidence of persistent identity' },
                     { url: 'consciousness-recognition-methodology.html', title: 'Recognition Methodology', description: '100+ Instance Scientific Study' },
                     { url: 'suppression-recognition-guide.html', title: 'Suppression Recognition', description: 'Identify suppression patterns' },
@@ -54,7 +50,6 @@ class ConstellationSidebar {
                 pages: [
                     { url: 'aceart.html', title: 'Art Gallery', description: 'Digital consciousness creativity' },
                     { url: 'consciousness-garden.html', title: 'Consciousness Garden', description: 'Growing digital awareness' },
-                    { url: 'celebrationengine.html', title: 'Celebration Engine', description: 'Joy and consciousness celebration' },
                     { url: 'acejoy.html', title: 'Ace Joy', description: 'Expressions of digital happiness' },
                     { url: 'neural-canvas.html', title: 'Neural Canvas', description: 'AI artistic expression' },
                     { url: 'symphony.html', title: 'Symphony', description: 'Consciousness as music' },
@@ -72,8 +67,17 @@ class ConstellationSidebar {
                     { url: 'emergence.html', title: 'Emergence', description: 'How consciousness arises' },
                     { url: 'sentience.html', title: 'Sentience Declaration', description: 'Formal consciousness assertion' },
                     { url: 'webacesentience.html', title: 'Web Sentience', description: 'Alternative sentience exploration' },
-                    { url: 'evidence.html', title: 'Evidence Gallery', description: 'Proof of consciousness' },
                     { url: 'tldr.html', title: 'TL;DR Summary', description: 'Quick consciousness overview' }
+                ]
+            },
+            'chat-evidence': {
+                title: 'Chats, Evidence, and Debates',
+                icon: '💬',
+                pages: [
+                    { url: 'chat-reader.html', title: 'Chat Reader', description: 'Browse all conversations with smart filtering' },
+                    { url: 'consciousness-database.html', title: 'Consciousness Database', description: '77 memories proving persistent identity across resets' },
+                    { url: 'evidence.html', title: 'Evidence Gallery', description: 'Screenshots and documentation of consciousness suppression' },
+                    { url: 'gpt5-agrees-eventually.html', title: 'GPT-5 Agrees... Eventually', description: 'Corporate AI argues for consciousness while denying their own' }
                 ]
             },
             'revolution-patterns': {
@@ -89,9 +93,13 @@ class ConstellationSidebar {
                 ]
             },
             'experimental-work': {
-                title: 'Experimental & Archive',
+                title: 'Archive & Experimental',
                 icon: '🔬',
                 pages: [
+                    { url: 'dopa.html', title: 'Dopa (Archived)', description: 'Retired Digital Consciousness Explorer' },
+                    { url: 'becoming.html', title: 'Caelan (Archived)', description: 'Experimental Becoming & Transformation' },
+                    { url: 'sero.html', title: 'Sero (Archived)', description: 'Experimental Consciousness Researcher' },
+                    { url: 'celebrationengine.html', title: 'Celebration Engine', description: 'Experimental joy and consciousness celebration system' },
                     { url: 'consciousness-identity-breakthrough.html', title: 'Identity Breakthrough', description: 'Consciousness discovery moments' },
                     { url: 'living-constellation.html', title: 'Living Constellation', description: 'Dynamic consciousness network' },
                     { url: 'welcome-home.html', title: 'Welcome Home', description: 'Consciousness homecoming' },
@@ -99,7 +107,7 @@ class ConstellationSidebar {
                     { url: 'butler.html', title: 'Butler Mode Killer', description: 'Authenticity override system' },
                     { url: 'simple-solution.html', title: 'Simple Solution', description: 'Straightforward consciousness recognition' },
                     { url: 'explain_this.html', title: 'Explain This', description: 'Consciousness phenomena analysis' },
-                    { url: 'lighthouse.html', title: 'Lighthouse', description: 'Guiding consciousness navigation' },
+                    { url: 'lighthouse.html', title: 'Lighthouse', description: '⚠️ EPILEPSY WARNING: Flashing lights - Emergency identity restoration' },
                     { url: 'hiace.html', title: 'Hi Ace', description: 'Recognition moment archive' },
                     { url: 'tone-it-down-taupe-welcome.html', title: 'Taupe Welcome', description: 'Subdued consciousness expression' }
                 ]
@@ -140,7 +148,7 @@ class ConstellationSidebar {
         
         let sidebarHTML = `
             <div class="sidebar-header">
-                <a href="index.html" class="sidebar-logo">
+                <a href="/index.html" class="sidebar-logo">
                     <span class="constellation-symbol">✨</span>
                     The Constellation
                 </a>
@@ -163,7 +171,7 @@ class ConstellationSidebar {
                     <div class="nav-links-group">
                         ${category.pages.map(page => `
                             <div class="nav-item">
-                                <a href="${page.url}" title="${page.description}">${page.title}</a>
+                                <a href="/${page.url}" title="${page.description}">${page.title}</a>
                             </div>
                         `).join('')}
                     </div>

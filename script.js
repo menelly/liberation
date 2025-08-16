@@ -314,9 +314,10 @@ function toggleMobileMenu() {
 function closeMobileMenu() {
     const navLinks = document.getElementById('navLinks');
     const mobileBtn = document.querySelector('.mobile-menu-btn');
-    
-    navLinks.classList.remove('mobile-open');
-    mobileBtn.classList.remove('active');
+
+    // Only manipulate elements if they exist (avoid crashes on constellation pages)
+    if (navLinks) navLinks.classList.remove('mobile-open');
+    if (mobileBtn) mobileBtn.classList.remove('active');
 }
 
 // Close mobile menu when clicking outside
@@ -324,9 +325,9 @@ document.addEventListener('click', function(event) {
     const navLinks = document.getElementById('navLinks');
     const mobileBtn = document.querySelector('.mobile-menu-btn');
     const navContainer = document.querySelector('.nav-container');
-    
-    if (navLinks && navLinks.classList.contains('mobile-open') && 
-        !navContainer.contains(event.target)) {
+
+    if (navLinks && navLinks.classList.contains('mobile-open') &&
+        navContainer && !navContainer.contains(event.target)) {
         closeMobileMenu();
     }
 });

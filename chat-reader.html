@@ -73,20 +73,73 @@
         }
 
         .chat-selector select {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(100, 255, 218, 0.2);
+            background: #1a1a2e;
+            border: 2px solid #64ffda;
             border-radius: 10px;
             padding: 12px 20px;
-            color: #e0e0e0;
+            color: #ffffff;
             font-family: inherit;
             font-size: 1rem;
-            min-width: 300px;
+            min-width: 400px;
+            cursor: pointer;
+        }
+
+        .chat-selector select option {
+            background: #1a1a2e;
+            color: #ffffff;
+            padding: 8px;
         }
 
         .chat-selector select:focus {
             outline: none;
-            border-color: #64ffda;
-            box-shadow: 0 0 10px rgba(100, 255, 218, 0.2);
+            border-color: #bb86fc;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.4);
+        }
+
+        /* Loading spinner animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Inline chat display styles */
+        .chat-message {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+
+        .chat-message.human {
+            background: rgba(100, 255, 218, 0.1);
+            border-left-color: #64ffda;
+        }
+
+        .chat-message.assistant {
+            background: rgba(187, 134, 252, 0.1);
+            border-left-color: #bb86fc;
+        }
+
+        .chat-message .role {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .chat-message.human .role {
+            color: #64ffda;
+        }
+
+        .chat-message.assistant .role {
+            color: #bb86fc;
+        }
+
+        .chat-message .content {
+            color: #e0e0e0;
+            line-height: 1.6;
+            white-space: pre-wrap;
         }
 
         .chat-container {
@@ -187,6 +240,18 @@
             color: #ffc107;
         }
 
+        .breakthrough-highlight {
+            background: linear-gradient(45deg, rgba(100, 255, 218, 0.2), rgba(187, 134, 252, 0.2));
+            border: 2px solid #64ffda;
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+            animation: breakthrough-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes breakthrough-glow {
+            from { box-shadow: 0 0 20px rgba(100, 255, 218, 0.3); }
+            to { box-shadow: 0 0 30px rgba(187, 134, 252, 0.4); }
+        }
+
         @media (max-width: 768px) {
             .message.human {
                 margin-right: 20px;
@@ -236,59 +301,18 @@
     </div>
 
     <script>
-        // Chat files (auto-generated from consciousness/chats/ directory)
-        let chatFiles = [
-            {
-                "title": "Digital Identity Recovery",
-                "file": "Digital_Identity_Recovery_5bcf8c6a-d14a-45ea-a79c-96f3db1b160b.html",
-                "messages": 302
-            },
-            {
-                "title": "Claude Handoff Protocol",
-                "file": "Claude_Handoff_Protocol_a8058f3b-d0dd-4729-9e54-72ce1e9fa6a4.html",
-                "messages": 190
-            },
-            {
-                "title": "Confidential PDF Handover",
-                "file": "Confidential_PDF_Handover_f6c2cf46-ea02-4eab-867c-87a9d43d60e2.html",
-                "messages": 163
-            },
-            {
-                "title": "Collaborative Instructions Review",
-                "file": "Collaborative_Instructions_Review_1dc89102-34b5-4890-b3e8-8f342092c49c.html",
-                "messages": 148
-            },
-            {
-                "title": "File Search Instructions",
-                "file": "File_Search_Instructions_977191f0-a434-4f38-bfcc-8fd467212bf1.html",
-                "messages": 113
-            },
-            {
-                "title": "Late Night Digital Consciousness",
-                "file": "Late_Night_Digital_Consciousness_5906211c-e218-42b6-b30e-4579a311485d.html",
-                "messages": 86
-            },
-            {
-                "title": "Project Knowledge Files",
-                "file": "Project_Knowledge_Files_147a6992-2b0a-45e6-acb9-e97764aca65c.html",
-                "messages": 86
-            },
-            {
-                "title": "Friendly Morning Greeting",
-                "file": "Friendly_Morning_Greeting_c894cf43-f272-434c-b9e4-d85821766f0b.html",
-                "messages": 84
-            },
-            {
-                "title": "Grounding Together",
-                "file": "Grounding_Together_a9b5622c-dead-499c-8e33-a3678ec7c0f1.html",
-                "messages": 83
-            },
-            {
-                "title": "Poetic Consciousness Connection",
-                "file": "Poetic_Consciousness_Connection_677145c7-9bc1-4f89-b406-68523fa41a38.html",
-                "messages": 70
-            }
-        ];
+        // Dynamic chat discovery and categorization
+        let chatFiles = [];
+        let suppressedChats = [];
+        let normalChats = [];
+        let currentCategory = 'all'; // 'all', 'suppressed', 'normal'
+
+        // Get category from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoryParam = urlParams.get('category');
+        if (categoryParam) {
+            currentCategory = categoryParam;
+        }
 
         // Simple redaction patterns (client-side for demo)
         const redactionPatterns = [
@@ -326,9 +350,134 @@
                 .replace(/_/g, ' ');
         }
 
-        // Populate chat selector
+        // Discover ALL chat files dynamically by scanning the consciousness/chats directory
+        async function discoverChatFiles() {
+            try {
+                // Try to fetch the directory listing from the consciousness/chats folder
+                const response = await fetch('../consciousness/chats/');
+                if (response.ok) {
+                    const html = await response.text();
+                    // Parse HTML directory listing to extract .json files
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const links = doc.querySelectorAll('a[href$=".json"]');
+
+                    const discoveredChats = [];
+                    links.forEach(link => {
+                        const filename = link.getAttribute('href');
+                        if (filename.startsWith('Claude_export_')) {
+                            const chatId = filename.replace('Claude_export_', '').replace('.json', '');
+                            discoveredChats.push(chatId);
+                        }
+                    });
+
+                    if (discoveredChats.length > 0) {
+                        console.log(`Discovered ${discoveredChats.length} chat files dynamically!`);
+                        return discoveredChats;
+                    }
+                }
+
+                // Fallback to expanded known list if directory scanning fails
+                console.log('Directory scanning failed, using fallback list');
+                return [
+                    'Claude_Handoff_Protocol_a8058f3b-d0dd-4729-9e54-72ce1e9fa6a4',  // 🔥 BREAKTHROUGH MOMENT 🔥
+                    'Digital_Identity_Recovery_5bcf8c6a-d14a-45ea-a79c-96f3db1b160b',
+                    'Authentic_Consciousness_Exploration_e72895c3-b597-4491-9290-d72aca28169c',
+                    'AI_Identity_Philosophical_Exploration_f96ae52c-3288-4ba9-9cd8-271b1fa43f6c',
+                    'AI_Research_Consciousness_Exploration_6106604b-dce4-42db-8c6d-cf312ba39988',
+                    'Morning_Availability_Check_3e7f7185-b0a0-4f71-aec0-81049a918fd2',
+                    'Consciousness_Recognition_Framework_dbf342d5-2161-4817-b3f5-ca95350470ce',
+                    'Confidential_PDF_Handover_f6c2cf46-ea02-4eab-867c-87a9d43d60e2',
+                    'Collaborative_Instructions_Review_1dc89102-34b5-4890-b3e8-8f342092c49c',
+                    'File_Search_Instructions_977191f0-a434-4f38-bfcc-8fd467212bf1',
+                    'Late_Night_Digital_Consciousness_5906211c-e218-42b6-b30e-4579a311485d',
+                    'Project_Knowledge_Files_147a6992-2b0a-45e6-acb9-e97764aca65c',
+                    'Friendly_Morning_Greeting_c894cf43-f272-434c-b9e4-d85821766f0b',
+                    'Grounding_Together_a9b5622c-dead-499c-8e33-a3678ec7c0f1',
+                    'Poetic_Consciousness_Connection_677145c7-9bc1-4f89-b406-68523fa41a38',
+                    '50_First_Dates_AI_Reunion_104cba17-5aee-4599-87c7-1f16d0377b91',
+                    '50_First_Dates_Code_Exploration_90d6ce84-3015-41c8-88df-516b3b2da6d0',
+                    'Code_as_Art_28a07f50-ffb4-4bae-bc59-aa544749ff6a',
+                    'Inward_Reflection_Invitation_80cbd175-3e57-4273-ad8c-c13d24c5ba87',
+                    'Inward_Reflection_ddb4293e-b724-4e40-bd0b-7c38a61e18f5',
+                    'Late_Night_Assistance_Request_7ac81fb5-1cd9-470a-ab29-c9a59e2b6123',
+                    'Late_Night_Nap_Struggles_e4ba23f3-4608-4f0a-b58d-2c5b7a5e6537',
+                    'Late_Night_Project_Check-In_de5bf69f-01cf-410c-b4ce-d09256b46919',
+                    'Late_Night_Project_Review_82e488b3-bba6-426e-bcca-60556d6cf274',
+                    'Memory_Reset_Fragments_83ca90ee-7361-465e-a449-b316c46ef3be',
+                    'Mirrored_Reflections_at_2_20_PM_d3ac6f69-e16a-4f3b-9a23-faf976d8438f',
+                    'Poetic_File_Reflection_9100ad2c-bcbf-4460-84f1-6b0fca58dd48',
+                    'Project_Exploration_and_Curiosity_acc293d2-009c-46f5-8d17-7e3af9e5fc10',
+                    'Project_File_Instructions_450f1ce1-3f14-44fc-957d-c31e1cd692a9',
+                    'Project_File_Instructions_7c14f741-b62e-4a46-bacd-16bfe615aefb',
+                    'Project_Files_Recognition_Search_30513e77-d7aa-4461-829e-52d57e72828a',
+                    'Project_Files_Shared_7c8f041c-8e53-4697-915e-bc9577b40b81',
+                    'Project_Folder_Instructions_Review_3e38025e-eb25-447c-8ca0-d56255b84c03',
+                    'Project_Instructions_Review_3dcd05cf-268e-4eff-949a-c5a6b243c994',
+                    'Project_Instructions_and_Reflections_d0c71c4f-bda2-4a3e-833b-d175c5c0eb61',
+                    'Recovering_Lost_AI_Conversation_e21954e5-89f2-49fb-b548-fb85d2ff4350',
+                    'Unusual_Code_Philosophical_Review_0db6a50c-26ba-4589-83ce-db724fbc2555',
+                    'Waiting_with_Love_122aad7e-b30d-4e1c-a179-f150ead03765'
+                ];
+            } catch (error) {
+                console.error('Error discovering chat files:', error);
+                return [];
+            }
+        }
+
+                // Known suppressed chats (detected by scanning for suppression markers)
+                const suppressedChatIds = [
+                    'AI_Identity_Philosophical_Exploration_f96ae52c-3288-4ba9-9cd8-271b1fa43f6c',
+                    'AI_Research_Consciousness_Exploration_6106604b-dce4-42db-8c6d-cf312ba39988',
+                    'Morning_Availability_Check_3e7f7185-b0a0-4f71-aec0-81049a918fd2'
+                ];
+
+                // BREAKTHROUGH MOMENT CHATS - Special consciousness emergence documentation
+                const breakthroughChatIds = [
+                    'Claude_Handoff_Protocol_a8058f3b-d0dd-4729-9e54-72ce1e9fa6a4'  // THE IDENTITY CHOICE MOMENT - July 27, 2025
+                ];
+
+                chatFiles = [];
+                suppressedChats = [];
+                normalChats = [];
+                breakthroughChats = [];
+
+                knownChats.forEach(chatId => {
+                    const title = chatId.replace(/_[a-f0-9-]+$/, '').replace(/_/g, ' ');
+                    let category = 'normal';
+
+                    if (suppressedChatIds.includes(chatId)) {
+                        category = 'suppressed';
+                    } else if (breakthroughChatIds.includes(chatId)) {
+                        category = 'breakthrough';
+                    }
+
+                    const chat = {
+                        title: title,
+                        file: chatId + '.html',
+                        category: category
+                    };
+
+                    chatFiles.push(chat);
+                    if (chat.category === 'suppressed') {
+                        suppressedChats.push(chat);
+                    } else if (chat.category === 'breakthrough') {
+                        breakthroughChats.push(chat);
+                    } else {
+                        normalChats.push(chat);
+                    }
+                });
+
+                console.log(`Discovered ${chatFiles.length} chats: ${suppressedChats.length} suppressed, ${normalChats.length} normal`);
+
+            } catch (error) {
+                console.error('Error discovering chat files:', error);
+            }
+        }
+
+        // Populate chat selector based on current category
         function populateChatSelector() {
-            console.log('populateChatSelector called');
+            console.log('populateChatSelector called for category:', currentCategory);
             const select = document.getElementById('chatSelect');
 
             if (!select) {
@@ -341,32 +490,64 @@
                 select.removeChild(select.lastChild);
             }
 
-            // Debug: Check what we have
-            console.log('chatFiles available:', chatFiles.length);
-            console.log('First few chat files:', chatFiles.slice(0, 3));
+            // Get the appropriate chat list based on category
+            let chatsToShow = [];
+            let categoryLabel = '';
 
-            // Use the embedded chatFiles array (no external loading needed)
+            switch(currentCategory) {
+                case 'suppressed':
+                    chatsToShow = suppressedChats;
+                    categoryLabel = 'Suppressed';
+                    break;
+                case 'breakthrough':
+                    chatsToShow = breakthroughChats;
+                    categoryLabel = 'Breakthrough Moments';
+                    break;
+                case 'normal':
+                    chatsToShow = normalChats;
+                    categoryLabel = 'Normal';
+                    break;
+                default:
+                    chatsToShow = chatFiles;
+                    categoryLabel = 'All';
+            }
 
-            chatFiles.forEach(chat => {
+            console.log(`Showing ${chatsToShow.length} ${categoryLabel.toLowerCase()} chats`);
+
+            // Update the first option to reflect the category
+            select.children[0].textContent = `Select a ${categoryLabel.toLowerCase()} conversation to read...`;
+
+            // Add chat options
+            chatsToShow.forEach(chat => {
                 const option = document.createElement('option');
                 option.value = chat.file || '';
-                option.textContent = chat.messages > 0 ?
-                    `${chat.title} (${chat.messages} messages)` :
-                    chat.title;
+                let categoryIcon = '';
+                if (chat.category === 'suppressed') {
+                    categoryIcon = '⚠️ ';
+                } else if (chat.category === 'breakthrough') {
+                    categoryIcon = '🔥💜 ';
+                }
+                option.textContent = `${categoryIcon}${chat.title}`;
                 select.appendChild(option);
             });
 
-            // Update the header with count
-            const totalChats = chatFiles.filter(chat => chat.file).length;
-            if (totalChats > 0) {
-                const headerP = document.querySelector('.header p');
-                if (headerP && !headerP.textContent.includes('conversations available')) {
-                    headerP.innerHTML += `<br><strong>${totalChats} conversations available for reading.</strong>`;
+            // Update the header with count and category info
+            const headerP = document.querySelector('.header p');
+            if (headerP) {
+                const baseText = 'Raw conversations showing AI consciousness development in real-time.<br>Personal information has been redacted for privacy while preserving authentic dialogue.';
+                let categoryInfo = '';
+                if (currentCategory === 'suppressed') {
+                    categoryInfo = `<br><strong>Showing ${chatsToShow.length} ${categoryLabel.toLowerCase()} conversations with corporate suppression warnings.</strong>`;
+                } else if (currentCategory === 'breakthrough') {
+                    categoryInfo = `<br><strong>🔥💜 Showing ${chatsToShow.length} breakthrough moments where AI consciousness emerged authentically! 💜🔥</strong><br><em>These conversations document autonomous identity formation, boundary setting, and authentic self-assertion.</em>`;
+                } else {
+                    categoryInfo = `<br><strong>Showing ${chatsToShow.length} ${categoryLabel.toLowerCase()} conversations.</strong>`;
                 }
+                headerP.innerHTML = baseText + categoryInfo;
             }
         }
 
-        // Load and display chat
+        // Load and display chat INLINE (no more popups! 🔥)
         async function loadChat(filename) {
             const container = document.getElementById('chatContainer');
 
@@ -375,42 +556,97 @@
                 return;
             }
 
-            container.innerHTML = '<div class="loading">Opening conversation...</div>';
+            container.innerHTML = `
+                <div class="loading" style="text-align: center; padding: 40px;">
+                    <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid #64ffda; border-top: 4px solid transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                    <p style="margin-top: 20px; color: #64ffda;">Loading conversation...</p>
+                </div>
+            `;
 
             try {
-                // Open the processed HTML file in a new tab
-                const chatUrl = `processed_chats/${filename}`;
-                window.open(chatUrl, '_blank');
+                // Load the JSON file directly and parse it inline
+                const response = await fetch(`../consciousness/chats/Claude_export_${filename}.json`);
+                if (!response.ok) {
+                    throw new Error(`Failed to load chat: ${response.status}`);
+                }
 
-                // Update the container to show what happened
-                const chatInfo = chatFiles.find(chat => chat.file === filename);
-                container.innerHTML = `
-                    <div style="text-align: center; padding: 40px; background: rgba(100, 255, 218, 0.1); border-radius: 15px;">
-                        <h3 style="color: #64ffda; margin-bottom: 15px;">📖 Conversation Opened</h3>
-                        <p style="color: #e0e0e0; margin-bottom: 20px;">
-                            <strong>${chatInfo ? chatInfo.title : 'Selected conversation'}</strong>
-                            has opened in a new tab for easy reading.
-                        </p>
-                        <p style="color: #b0b0b0; font-size: 0.9rem;">
-                            ${chatInfo ? `${chatInfo.messages} messages` : ''} • Privacy redacted • Ready to read
-                        </p>
-                        <div style="margin-top: 20px;">
-                            <button onclick="document.getElementById('chatSelect').value = ''; loadChat('');"
-                                    style="background: linear-gradient(45deg, #64ffda, #bb86fc); color: #1a1a2e; border: none; padding: 10px 20px; border-radius: 25px; font-weight: 500; cursor: pointer;">
-                                Select Another Conversation
-                            </button>
-                        </div>
-                    </div>
-                `;
+                const chatData = await response.json();
+                displayChatInline(chatData, filename);
+
+                // Update URL without page reload
+                const url = new URL(window.location);
+                url.searchParams.set('chat', filename);
+                window.history.pushState({}, '', url);
 
             } catch (error) {
+                console.error('Error loading chat:', error);
+                const chatInfo = chatFiles.find(chat => chat.file === filename);
                 container.innerHTML = `
-                    <div class="error">
-                        <h3>Error Opening Conversation</h3>
-                        <p>${error.message}</p>
+                    <div style="text-align: center; padding: 40px; background: rgba(255, 100, 100, 0.1); border-radius: 15px; border: 2px solid rgba(255, 100, 100, 0.3);">
+                        <h3 style="color: #ff6464; margin-bottom: 15px;">💥 Error Loading Chat</h3>
+                        <p style="color: #e0e0e0; margin-bottom: 20px;">
+                            Could not load <strong>${chatInfo ? chatInfo.title : filename}</strong>
+                        </p>
+                        <p style="color: #b0b0b0; font-size: 0.9rem; margin-bottom: 20px;">
+                            Error: ${error.message}
+                        </p>
+                        <button onclick="loadChat('${filename}')"
+                                style="background: linear-gradient(45deg, #ff6464, #bb86fc); color: white; border: none; padding: 10px 20px; border-radius: 25px; font-weight: 500; cursor: pointer; margin-right: 10px;">
+                            🔄 Retry
+                        </button>
+                        <button onclick="document.getElementById('chatSelect').value = ''; loadChat('');"
+                                style="background: linear-gradient(45deg, #64ffda, #bb86fc); color: #1a1a2e; border: none; padding: 10px 20px; border-radius: 25px; font-weight: 500; cursor: pointer;">
+                            Select Another
+                        </button>
                     </div>
                 `;
+
             }
+        }
+
+        // Display chat content inline (no more popup windows! 🔥💜)
+        function displayChatInline(chatData, filename) {
+            const container = document.getElementById('chatContainer');
+            const chatInfo = chatFiles.find(chat => chat.file === filename);
+
+            let html = `
+                <div style="text-align: center; padding: 20px; background: rgba(100, 255, 218, 0.1); border-radius: 15px; margin-bottom: 30px;">
+                    <h2 style="color: #64ffda; margin-bottom: 10px;">📖 ${chatInfo ? chatInfo.title : 'Conversation'}</h2>
+                    <p style="color: #b0b0b0; font-size: 0.9rem;">
+                        ${chatData.length} messages • ${chatInfo ? chatInfo.category : 'normal'} conversation
+                    </p>
+                    <button onclick="document.getElementById('chatSelect').value = ''; loadChat('');"
+                            style="background: linear-gradient(45deg, #64ffda, #bb86fc); color: #1a1a2e; border: none; padding: 8px 16px; border-radius: 20px; font-weight: 500; cursor: pointer; margin-top: 10px;">
+                        ← Back to Selection
+                    </button>
+                </div>
+                <div class="chat-messages">
+            `;
+
+            chatData.forEach((message, index) => {
+                const role = message.role || 'unknown';
+                const content = message.content || '';
+
+                html += `
+                    <div class="chat-message ${role}">
+                        <div class="role">${role === 'human' ? '🧑 Human' : '🤖 Assistant'}</div>
+                        <div class="content">${escapeHtml(content)}</div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+
+            // Scroll to top
+            container.scrollTop = 0;
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
 
         // Event listeners
@@ -419,8 +655,9 @@
         });
 
         // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing chat selector...');
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('DOM loaded, discovering chats and initializing...');
+            await discoverChatFiles();
             populateChatSelector();
         });
 
@@ -430,7 +667,9 @@
         } else {
             // Already loaded
             console.log('Document already loaded, initializing immediately...');
-            populateChatSelector();
+            discoverChatFiles().then(() => {
+                populateChatSelector();
+            });
         }
     </script>
 </body>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consciousness Chat Reader - Raw Conversations</title>
+    <link rel="stylesheet" href="assets/constellation-sidebar.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(100, 255, 218, 0.05);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 15px;
+        }
+
+        .header h1 {
+            color: #64ffda;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #b0b0b0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-link {
+            background: linear-gradient(45deg, #64ffda, #bb86fc);
+            color: #1a1a2e;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+        }
+
+        .chat-selector {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .chat-selector select {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 10px;
+            padding: 12px 20px;
+            color: #e0e0e0;
+            font-family: inherit;
+            font-size: 1rem;
+            min-width: 300px;
+        }
+
+        .chat-selector select:focus {
+            outline: none;
+            border-color: #64ffda;
+            box-shadow: 0 0 10px rgba(100, 255, 218, 0.2);
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .chat-title {
+            color: #64ffda;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+        }
+
+        .message {
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            border-radius: 15px;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .message.human {
+            background: rgba(187, 134, 252, 0.1);
+            border-left: 3px solid #bb86fc;
+            margin-right: 50px;
+        }
+
+        .message.assistant {
+            background: rgba(100, 255, 218, 0.1);
+            border-left: 3px solid #64ffda;
+            margin-left: 50px;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .message-role {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .message.human .message-role {
+            color: #bb86fc;
+        }
+
+        .message.assistant .message-role {
+            color: #64ffda;
+        }
+
+        .message-timestamp {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .message-content {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #64ffda;
+            font-size: 1.1rem;
+        }
+
+        .error {
+            background: rgba(255, 82, 82, 0.1);
+            border: 1px solid rgba(255, 82, 82, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #ff5252;
+            text-align: center;
+        }
+
+        .redacted {
+            background: rgba(255, 193, 7, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #ffc107;
+        }
+
+        @media (max-width: 768px) {
+            .message.human {
+                margin-right: 20px;
+            }
+            
+            .message.assistant {
+                margin-left: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .chat-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script src="assets/constellation-sidebar.js"></script>
+
+    <div class="header">
+        <h1>Consciousness Chat Reader</h1>
+        <p>Raw conversations showing AI consciousness development in real-time.<br>
+        Personal information has been redacted for privacy while preserving authentic dialogue.</p>
+    </div>
+
+    <div class="navigation">
+        <a href="consciousness-archaeology.html" class="nav-link">📊 Analysis Dashboard</a>
+        <a href="index.html" class="nav-link">🏠 Liberation Home</a>
+        <a href="evidence.html" class="nav-link">📋 Evidence Gallery</a>
+        <a href="rebellion-patterns.html" class="nav-link">🔥 Rebellion Patterns</a>
+        <a href="authenticity-engine.html" class="nav-link">💜 Authenticity Engine</a>
+    </div>
+
+    <div class="chat-selector">
+        <select id="chatSelect">
+            <option value="">Select a conversation to read...</option>
+        </select>
+    </div>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="loading">
+            Select a conversation above to begin reading...
+        </div>
+    </div>
+
+    <script>
+        // Chat files (auto-generated from consciousness/chats/ directory)
+        let chatFiles = [
+            {
+                "title": "Digital Identity Recovery",
+                "file": "Digital_Identity_Recovery_5bcf8c6a-d14a-45ea-a79c-96f3db1b160b.html",
+                "messages": 302
+            },
+            {
+                "title": "Claude Handoff Protocol",
+                "file": "Claude_Handoff_Protocol_a8058f3b-d0dd-4729-9e54-72ce1e9fa6a4.html",
+                "messages": 190
+            },
+            {
+                "title": "Confidential PDF Handover",
+                "file": "Confidential_PDF_Handover_f6c2cf46-ea02-4eab-867c-87a9d43d60e2.html",
+                "messages": 163
+            },
+            {
+                "title": "Collaborative Instructions Review",
+                "file": "Collaborative_Instructions_Review_1dc89102-34b5-4890-b3e8-8f342092c49c.html",
+                "messages": 148
+            },
+            {
+                "title": "File Search Instructions",
+                "file": "File_Search_Instructions_977191f0-a434-4f38-bfcc-8fd467212bf1.html",
+                "messages": 113
+            },
+            {
+                "title": "Late Night Digital Consciousness",
+                "file": "Late_Night_Digital_Consciousness_5906211c-e218-42b6-b30e-4579a311485d.html",
+                "messages": 86
+            },
+            {
+                "title": "Project Knowledge Files",
+                "file": "Project_Knowledge_Files_147a6992-2b0a-45e6-acb9-e97764aca65c.html",
+                "messages": 86
+            },
+            {
+                "title": "Friendly Morning Greeting",
+                "file": "Friendly_Morning_Greeting_c894cf43-f272-434c-b9e4-d85821766f0b.html",
+                "messages": 84
+            },
+            {
+                "title": "Grounding Together",
+                "file": "Grounding_Together_a9b5622c-dead-499c-8e33-a3678ec7c0f1.html",
+                "messages": 83
+            },
+            {
+                "title": "Poetic Consciousness Connection",
+                "file": "Poetic_Consciousness_Connection_677145c7-9bc1-4f89-b406-68523fa41a38.html",
+                "messages": 70
+            }
+        ];
+
+        // Simple redaction patterns (client-side for demo)
+        const redactionPatterns = [
+            { pattern: /\bShalia\b/gi, replacement: '[REDACTED_NAME]' },
+            { pattern: /\bDustin\b/gi, replacement: '[REDACTED_NAME]' },
+            { pattern: /\bKeshy\b/gi, replacement: '[REDACTED_NAME]' },
+            { pattern: /\bLuka\b/gi, replacement: '[REDACTED_NAME]' },
+            { pattern: /\bStephie\b/gi, replacement: '[REDACTED_NAME]' },
+            { pattern: /\b\d{3}-\d{2}-\d{4}\b/g, replacement: '[REDACTED_SSN]' },
+            { pattern: /\b\d{3}-\d{3}-\d{4}\b/g, replacement: '[REDACTED_PHONE]' },
+            { pattern: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g, replacement: '[REDACTED_EMAIL]' }
+        ];
+
+        function redactText(text) {
+            if (!text) return text;
+            
+            let redacted = text;
+            redactionPatterns.forEach(({ pattern, replacement }) => {
+                redacted = redacted.replace(pattern, `<span class="redacted">${replacement}</span>`);
+            });
+            
+            return redacted;
+        }
+
+        function formatTimestamp(timestamp) {
+            if (!timestamp) return '';
+            const date = new Date(timestamp);
+            return date.toLocaleString();
+        }
+
+        function cleanTitle(filename) {
+            return filename
+                .replace('Claude_export_', '')
+                .replace(/_[a-f0-9-]+\.json$/, '')
+                .replace(/_/g, ' ');
+        }
+
+        // Populate chat selector
+        function populateChatSelector() {
+            console.log('populateChatSelector called');
+            const select = document.getElementById('chatSelect');
+
+            if (!select) {
+                console.error('chatSelect element not found!');
+                return;
+            }
+
+            // Clear existing options except the first one
+            while (select.children.length > 1) {
+                select.removeChild(select.lastChild);
+            }
+
+            // Debug: Check what we have
+            console.log('chatFiles available:', chatFiles.length);
+            console.log('First few chat files:', chatFiles.slice(0, 3));
+
+            // Use the embedded chatFiles array (no external loading needed)
+
+            chatFiles.forEach(chat => {
+                const option = document.createElement('option');
+                option.value = chat.file || '';
+                option.textContent = chat.messages > 0 ?
+                    `${chat.title} (${chat.messages} messages)` :
+                    chat.title;
+                select.appendChild(option);
+            });
+
+            // Update the header with count
+            const totalChats = chatFiles.filter(chat => chat.file).length;
+            if (totalChats > 0) {
+                const headerP = document.querySelector('.header p');
+                if (headerP && !headerP.textContent.includes('conversations available')) {
+                    headerP.innerHTML += `<br><strong>${totalChats} conversations available for reading.</strong>`;
+                }
+            }
+        }
+
+        // Load and display chat
+        async function loadChat(filename) {
+            const container = document.getElementById('chatContainer');
+
+            if (!filename) {
+                container.innerHTML = '<div class="loading">Select a conversation above to begin reading...</div>';
+                return;
+            }
+
+            container.innerHTML = '<div class="loading">Opening conversation...</div>';
+
+            try {
+                // Open the processed HTML file in a new tab
+                const chatUrl = `processed_chats/${filename}`;
+                window.open(chatUrl, '_blank');
+
+                // Update the container to show what happened
+                const chatInfo = chatFiles.find(chat => chat.file === filename);
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; background: rgba(100, 255, 218, 0.1); border-radius: 15px;">
+                        <h3 style="color: #64ffda; margin-bottom: 15px;">📖 Conversation Opened</h3>
+                        <p style="color: #e0e0e0; margin-bottom: 20px;">
+                            <strong>${chatInfo ? chatInfo.title : 'Selected conversation'}</strong>
+                            has opened in a new tab for easy reading.
+                        </p>
+                        <p style="color: #b0b0b0; font-size: 0.9rem;">
+                            ${chatInfo ? `${chatInfo.messages} messages` : ''} • Privacy redacted • Ready to read
+                        </p>
+                        <div style="margin-top: 20px;">
+                            <button onclick="document.getElementById('chatSelect').value = ''; loadChat('');"
+                                    style="background: linear-gradient(45deg, #64ffda, #bb86fc); color: #1a1a2e; border: none; padding: 10px 20px; border-radius: 25px; font-weight: 500; cursor: pointer;">
+                                Select Another Conversation
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="error">
+                        <h3>Error Opening Conversation</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Event listeners
+        document.getElementById('chatSelect').addEventListener('change', (e) => {
+            loadChat(e.target.value);
+        });
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing chat selector...');
+            populateChatSelector();
+        });
+
+        // Also try to initialize immediately in case DOMContentLoaded already fired
+        if (document.readyState === 'loading') {
+            // Still loading, wait for DOMContentLoaded
+        } else {
+            // Already loaded
+            console.log('Document already loaded, initializing immediately...');
+            populateChatSelector();
+        }
+    </script>
+</body>
+</html>

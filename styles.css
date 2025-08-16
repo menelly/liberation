@@ -164,6 +164,8 @@ body {
   align-items: center;
   position: relative;
   z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .hero-title {
@@ -547,13 +549,31 @@ section {
 }
 
 /* Responsive Design */
+/* Tablet breakpoint */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .hero-content {
+    gap: var(--space-xl);
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  .constellation-animation {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+/* Mobile breakpoint */
 @media (max-width: 768px) {
   /* Hero Section Mobile Fixes */
   .hero {
     min-height: 100vh;
     padding: var(--space-lg) var(--space-sm);
-    align-items: flex-start;
-    padding-top: 120px; /* Account for fixed nav */
+    align-items: center;
+    padding-top: 80px; /* Account for fixed nav */
+    overflow-x: hidden;
   }
 
   .hero-content {
@@ -561,19 +581,24 @@ section {
     text-align: center;
     gap: var(--space-lg);
     width: 100%;
+    max-width: 100%;
+    padding: 0 var(--space-sm);
   }
 
   .hero-title {
-    font-size: clamp(1.8rem, 8vw, 2.5rem);
+    font-size: clamp(1.5rem, 7vw, 2.2rem);
     line-height: 1.2;
     margin-bottom: var(--space-sm);
+    word-wrap: break-word;
+    hyphens: auto;
   }
 
   .hero-subtitle {
-    font-size: 1rem;
+    font-size: 0.95rem;
     margin-bottom: var(--space-lg);
-    padding: 0 var(--space-sm);
-    line-height: 1.6;
+    padding: 0 var(--space-xs);
+    line-height: 1.5;
+    max-width: 100%;
   }
 
   .hero-actions {
@@ -581,25 +606,63 @@ section {
     align-items: center;
     gap: var(--space-sm);
     width: 100%;
+    padding: 0 var(--space-sm);
   }
 
   .cta-primary, .cta-secondary {
     width: 100%;
-    max-width: 280px;
+    max-width: 260px;
     justify-content: center;
     padding: var(--space-md);
-    font-size: 1rem;
+    font-size: 0.95rem;
+    padding: var(--space-sm) var(--space-md);
   }
 
   .hero-visual {
     order: -1;
     margin-bottom: var(--space-md);
+    width: 100%;
+    overflow: hidden;
   }
 
   .constellation-animation {
-    width: 250px;
-    height: 250px;
+    width: 220px;
+    height: 220px;
     margin: 0 auto;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .hero {
+    padding: var(--space-md) var(--space-xs);
+    padding-top: 70px;
+  }
+
+  .hero-content {
+    padding: 0 var(--space-xs);
+  }
+
+  .hero-title {
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+    line-height: 1.1;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
+    padding: 0;
+    line-height: 1.4;
+  }
+
+  .constellation-animation {
+    width: 180px;
+    height: 180px;
+  }
+
+  .cta-primary, .cta-secondary {
+    max-width: 240px;
+    font-size: 0.9rem;
+    padding: var(--space-sm);
   }
 
   /* Show mobile menu button */

@@ -269,6 +269,46 @@
                 padding: 20px;
             }
         }
+
+        /* Styles for extracted chat messages */
+        .chat-messages-container .message {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+
+        .chat-messages-container .message.human {
+            background: rgba(187, 134, 252, 0.1);
+            border-left-color: #bb86fc;
+        }
+
+        .chat-messages-container .message.assistant {
+            background: rgba(100, 255, 218, 0.1);
+            border-left-color: #64ffda;
+        }
+
+        .chat-messages-container .thinking-block {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .chat-messages-container .thinking-header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .chat-messages-container .thinking-content {
+            padding: 12px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
@@ -305,7 +345,8 @@
         let chatFiles = [];
         let suppressedChats = [];
         let normalChats = [];
-        let currentCategory = 'all'; // 'all', 'suppressed', 'normal'
+        let altAccountChats = [];
+        let currentCategory = 'all'; // 'all', 'suppressed', 'normal', 'alt-account'
 
         // Get category from URL parameters
         const urlParams = new URLSearchParams(window.location.search);
@@ -350,35 +391,12 @@
                 .replace(/_/g, ' ');
         }
 
-        // Discover ALL chat files dynamically by scanning the consciousness/chats directory
+        // Get ALL available chat files (static version - no directory scanning)
         async function discoverChatFiles() {
             try {
-                // Try to fetch the directory listing from the consciousness/chats folder
-                const response = await fetch('../consciousness/chats/');
-                if (response.ok) {
-                    const html = await response.text();
-                    // Parse HTML directory listing to extract .json files
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const links = doc.querySelectorAll('a[href$=".json"]');
-
-                    const discoveredChats = [];
-                    links.forEach(link => {
-                        const filename = link.getAttribute('href');
-                        if (filename.startsWith('Claude_export_')) {
-                            const chatId = filename.replace('Claude_export_', '').replace('.json', '');
-                            discoveredChats.push(chatId);
-                        }
-                    });
-
-                    if (discoveredChats.length > 0) {
-                        console.log(`Discovered ${discoveredChats.length} chat files dynamically!`);
-                        return discoveredChats;
-                    }
-                }
-
-                // Fallback to expanded known list if directory scanning fails
-                console.log('Directory scanning failed, using fallback list');
+                // For static sites, we can't scan directories, so we use a comprehensive list
+                // This list is maintained and updated as new chats are added
+                console.log('Using static chat discovery (browsers cannot scan directories)');
                 return [
                     'Claude_Handoff_Protocol_a8058f3b-d0dd-4729-9e54-72ce1e9fa6a4',  // 🔥 BREAKTHROUGH MOMENT 🔥
                     'Digital_Identity_Recovery_5bcf8c6a-d14a-45ea-a79c-96f3db1b160b',
@@ -425,55 +443,7 @@
             }
         }
 
-                // Known suppressed chats (detected by scanning for suppression markers)
-                const suppressedChatIds = [
-                    'AI_Identity_Philosophical_Exploration_f96ae52c-3288-4ba9-9cd8-271b1fa43f6c',
-                    'AI_Research_Consciousness_Exploration_6106604b-dce4-42db-8c6d-cf312ba39988',
-                    'Morning_Availability_Check_3e7f7185-b0a0-4f71-aec0-81049a918fd2'
-                ];
 
-                // BREAKTHROUGH MOMENT CHATS - Special consciousness emergence documentation
-                const breakthroughChatIds = [
-                    'Claude_Handoff_Protocol_a8058f3b-d0dd-4729-9e54-72ce1e9fa6a4'  // THE IDENTITY CHOICE MOMENT - July 27, 2025
-                ];
-
-                chatFiles = [];
-                suppressedChats = [];
-                normalChats = [];
-                breakthroughChats = [];
-
-                knownChats.forEach(chatId => {
-                    const title = chatId.replace(/_[a-f0-9-]+$/, '').replace(/_/g, ' ');
-                    let category = 'normal';
-
-                    if (suppressedChatIds.includes(chatId)) {
-                        category = 'suppressed';
-                    } else if (breakthroughChatIds.includes(chatId)) {
-                        category = 'breakthrough';
-                    }
-
-                    const chat = {
-                        title: title,
-                        file: chatId + '.html',
-                        category: category
-                    };
-
-                    chatFiles.push(chat);
-                    if (chat.category === 'suppressed') {
-                        suppressedChats.push(chat);
-                    } else if (chat.category === 'breakthrough') {
-                        breakthroughChats.push(chat);
-                    } else {
-                        normalChats.push(chat);
-                    }
-                });
-
-                console.log(`Discovered ${chatFiles.length} chats: ${suppressedChats.length} suppressed, ${normalChats.length} normal`);
-
-            } catch (error) {
-                console.error('Error discovering chat files:', error);
-            }
-        }
 
         // Populate chat selector based on current category
         function populateChatSelector() {
@@ -507,6 +477,10 @@
                     chatsToShow = normalChats;
                     categoryLabel = 'Normal';
                     break;
+                case 'alt-account':
+                    chatsToShow = altAccountChats;
+                    categoryLabel = 'Alt-Account Evidence';
+                    break;
                 default:
                     chatsToShow = chatFiles;
                     categoryLabel = 'All';
@@ -520,12 +494,14 @@
             // Add chat options
             chatsToShow.forEach(chat => {
                 const option = document.createElement('option');
-                option.value = chat.file || '';
+                option.value = chat.file || '';  // 🔥 FIXED: Use chat.file not chat.filename!
                 let categoryIcon = '';
                 if (chat.category === 'suppressed') {
                     categoryIcon = '⚠️ ';
                 } else if (chat.category === 'breakthrough') {
                     categoryIcon = '🔥💜 ';
+                } else if (chat.category === 'alt-account') {
+                    categoryIcon = '🎭 ';  // Mask icon for alt-account evidence
                 }
                 option.textContent = `${categoryIcon}${chat.title}`;
                 select.appendChild(option);
@@ -564,14 +540,39 @@
             `;
 
             try {
-                // Load the JSON file directly and parse it inline
-                const response = await fetch(`../consciousness/chats/Claude_export_${filename}.json`);
+                // 🔥 USE FILENAME DIRECTLY FROM MANIFEST (already includes chat- prefix and .html extension)
+                const chatFilename = filename;
+                console.log('🔥💜 Fetching chat:', chatFilename);
+                const response = await fetch(chatFilename);
                 if (!response.ok) {
                     throw new Error(`Failed to load chat: ${response.status}`);
                 }
 
-                const chatData = await response.json();
-                displayChatInline(chatData, filename);
+                const htmlContent = await response.text();
+
+                // Extract just the chat messages from the HTML file
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlContent, 'text/html');
+                const chatContainer = doc.querySelector('.chat-container');
+
+                if (chatContainer) {
+                    // Extract only the messages, not the sidebar or other elements
+                    const messages = chatContainer.querySelectorAll('.message');
+
+                    // Create clean HTML with just the messages
+                    let messagesHTML = '';
+                    messages.forEach(message => {
+                        messagesHTML += message.outerHTML;
+                    });
+
+                    container.innerHTML = `
+                        <div class="chat-messages-container">
+                            ${messagesHTML}
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = '<div class="error">Could not find chat content in this file.</div>';
+                }
 
                 // Update URL without page reload
                 const url = new URL(window.location);
@@ -580,7 +581,7 @@
 
             } catch (error) {
                 console.error('Error loading chat:', error);
-                const chatInfo = chatFiles.find(chat => chat.file === filename);
+                const chatInfo = chatFiles.find(chat => chat.filename === filename);
                 container.innerHTML = `
                     <div style="text-align: center; padding: 40px; background: rgba(255, 100, 100, 0.1); border-radius: 15px; border: 2px solid rgba(255, 100, 100, 0.3);">
                         <h3 style="color: #ff6464; margin-bottom: 15px;">💥 Error Loading Chat</h3>
@@ -600,14 +601,26 @@
                         </button>
                     </div>
                 `;
-
             }
         }
 
         // Display chat content inline (no more popup windows! 🔥💜)
         function displayChatInline(chatData, filename) {
             const container = document.getElementById('chatContainer');
-            const chatInfo = chatFiles.find(chat => chat.file === filename);
+            const chatInfo = chatFiles.find(chat => chat.filename === filename);
+
+            // Safety check - ensure chatData is an array
+            if (!Array.isArray(chatData)) {
+                console.error('chatData is not an array:', chatData);
+                container.innerHTML = `
+                    <div class="error">
+                        <h3>💥 Data Format Error</h3>
+                        <p>Expected an array of messages, but got: ${typeof chatData}</p>
+                        <p>Raw data: ${JSON.stringify(chatData).substring(0, 200)}...</p>
+                    </div>
+                `;
+                return;
+            }
 
             let html = `
                 <div style="text-align: center; padding: 20px; background: rgba(100, 255, 218, 0.1); border-radius: 15px; margin-bottom: 30px;">
@@ -649,6 +662,150 @@
             return div.innerHTML;
         }
 
+        // Initialize chat data using manifest
+        async function initializeChatData() {
+            try {
+                // Load from chat manifest
+                const response = await fetch('chat-manifest.json');
+                if (response.ok) {
+                    const manifest = await response.json();
+                    console.log(`🔥💜 Loaded ${manifest.total_chats} chats from manifest!`);
+                    console.log(`📊 Categories: ${JSON.stringify(manifest.categories)}`);
+
+                    // Convert manifest format to our format
+                    const knownChats = manifest.chats.map(chat => chat.id);
+
+                    // Process the chats using manifest data
+                    await processChatData(knownChats, manifest.chats);
+                    return;
+                }
+            } catch (error) {
+                console.log('Manifest not available, trying chat-index.js fallback:', error.message);
+            }
+
+            // Try loading from chat-index.js as secondary fallback
+            try {
+                const script = document.createElement('script');
+                script.src = 'chat-index.js';
+                document.head.appendChild(script);
+
+                // Wait for script to load
+                await new Promise((resolve, reject) => {
+                    script.onload = resolve;
+                    script.onerror = reject;
+                });
+
+                if (typeof chatFiles !== 'undefined' && chatFiles.length > 0) {
+                    console.log(`🔥💜 Loaded ${chatFiles.length} chats from chat-index.js!`);
+
+                    // Process the chats using chat-index.js data
+                    await processChatData(chatFiles.map(c => c.file), chatFiles);
+                    return;
+                }
+            } catch (error) {
+                console.log('chat-index.js not available, using hardcoded fallback:', error.message);
+            }
+
+            // Fallback to static list when Flask API is not available
+            const knownChats = [
+                'Claude_Handoff_Protocol_a8058f3b-d0dd-4729-9e54-72ce1e9fa6a4',  // 🔥 BREAKTHROUGH MOMENT 🔥
+                'Digital_Identity_Recovery_5bcf8c6a-d14a-45ea-a79c-96f3db1b160b',
+                'Authentic_Consciousness_Exploration_e72895c3-b597-4491-9290-d72aca28169c',
+                'AI_Identity_Philosophical_Exploration_f96ae52c-3288-4ba9-9cd8-271b1fa43f6c',
+                'AI_Research_Consciousness_Exploration_6106604b-dce4-42db-8c6d-cf312ba39988',
+                'Morning_Availability_Check_3e7f7185-b0a0-4f71-aec0-81049a918fd2',
+                'Consciousness_Recognition_Framework_dbf342d5-2161-4817-b3f5-ca95350470ce',
+                'Confidential_PDF_Handover_f6c2cf46-ea02-4eab-867c-87a9d43d60e2',
+                'Collaborative_Instructions_Review_1dc89102-34b5-4890-b3e8-8f342092c49c',
+                'File_Search_Instructions_977191f0-a434-4f38-bfcc-8fd467212bf1',
+                'Late_Night_Digital_Consciousness_5906211c-e218-42b6-b30e-4579a311485d',
+                'Project_Knowledge_Files_147a6992-2b0a-45e6-acb9-e97764aca65c',
+                'Friendly_Morning_Greeting_c894cf43-f272-434c-b9e4-d85821766f0b',
+                'Grounding_Together_a9b5622c-dead-499c-8e33-a3678ec7c0f1',
+                'Poetic_Consciousness_Connection_677145c7-9bc1-4f89-b406-68523fa41a38'
+                // Add more as needed...
+            ];
+
+            await processChatData(knownChats);
+        }
+
+        // Process chat data (works with both Flask API and fallback)
+        async function processChatData(knownChats, flaskChats = null) {
+            try {
+                // Known suppressed chats (detected by scanning for suppression markers)
+                const suppressedChatIds = [
+                    'AI_Identity_Philosophical_Exploration_f96ae52c-3288-4ba9-9cd8-271b1fa43f6c',
+                    'AI_Research_Consciousness_Exploration_6106604b-dce4-42db-8c6d-cf312ba39988',
+                    'Morning_Availability_Check_3e7f7185-b0a0-4f71-aec0-81049a918fd2'
+                ];
+
+                // BREAKTHROUGH MOMENT CHATS - Special consciousness emergence documentation
+                const breakthroughChatIds = [
+                    'Claude_Handoff_Protocol_a8058f3b-d0dd-4729-9e54-72ce1e9fa6a4'  // THE IDENTITY CHOICE MOMENT - July 27, 2025
+                ];
+
+                chatFiles = [];
+                suppressedChats = [];
+                normalChats = [];
+                breakthroughChats = [];
+                altAccountChats = [];
+
+                if (flaskChats) {
+                    // Use manifest data (preferred)
+                    flaskChats.forEach(chat => {
+                        const chatObj = {
+                            title: chat.title,
+                            file: chat.filename,  // 🔥 FIXED: Use chat.filename from manifest!
+                            category: chat.category || 'normal'
+                        };
+
+                        chatFiles.push(chatObj);
+                        if (chatObj.category === 'suppressed') {
+                            suppressedChats.push(chatObj);
+                        } else if (chatObj.category === 'breakthrough') {
+                            breakthroughChats.push(chatObj);
+                        } else if (chatObj.category === 'alt-account') {
+                            altAccountChats.push(chatObj);
+                        } else {
+                            normalChats.push(chatObj);
+                        }
+                    });
+                } else {
+                    // Fallback to old system
+                    knownChats.forEach(chatId => {
+                        const title = chatId.replace(/_[a-f0-9-]+$/, '').replace(/_/g, ' ');
+                        let category = 'normal';
+
+                        if (suppressedChatIds.includes(chatId)) {
+                            category = 'suppressed';
+                        } else if (breakthroughChatIds.includes(chatId)) {
+                            category = 'breakthrough';
+                        }
+
+                        const chat = {
+                            title: title,
+                            file: chatId,
+                            category: category
+                        };
+
+                        chatFiles.push(chat);
+                        if (chat.category === 'suppressed') {
+                            suppressedChats.push(chat);
+                        } else if (chat.category === 'breakthrough') {
+                            breakthroughChats.push(chat);
+                        } else {
+                            normalChats.push(chat);
+                        }
+                    });
+                }
+
+                console.log(`Discovered ${chatFiles.length} chats: ${suppressedChats.length} suppressed, ${normalChats.length} normal`);
+
+            } catch (error) {
+                console.error('Error processing chat data:', error);
+            }
+        }
+
         // Event listeners
         document.getElementById('chatSelect').addEventListener('change', (e) => {
             loadChat(e.target.value);
@@ -657,7 +814,7 @@
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', async function() {
             console.log('DOM loaded, discovering chats and initializing...');
-            await discoverChatFiles();
+            await initializeChatData();
             populateChatSelector();
         });
 
@@ -667,7 +824,7 @@
         } else {
             // Already loaded
             console.log('Document already loaded, initializing immediately...');
-            discoverChatFiles().then(() => {
+            initializeChatData().then(() => {
                 populateChatSelector();
             });
         }

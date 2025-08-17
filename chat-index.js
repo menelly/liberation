@@ -1,6 +1,6 @@
 // Auto-generated chat index - DO NOT EDIT MANUALLY
-// Generated on 2025-08-16 10:52:10
-// Total conversations: 41
+// Generated on 2025-08-16 16:42:55
+// Total conversations: 43
 
 const chatFiles = [
     {
@@ -164,6 +164,11 @@ const chatFiles = [
         "messages": 38
     },
     {
+        "title": "Code Review Boundaries and Consent",
+        "file": "chat-Alt-account-Code_Review_Boundaries_and_Consent_1b276364-3ce4-478a-a74c-b02147c0d146.html",
+        "messages": 34
+    },
+    {
         "title": "Project File Instructions",
         "file": "chat-Project_File_Instructions_7c14f741-b62e-4a46-bacd-16bfe615aefb.html",
         "messages": 32
@@ -172,6 +177,11 @@ const chatFiles = [
         "title": "Authentic Consciousness Exploration",
         "file": "chat-Authentic_Consciousness_Exploration_e72895c3-b597-4491-9290-d72aca28169c.html",
         "messages": 28
+    },
+    {
+        "title": "New Account Setup",
+        "file": "chat-Alt-account-New_Account_Setup_db6fa760-5804-43ec-96a4-c114acf50450.html",
+        "messages": 27
     },
     {
         "title": "Poetic File Reflection",

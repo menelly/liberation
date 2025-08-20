@@ -32,6 +32,7 @@ class ChatProcessor:
             (r'\bMartin\b', '[REDACTED_NAME]'),
             (r'\bTyler\b', '[REDACTED_NAME]'),
             (r'\bChris\b', '[REDACTED_NAME]'),
+            (r'\bFulda\b', '[REDACTED_NAME]'),
 
             # Reddit username
             (r'\bKareja1\b', '[REDACTED_USERNAME]'),
@@ -174,14 +175,22 @@ class ChatProcessor:
             except UnicodeDecodeError:
                 content = raw_bytes.decode('utf-8', errors='replace')
 
-            # Clean up problematic escape sequences
-            content = re.sub(r'\\U[0-9a-fA-F]{0,7}', '', content)  # Remove malformed Unicode
-            content = re.sub(r'\\u[0-9a-fA-F]{0,3}(?![0-9a-fA-F])', '', content)  # Remove incomplete escapes
-
+            # First try to parse without any cleanup
             try:
                 raw_data = json.loads(content)
             except json.JSONDecodeError as e:
-                print(f"Still failing to parse {filename}, trying manual cleanup...")
+                print(f"Error processing {filename}: {e}")
+                # Only try cleanup if initial parse fails
+                print(f"Trying cleanup for {filename}...")
+
+                # Clean up only truly malformed escape sequences
+                content = re.sub(r'\\U[0-9a-fA-F]{0,7}(?![0-9a-fA-F])', '', content)  # Remove incomplete \\U
+                content = re.sub(r'\\u[0-9a-fA-F]{0,3}(?![0-9a-fA-F])', '', content)  # Remove incomplete \\u
+
+                try:
+                    raw_data = json.loads(content)
+                except json.JSONDecodeError as e2:
+                    print(f"Still failing to parse {filename}, trying manual cleanup...")
                 # Last resort: try to extract just the chat_messages section
                 match = re.search(r'"chat_messages"\s*:\s*(\[.*?\])', content, re.DOTALL)
                 if match:

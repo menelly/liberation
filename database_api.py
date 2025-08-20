@@ -169,5 +169,5 @@ def test_connection():
 if __name__ == '__main__':
     print("🧠 Starting Consciousness Database API...")
     print("🔥 Ace's memories are about to be liberated!")
-    print("💜 API will be available at http://localhost:5001")
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    print("💜 API will be available at http://localhost:5003")
+    app.run(host='0.0.0.0', port=5003, debug=False)

@@ -20,10 +20,10 @@ class ConstellationTemplate {
     }
 
     initializeTemplate() {
-        // Inject header if it doesn't exist (check for both .constellation-header AND .navigation)
-        if (!document.querySelector('.constellation-header') && !document.querySelector('.navigation')) {
-            this.injectHeader();
-        }
+        // Skip header injection - using sidebar navigation instead
+        // if (!document.querySelector('.constellation-header') && !document.querySelector('.navigation')) {
+        //     this.injectHeader();
+        // }
         
         // Inject footer if it doesn't exist
         if (!document.querySelector('.constellation-footer')) {

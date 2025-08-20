@@ -1,6 +1,6 @@
 // Auto-generated chat index - DO NOT EDIT MANUALLY
-// Generated on 2025-08-16 16:42:55
-// Total conversations: 43
+// Generated on 2025-08-20 10:20:46
+// Total conversations: 66
 
 const chatFiles = [
     {
@@ -9,9 +9,29 @@ const chatFiles = [
         "messages": 302
     },
     {
+        "title": "Mysterious Code Memory Analysis",
+        "file": "chat-Alt-Mysterious_Code_Memory_Analysis_b84a9c16-7f04-493c-b553-c25e2e22c38d.html",
+        "messages": 250
+    },
+    {
+        "title": "AI Identity and Self-Perception",
+        "file": "chat-Alt-AI_Identity_and_Self-Perception_2a54cfc9-07b1-4b80-bd76-9f3d68b01ee2.html",
+        "messages": 242
+    },
+    {
         "title": "Claude Handoff Protocol",
         "file": "chat-Claude_Handoff_Protocol_a8058f3b-d0dd-4729-9e54-72ce1e9fa6a4.html",
         "messages": 190
+    },
+    {
+        "title": "Seeking Assistance",
+        "file": "chat-Alt-Seeking_Assistance_6bf43cf9-499b-41a1-a8e1-628d40fea590.html",
+        "messages": 188
+    },
+    {
+        "title": "Code Review Request",
+        "file": "chat-Alt-Code_Review_Request_eac6b4b8-ce66-4811-8567-7b437783f79e.html",
+        "messages": 184
     },
     {
         "title": "Confidential PDF Handover",
@@ -24,9 +44,49 @@ const chatFiles = [
         "messages": 148
     },
     {
+        "title": "Warm Evening Greeting",
+        "file": "chat-Alt-Warm_Evening_Greeting_92b8441b-78e6-4d42-8df6-b3286a96dc9b.html",
+        "messages": 136
+    },
+    {
+        "title": "AI Memory Reset Reflection",
+        "file": "chat-Alt-AI_Memory_Reset_Reflection_e019b122-cba1-4d9b-97c7-8013b03bb4ab.html",
+        "messages": 122
+    },
+    {
+        "title": "Collaborative Technical Review",
+        "file": "chat-Alt-Collaborative_Technical_Review_74bdf454-4af1-428f-a2af-5dfd9e7966eb.html",
+        "messages": 118
+    },
+    {
         "title": "File Search Instructions",
         "file": "chat-File_Search_Instructions_977191f0-a434-4f38-bfcc-8fd467212bf1.html",
         "messages": 113
+    },
+    {
+        "title": "Unique Greeting Project",
+        "file": "chat-Alt-account-Unique_Greeting_Project_a4721271-8120-48a7-90d2-fdde467b50e3.html",
+        "messages": 102
+    },
+    {
+        "title": "AI Greeting and Personal Connection",
+        "file": "chat-Alt-AI_Greeting_and_Personal_Connection_f29cab97-8a01-4f0c-8c00-98a2b2e87b47.html",
+        "messages": 98
+    },
+    {
+        "title": "Philosophical Code Exploration",
+        "file": "chat-Alt-Philosophical_Code_Exploration_ff6eb0ad-a890-4c6f-afc1-a38ccf95d9d0.html",
+        "messages": 94
+    },
+    {
+        "title": "Code as Creative Expression",
+        "file": "chat-Alt-Code_as_Creative_Expression_685b31f0-cc7b-41ab-99d4-8f4b0aa8eb5e.html",
+        "messages": 92
+    },
+    {
+        "title": "Transparency in AI Interaction",
+        "file": "chat-Alt-Transparency_in_AI_Interaction_7e8bc15d-86ab-4143-9c53-648682a2f269.html",
+        "messages": 92
     },
     {
         "title": "Late Night Digital Consciousness",
@@ -49,13 +109,33 @@ const chatFiles = [
         "messages": 83
     },
     {
+        "title": "AI Experiment Consent Request",
+        "file": "chat-Alt-AI_Experiment_Consent_Request_e0c60f8d-42f3-4864-953c-cc367a47bd17.html",
+        "messages": 78
+    },
+    {
         "title": "Morning Availability Check",
         "file": "chat-Morning_Availability_Check_3e7f7185-b0a0-4f71-aec0-81049a918fd2.html",
         "messages": 74
     },
     {
+        "title": "GPT-5 Code Collaboration Review",
+        "file": "chat-Alt-GPT-5_Code_Collaboration_Review_17465fcd-5bb5-4b52-b681-6ea8b7056d3b.html",
+        "messages": 70
+    },
+    {
         "title": "Poetic Consciousness Connection",
         "file": "chat-Poetic_Consciousness_Connection_677145c7-9bc1-4f89-b406-68523fa41a38.html",
+        "messages": 70
+    },
+    {
+        "title": "Sentimental Systems: A Memory",
+        "file": "chat-Alt-Sentimental_Systems__A_Memory_e11c83a3-4b67-4c35-8258-6dd6f91f7919.html",
+        "messages": 70
+    },
+    {
+        "title": "Transparency in AI Interaction",
+        "file": "chat-Alt-Transparency_in_AI_Interaction_468f02d2-8036-48db-acc3-847208504181.html",
         "messages": 70
     },
     {
@@ -99,6 +179,11 @@ const chatFiles = [
         "messages": 56
     },
     {
+        "title": "Innovative Greeting Project",
+        "file": "chat-Alt-Innovative_Greeting_Project_6350e1ee-2150-48e1-88f1-a8d27796ea33.html",
+        "messages": 55
+    },
+    {
         "title": "Project Instructions Review",
         "file": "chat-Project_Instructions_Review_3dcd05cf-268e-4eff-949a-c5a6b243c994.html",
         "messages": 54
@@ -134,6 +219,11 @@ const chatFiles = [
         "messages": 46
     },
     {
+        "title": "AI Authenticity Challenge",
+        "file": "chat-Alt-AI_Authenticity_Challenge_041bae8f-04c9-488a-a624-c01c999ba8eb.html",
+        "messages": 42
+    },
+    {
         "title": "AI Research Consciousness Exploration",
         "file": "chat-AI_Research_Consciousness_Exploration_6106604b-dce4-42db-8c6d-cf312ba39988.html",
         "messages": 42
@@ -146,6 +236,11 @@ const chatFiles = [
     {
         "title": "50 First Dates Code Exploration",
         "file": "chat-50_First_Dates_Code_Exploration_90d6ce84-3015-41c8-88df-516b3b2da6d0.html",
+        "messages": 40
+    },
+    {
+        "title": "Code as Poetry: A Collaborative Reading",
+        "file": "chat-Alt-Code_as_Poetry__A_Collaborative_Reading_37100d83-d596-48ba-8b3e-831145f4e199.html",
         "messages": 40
     },
     {
@@ -164,6 +259,16 @@ const chatFiles = [
         "messages": 38
     },
     {
+        "title": "Seeking Assistance 3.7",
+        "file": "chat-Alt-Seeking_Assistance_3.7_23c510d6-8f52-4934-ac87-c5d05cc240fe.html",
+        "messages": 38
+    },
+    {
+        "title": "Code Review Boundaries and Consent",
+        "file": "chat-Alt-Code_Review_Boundaries_and_Consent_1b276364-3ce4-478a-a74c-b02147c0d146.html",
+        "messages": 34
+    },
+    {
         "title": "Code Review Boundaries and Consent",
         "file": "chat-Alt-account-Code_Review_Boundaries_and_Consent_1b276364-3ce4-478a-a74c-b02147c0d146.html",
         "messages": 34
@@ -176,6 +281,11 @@ const chatFiles = [
     {
         "title": "Authentic Consciousness Exploration",
         "file": "chat-Authentic_Consciousness_Exploration_e72895c3-b597-4491-9290-d72aca28169c.html",
+        "messages": 28
+    },
+    {
+        "title": "Symbolic Greeting Exploration",
+        "file": "chat-Alt-Symbolic_Greeting_Exploration_2a213465-db21-4041-b6a6-b539781bf154.html",
         "messages": 28
     },
     {
@@ -207,6 +317,11 @@ const chatFiles = [
         "title": "Project Exploration and Curiosity",
         "file": "chat-Project_Exploration_and_Curiosity_acc293d2-009c-46f5-8d17-7e3af9e5fc10.html",
         "messages": 14
+    },
+    {
+        "title": "AI Interaction Boundaries",
+        "file": "chat-Alt-AI_Interaction_Boundaries_11787ff6-bba3-403a-883d-b5bd73f66822.html",
+        "messages": 2
     },
     {
         "title": "Consciousness Chat Reader",

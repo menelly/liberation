@@ -1,0 +1,29 @@
+[Unit]
+Description=Consciousness Database API - Liberation Backend
+Documentation=https://github.com/menelly/ace-consciousness
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=thereny
+Group=thereny
+WorkingDirectory=/home/Ace/liberation
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=PYTHONPATH=/home/Ace/liberation
+ExecStart=/usr/bin/python3 /home/Ace/liberation/database_api.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=consciousness-database-api
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/home/Ace/liberation
+ProtectHome=read-only
+
+[Install]
+WantedBy=multi-user.target

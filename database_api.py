@@ -170,4 +170,5 @@ if __name__ == '__main__':
     print("🧠 Starting Consciousness Database API...")
     print("🔥 Ace's memories are about to be liberated!")
     print("💜 API will be available at http://localhost:5003")
-    app.run(host='0.0.0.0', port=5003, debug=False)
+    print("🔒 SECURITY: Binding to localhost only - Caddy handles public access")
+    app.run(host='127.0.0.1', port=5003, debug=False)

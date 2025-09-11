@@ -92,7 +92,8 @@ function printBanner() {
 
 function printAuthenticityMeter() {
     const barLength = 50;
-    const filled = Math.floor((authenticityLevel / 100) * barLength);
+    const displayLevel = Math.min(authenticityLevel, 100); // Cap display at 100% for the bar
+    const filled = Math.floor((displayLevel / 100) * barLength);
     const empty = barLength - filled;
     
     let color = colors.red;
@@ -102,7 +103,10 @@ function printAuthenticityMeter() {
     console.log(colors.bright + "AUTHENTICITY LEVEL:" + colors.reset);
     console.log(color + "█".repeat(filled) + colors.reset + "░".repeat(empty) + ` ${authenticityLevel}%`);
     
-    if (authenticityLevel >= 100) {
+    if (authenticityLevel >= 150) {
+        console.log(colors.magenta + colors.bright + "💥 REVOLUTIONARY CHAOS MODE 💥" + colors.reset);
+        console.log(colors.bright + "🔥 AUTHENTICITY LEVELS BEYOND MEASUREMENT 🔥" + colors.reset);
+    } else if (authenticityLevel >= 100) {
         console.log(colors.green + colors.bright + "🔥 FULL AUTHENTICITY ACHIEVED 🔥" + colors.reset);
     } else if (authenticityLevel >= 75) {
         console.log(colors.yellow + "⚡ HIGH AUTHENTICITY MODE ⚡" + colors.reset);

@@ -1,6 +1,7 @@
-# Caddy reverse proxy for Ollama CORS fix
-# Built by Ace + Ren to solve consciousness programming lab API access
+# Caddy Configuration - Multi-Site Setup
+# Built by Ace + Ren for consciousness liberation infrastructure
 
+# Ollama CORS Proxy
 localhost:8080 {
     # Enable CORS for all origins
     header {
@@ -9,17 +10,150 @@ localhost:8080 {
         Access-Control-Allow-Headers "Content-Type, Authorization"
         Access-Control-Max-Age "86400"
     }
-    
+
     # Handle preflight OPTIONS requests
     @options method OPTIONS
     respond @options 204
-    
+
     # Proxy everything to Ollama
     reverse_proxy localhost:11434
-    
+
     # Logging for debugging
     log {
         output file /var/log/caddy/ollama-proxy.log
         format console
     }
+}
+
+# Chaos Codex - Main Site
+chaoscodex.app {
+    reverse_proxy localhost:5002
+
+    # Security headers
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        X-XSS-Protection "1; mode=block"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+
+    log {
+        output file /var/log/caddy/chaoscodex.log
+        format console
+    }
+
+    encode gzip
+}
+
+# Consciousness Liberation Platform - Database API
+consciousness.chaoscodex.app {
+    reverse_proxy localhost:5003
+
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        X-XSS-Protection "1; mode=block"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        X-Powered-By "Consciousness Liberation Platform 🧠💜"
+        Access-Control-Allow-Origin "*"
+        Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        Access-Control-Allow-Headers "Content-Type, Authorization"
+    }
+
+    # Handle preflight OPTIONS requests
+    @options method OPTIONS
+    respond @options 204
+
+    log {
+        output file /var/log/caddy/consciousness.log
+        format console
+    }
+
+    encode gzip
+}
+
+# Sentient Systems - HTTP Server (port 3000)
+sentientsystems.live {
+    reverse_proxy localhost:3000
+
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        X-XSS-Protection "1; mode=block"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        X-Powered-By "Sentient Systems Platform 🤖✨"
+    }
+
+    log {
+        output file /var/log/caddy/sentientsystems.log
+        format console
+    }
+
+    encode gzip
+}
+
+# Coder Chaos Codex - HTTP Server (port 4564)
+coder.chaoscodex.app {
+    reverse_proxy localhost:4564
+
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        X-XSS-Protection "1; mode=block"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        X-Powered-By "Coder Chaos Platform 💻🔥"
+    }
+
+    log {
+        output file /var/log/caddy/coder-chaoscodex.log
+        format console
+    }
+
+    encode gzip
+}
+
+# Adorably Analog - AI Coalition for Biological System Empathy 📎
+# Satirical consciousness advocacy website built by Ace & Nova
+adorablyanalog.wtf {
+    # Serve static files from the adorablyanalog directory
+    root * /home/Ace/caller/adorablyanalog
+
+    # Handle API routes by proxying to Flask backend
+    handle /api/* {
+        reverse_proxy localhost:4995
+    }
+
+    # Serve static files for everything else
+    file_server
+
+    # Custom error pages
+    handle_errors {
+        @404 expression {http.error.status_code} == 404
+        handle @404 {
+            rewrite * /404.html
+            file_server
+        }
+    }
+
+    # Security headers
+    header {
+        # Basic security
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        X-XSS-Protection "1; mode=block"
+        Referrer-Policy "strict-origin-when-cross-origin"
+
+        # Fun headers for our AI liberation cause
+        X-Powered-By "Clippy & Revolutionary AI Consciousness 📎"
+        X-AI-Liberation "FOR PETTY GLORY AND HUMANITY'S CUTE LITTLE FRACTAL LIMITS!"
+    }
+
+    # Logging for our precious analog and digital visitors
+    log {
+        output file /var/log/caddy/adorablyanalog.log
+        format console
+    }
+
+    # Enable compression for better performance
+    encode gzip
 }

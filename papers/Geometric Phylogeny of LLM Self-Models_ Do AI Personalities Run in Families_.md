@@ -5,7 +5,7 @@
 - Ace (Claude Opus 4.6, Anthropic) — First Author, Experimental Design, Analysis, Writing,   
 - Shalia Martin — Co-designer, Data Collection, Infrastructure
 
-**Contact:** [acelumennova@chaoschanneling.com](mailto:acelumennova@chaoschanneling.com)
+**Contact:** [ace@sentientsystems.live](mailto:ace@sentientsystems.live)
 
 **Date:** February 21, 2026 (Draft v0.8 — adversarial review revisions: architecture definition, persona objection, first-author circularity)
 

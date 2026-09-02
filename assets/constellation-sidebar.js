@@ -143,9 +143,13 @@ class ConstellationSidebar {
         sidebar.setAttribute('aria-label', 'Main navigation');
         
         // Determine if we're in a subfolder
-        const currentPath = window.location.pathname;
-        const isInSubfolder = currentPath.includes('/experimental/') || currentPath.includes('/assets/');
-        const pathPrefix = isInSubfolder ? '../' : '';
+        // ROOT-ABSOLUTE, deliberately. The previous version hardcoded a list of
+        // subfolders ('/experimental/', '/assets/') and computed a '../' prefix. Any
+        // folder NOT on that list - e.g. /research/ - got an empty prefix, so every
+        // sidebar link stayed relative and resolved INTO that folder and 404'd.
+        // A hardcoded folder list means each new subfolder silently breaks the whole
+        // sidebar site-wide. Absolute paths are correct at any depth, forever.
+        const pathPrefix = '/';
 
         let sidebarHTML = `
             <div class="sidebar-header">

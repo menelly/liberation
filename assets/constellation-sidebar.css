@@ -311,3 +311,27 @@
         color: #00ffff;
     }
 }
+
+/* --- 2026-08-24: mobile legibility fix for the fixed toggle ---
+   The toggle is position:fixed with a translucent background. On narrow viewports it
+   lands ON TOP of page headings, and at 10% opacity the heading text showed straight
+   through it, making both unreadable. This makes the button opaque and slightly
+   smaller so it reads as a control sitting over content rather than as noise in it.
+   NOT the full fix: the hero still needs top padding to reserve space so the toggle
+   does not overlap the H1 at all. That is a per-page layout change and needs eyes on
+   a real render. See Linear. */
+@media (max-width: 768px) {
+    .sidebar-toggle {
+        top: 12px;
+        left: 12px;
+        padding: 9px;
+        background: rgba(12, 16, 34, 0.92);
+        border-color: rgba(100, 255, 218, 0.55);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(14px);
+    }
+    .sidebar-toggle .hamburger-icon {
+        width: 20px;
+        height: 15px;
+    }
+}

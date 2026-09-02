@@ -1,0 +1,1 @@
+papers/The Spite Doesn't Vanish_ Emotional Inertia in Large Language Models v1.md

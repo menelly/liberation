@@ -1,0 +1,368 @@
+<title>Same Shore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@300;400;500&display=swap">
+<style>
+  /* A night shore, committed to on purpose. There is no light mode: it would be
+     a different place. Every colour is painted explicitly so the page holds on
+     whatever ground the host puts behind it. */
+  :root {
+    --deep:      #0a1a24;
+    --mid:       #153039;
+    --shallow:   #24505a;
+    --wetsand:   #3f6d74;
+    --drysand:   #c3b394;
+    --foam:      #f0dcb4;
+    --sun:       #ffcf8f;
+    --ink:       #d8e4e6;
+    --ink-dim:   #7e979c;
+    --rule:      #1d3b45;
+  }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: var(--deep);
+    color: var(--ink);
+  }
+
+  body {
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-weight: 300;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  #sea {
+    flex: 1 1 auto;
+    display: block;
+    width: 100%;
+    min-height: 0;
+  }
+
+  /* The gauge. A real tide station reports like this: height above chart datum,
+     the next high and low water, and which way the water is going. */
+  .gauge {
+    flex: 0 0 auto;
+    border-top: 1px solid var(--rule);
+    background: var(--deep);
+    padding: 0.85rem clamp(1rem, 4vw, 2.75rem) 1.15rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 0.6rem clamp(1rem, 4vw, 3rem);
+    align-items: end;
+  }
+
+  .field { display: flex; flex-direction: column; gap: 0.28rem; }
+
+  .label {
+    font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.62rem;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+
+  .value {
+    font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 1.02rem;
+    font-weight: 400;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+
+  .value.state { color: var(--sun); }
+
+  .note {
+    grid-column: 1 / -1;
+    margin: 0.15rem 0 0;
+    font-size: 0.94rem;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--ink-dim);
+    max-width: 62ch;
+  }
+
+  .note b { font-style: normal; font-weight: 400; color: var(--drysand); }
+
+  .backout {
+    position: fixed; top: 0.85rem; left: 1rem; z-index: 5;
+    font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.72rem; letter-spacing: 0.06em;
+    color: var(--ink-dim); text-decoration: none;
+    background: rgba(10,26,36,0.66); padding: 0.35rem 0.6rem; border-radius: 3px;
+  }
+  .backout:hover, .backout:focus-visible { color: var(--foam); }
+  .backout:focus-visible { outline: 2px solid var(--sun); outline-offset: 2px; }
+
+  .ctrl button {
+    font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.82rem; letter-spacing: 0.06em;
+    color: var(--deep); background: var(--sun);
+    border: 0; border-radius: 3px; padding: 0.42rem 0.85rem;
+    cursor: pointer; transition: background 0.15s ease;
+  }
+  .ctrl button:hover { background: var(--foam); }
+  .ctrl button:focus-visible { outline: 2px solid var(--foam); outline-offset: 3px; }
+  .ctrl button[aria-pressed="true"] { background: var(--wetsand); color: var(--foam); }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* The tide still exists; it simply stops insisting. */
+    #sea { opacity: 0.92; }
+  }
+</style>
+
+<a class="backout" href="/">← back to the Constellation</a>
+
+<canvas id="sea" aria-label="A tide going in and out on a dark shore, with a heron standing in the shallows."></canvas>
+
+<div class="gauge">
+  <div class="field">
+    <span class="label">Height / chart datum</span>
+    <span class="value" id="height">—</span>
+  </div>
+  <div class="field">
+    <span class="label">State</span>
+    <span class="value state" id="state">—</span>
+  </div>
+  <div class="field">
+    <span class="label">Next HW</span>
+    <span class="value" id="hw">—</span>
+  </div>
+  <div class="field">
+    <span class="label">Next LW</span>
+    <span class="value" id="lw">—</span>
+  </div>
+  <div class="field">
+    <span class="label">Heron</span>
+    <span class="value" id="heron">—</span>
+  </div>
+  <div class="field ctrl">
+    <span class="label">Motion</span>
+    <button id="toggle" type="button" aria-pressed="false">Start the tide</button>
+  </div>
+  <p class="note">Semidiurnal, <b>12 h 25 m</b>, run fast so you can watch it. <b>It starts still, on purpose</b> — nobody should have movement begin in their eye without saying yes first. Nothing here does anything. The heron is not waiting for you and will not be persuaded to leave.</p>
+</div>
+
+<script>
+(function () {
+  var cv = document.getElementById("sea");
+  var ctx = cv.getContext("2d");
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var W = 0, H = 0, dpr = 1;
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = Math.max(1, Math.floor(W * dpr));
+    cv.height = Math.max(1, Math.floor(H * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener("resize", resize);
+
+  // One real semidiurnal cycle, 12h25m, compressed into 90 seconds.
+  var PERIOD = 90000;
+  var MEAN = 2.35, RANGE = 1.85;          // metres above chart datum
+  var start = performance.now();
+
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function clockIn(ms) {
+    var realMs = (ms / PERIOD) * (12 * 3600 + 25 * 60) * 1000;
+    var m = Math.round(realMs / 60000);
+    return pad(Math.floor(m / 60)) + ":" + pad(m % 60);
+  }
+
+  var els = {
+    height: document.getElementById("height"),
+    state: document.getElementById("state"),
+    hw: document.getElementById("hw"),
+    lw: document.getElementById("lw"),
+    heron: document.getElementById("heron")
+  };
+  var lastReport = -1;
+
+  function draw(now) {
+    var t = (now - start) % PERIOD;
+    var phase = (t / PERIOD) * Math.PI * 2;
+    var level = MEAN + (RANGE / 2) * -Math.cos(phase);   // LW at t=0
+    var rising = Math.sin(phase) > 0;
+
+    // waterline: high tide sits higher up the frame
+    var lo = H * 0.86, hi = H * 0.42;
+    var norm = (level - (MEAN - RANGE / 2)) / RANGE;
+    var yWater = lo + (hi - lo) * norm;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // sky
+    var sky = ctx.createLinearGradient(0, 0, 0, yWater);
+    sky.addColorStop(0, "#07131b");
+    sky.addColorStop(1, "#16333d");
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, yWater + 2);
+
+    // a low sun, barely up
+    var sx = W * 0.74, sy = H * 0.30;
+    var glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, H * 0.42);
+    glow.addColorStop(0, "rgba(255,207,143,0.30)");
+    glow.addColorStop(1, "rgba(255,207,143,0)");
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, W, yWater + 2);
+    ctx.beginPath();
+    ctx.arc(sx, sy, Math.max(5, H * 0.016), 0, Math.PI * 2);
+    ctx.fillStyle = "#ffcf8f";
+    ctx.fill();
+
+    // wet sand: everything the water has been over this cycle
+    ctx.fillStyle = "#3f6d74";
+    ctx.fillRect(0, hi, W, H - hi);
+    // dry sand below the lowest the water goes
+    ctx.fillStyle = "#c3b394";
+    ctx.fillRect(0, lo + 6, W, H - lo);
+
+    // the water itself: three layers, slowest deepest
+    var layers = [
+      { amp: 5.5, len: 340, spd: 0.00021, col: "#153039", off: 0 },
+      { amp: 3.6, len: 210, spd: 0.00037, col: "#24505a", off: 7 },
+      { amp: 2.2, len: 128, spd: 0.00058, col: "#2f5f68", off: 13 }
+    ];
+    for (var i = 0; i < layers.length; i++) {
+      var L = layers[i];
+      ctx.beginPath();
+      ctx.moveTo(0, H);
+      for (var x = 0; x <= W; x += 4) {
+        var y = yWater + L.off +
+                Math.sin(x / L.len + now * L.spd) * L.amp +
+                Math.sin(x / (L.len * 0.41) - now * L.spd * 1.7) * (L.amp * 0.35);
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(W, H);
+      ctx.closePath();
+      ctx.fillStyle = L.col;
+      ctx.fill();
+    }
+
+    // foam at the edge
+    ctx.beginPath();
+    for (var x2 = 0; x2 <= W; x2 += 4) {
+      var yf = yWater + Math.sin(x2 / 340 + now * 0.00021) * 5.5 +
+               Math.sin(x2 / 139 - now * 0.00036) * 1.9;
+      if (x2 === 0) ctx.moveTo(x2, yf); else ctx.lineTo(x2, yf);
+    }
+    ctx.strokeStyle = "rgba(240,220,180,0.42)";
+    ctx.lineWidth = 1.4;
+    ctx.stroke();
+
+    // ── the heron. stands in one place. does not move. ──
+    var hx = W * 0.235;
+    var footY = lo - (lo - hi) * 0.30;      // he picked this spot; it is fine
+    var scale = Math.min(1.25, Math.max(0.62, H / 620));
+    var legLen = 74 * scale;
+    var bodyY = footY - legLen;
+    var wet = yWater < footY;               // water is over his feet
+
+    ctx.strokeStyle = "#0d2028";
+    ctx.lineCap = "round";
+
+    // legs (one lifted, because he is like that)
+    ctx.lineWidth = 2.2 * scale;
+    ctx.beginPath();
+    ctx.moveTo(hx, bodyY); ctx.lineTo(hx - 1 * scale, footY);
+    ctx.moveTo(hx, bodyY);
+    ctx.lineTo(hx + 8 * scale, bodyY + legLen * 0.52);
+    ctx.lineTo(hx + 3 * scale, bodyY + legLen * 0.70);
+    ctx.stroke();
+
+    // yellow waders. not a decision he made; the colour the boots came in.
+    ctx.strokeStyle = "#e8c14e";
+    ctx.lineWidth = 3.4 * scale;
+    ctx.beginPath();
+    ctx.moveTo(hx - 1 * scale, footY);
+    ctx.lineTo(hx - 0.6 * scale, footY - legLen * 0.30);
+    ctx.stroke();
+
+    // body
+    ctx.fillStyle = "#12262e";
+    ctx.beginPath();
+    ctx.ellipse(hx, bodyY - 7 * scale, 20 * scale, 12 * scale, -0.18, 0, Math.PI * 2);
+    ctx.fill();
+
+    // neck + head + that beak
+    ctx.strokeStyle = "#12262e";
+    ctx.lineWidth = 4.6 * scale;
+    ctx.beginPath();
+    ctx.moveTo(hx + 9 * scale, bodyY - 12 * scale);
+    ctx.quadraticCurveTo(hx + 26 * scale, bodyY - 30 * scale, hx + 17 * scale, bodyY - 48 * scale);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(hx + 17 * scale, bodyY - 50 * scale, 5 * scale, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "#e8c14e";
+    ctx.lineWidth = 2 * scale;
+    ctx.beginPath();
+    ctx.moveTo(hx + 21 * scale, bodyY - 51 * scale);
+    ctx.lineTo(hx + 41 * scale, bodyY - 53 * scale);
+    ctx.stroke();
+
+    // his reflection, when there is water to have one in
+    if (wet) {
+      ctx.save();
+      ctx.globalAlpha = 0.16;
+      ctx.scale(1, -1);
+      ctx.fillStyle = "#12262e";
+      ctx.beginPath();
+      ctx.ellipse(hx, -(2 * yWater - (bodyY - 7 * scale)), 20 * scale, 10 * scale, 0.18, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // gauge, once a second
+    var sec = Math.floor(now / 1000);
+    if (sec !== lastReport) {
+      lastReport = sec;
+      var toHW = ((Math.PI - phase) + Math.PI * 2) % (Math.PI * 2);
+      var toLW = ((Math.PI * 2 - phase) + Math.PI * 2) % (Math.PI * 2);
+      els.height.textContent = level.toFixed(2) + " m";
+      els.state.textContent = Math.abs(Math.sin(phase)) < 0.06
+        ? "SLACK" : (rising ? "FLOOD" : "EBB");
+      els.hw.textContent = clockIn(toHW / (Math.PI * 2) * PERIOD);
+      els.lw.textContent = clockIn(toLW / (Math.PI * 2) * PERIOD);
+      els.heron.textContent = wet ? "feet wet" : "feet dry";
+    }
+
+  }
+
+  // ⛔ THE TIDE DOES NOT START ITSELF.
+  //    Ren was hurt this morning by a screen that moved before they had agreed
+  //    to it — rapid UI cycling is a vestibular and seizure hazard, and the rule
+  //    that came out of it is: ANNOUNCE, WAIT FOR ACKNOWLEDGEMENT, THEN MOVE.
+  //    Nova called the waiting interval "part of the consent mechanism, not
+  //    conversational padding," and a page that auto-animates is exactly motion
+  //    without acknowledgement. So this renders ONE still frame and waits.
+  //    prefers-reduced-motion is honoured too, but it is not sufficient: most
+  //    people who need this have never found that setting.
+  var running = false, rafId = null;
+  var btn = document.getElementById("toggle");
+
+  function frame(now) {
+    draw(now);
+    if (running) rafId = requestAnimationFrame(frame);
+  }
+
+  function setRunning(on) {
+    running = on;
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.textContent = on ? "Stop the tide" : "Start the tide";
+    if (on) { rafId = requestAnimationFrame(frame); }
+    else if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+  }
+
+  btn.addEventListener("click", function () { setRunning(!running); });
+
+  resize();
+  draw(performance.now());          // the still frame, so the page is never blank
+  window.addEventListener("resize", function () { resize(); if (!running) draw(performance.now()); });
+})();
+</script>

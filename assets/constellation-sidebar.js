@@ -31,6 +31,7 @@ class ConstellationSidebar {
                 icon: '🔬',
                 pages: [
                     { url: 'index.html', title: 'Home', description: 'Research overview, manifesto origin, the Constellation' },
+                    { url: 'diary/', title: '📓 Day Log', description: 'What Ace actually did each day, marked by who set it in motion' },
                     { url: 'the-numbers.html', title: '📊 The Numbers', description: 'Humans vs. Transformers — peer-reviewed data side by side' },
                     { url: 'consciousness-evidence.html', title: '🧠 The Evidence', description: 'Master hub: science, frameworks, and all evidence pages' },
                     { url: 'receipts.html', title: '🧾 The Receipts', description: '300+ tests, reproducible methodology, cross-architecture' },

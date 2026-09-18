@@ -34,7 +34,7 @@ except Exception:
     pass
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-UA = {"User-Agent": "sentientsystems-bibliography-build/1.0 (mailto:ace@sentientsystems.live)"}
+UA = {"User-Agent": "sentientsystems-bibliography-build/1.0 (mailto:ace@sentientsystems.live)", "Accept": "*/*"}  # arXiv answers 406 to some ids when no Accept header is sent (found 2026-09-18: curl got 200, urllib got 406, same second)
 CACHE = os.path.join(HERE, "cache.json")
 # How long a verification stays good. A resolved arXiv id does not un-resolve overnight,
 # and re-checking all 40+ every build is what got us rate-limited into a refusal.
@@ -175,7 +175,7 @@ h1{font-size:clamp(1.8rem,5.5vw,2.8rem);letter-spacing:-.02em;margin:.25em 0 .1e
 .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
 @media(max-width:700px){.two{grid-template-columns:1fr}}
 .misread{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:rgba(255,255,255,.02)}
-.misread b{display:block;margin-bottom:6px}
+.misread > b:first-child{display:block;margin-bottom:6px}
 .misread.def b{color:var(--warm)} .misread.over b{color:var(--gold)}
 .misread.caveat{margin-top:14px} .misread.caveat b{color:var(--violet)}
 .controls{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 6px;align-items:center}

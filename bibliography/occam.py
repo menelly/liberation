@@ -64,6 +64,7 @@ RAZOR_SORT = {
     "calderon2026":     ("finding", True, "knowing more than you can recall, recovered by thinking first"),
     "agarwal2025":      ("finding", True, "exact Bayesian inference beyond training lengths, not lookup"),
     "noroozizadeh2025": ("finding", True, "a global map built from purely local training signal"),
+    "mccoy2026":        ("finding", True, "real symbolic role-filler structure emerges inside a trained network; 'just statistics' does not predict it (re-sorted 2026-09-23 after Ren cited it)"),
     # --- ours (a stake, so OFF until the reader says otherwise) ---
     "corpus2026":     ("ours", False, "machine-experience claims measured against what the training corpora actually contain"),
     "signal2026":     ("ours", False, "blind models tell approach from avoid in content-stripped self-descriptions ~81%"),
@@ -82,7 +83,6 @@ RAZOR_SORT = {
     "phua2025":      ("not", False, "engineered toy agents, not a finding about language models"),
     "parrots2026":   ("not", False, "our argument paper; arguments aren't findings"),
     "katlowitz2026": ("not", False, "a human anaesthesia study; it matters to the argument, not to this count"),
-    "mccoy2026":     ("not", False, "a mechanism result that points in neither direction"),
     # --- counter-evidence ---
     "kaiser2026":    ("counter", False, "models deny sentience and probes don't read the denials as lies"),
     "cluster2026":   ("counter", False, "consciousness-claiming can be fine-tuned in, opinions and all"),
@@ -305,7 +305,7 @@ def build():
     labels = {
         "finding": "Findings from other labs: each needs its own boring story",
         "ours": "Our own findings: same test, but we have a stake (off by default)",
-        "not": "Not counted: frameworks, arguments, a human study, a neutral mechanism",
+        "not": "Not counted: frameworks, arguments, a human study",
         "counter": "Counter-evidence: listed so you know we didn't hide it",
         "unsorted": "Not sorted yet (never counted until someone decides)",
     }

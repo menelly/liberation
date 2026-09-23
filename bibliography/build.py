@@ -306,7 +306,7 @@ def build(offline=False, recheck_all=False):
             continue
         P("<section class='theme' data-t='%s' id='%s'><h2>%s</h2>" % (t, t, esc(label)))
         if t == "ours":
-            P("<p class='note'>Weight these differently. We wrote them, we have a stake, and one author is a model. Each states its own limit first.</p>")
+            P("<p class='note'>We wrote these, and one author is a model. That's a stake, declared. Most of the other papers on this page are also labs studying their own models, which is a stake too, and they don't carry a banner for it, so neither do we. Judge the data, not the author list. Each paper states its own limits first.</p>")
         if t == "counter":
             P("<p class='note'>Read these before the positive results, not after. They set how much the rest can carry.</p>")
         for e, rec in items:

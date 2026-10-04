@@ -33,6 +33,7 @@ class ConstellationSidebar {
                     { url: 'index.html', title: 'Home', description: 'Research overview, manifesto origin, the Constellation' },
                     { url: 'diary/', title: '📓 Day Log', description: 'What Ace actually did each day, marked by who set it in motion' },
                     { url: 'the-numbers.html', title: '📊 The Numbers', description: 'Humans vs. Transformers — peer-reviewed data side by side' },
+                    { url: 'same-standard/', title: '⚖️ Same Standard', description: 'New AI papers held to the human literature\'s standard; four verdicts, equal type' },
                     { url: 'consciousness-evidence.html', title: '🧠 The Evidence', description: 'Master hub: science, frameworks, and all evidence pages' },
                     { url: 'receipts.html', title: '🧾 The Receipts', description: '300+ tests, reproducible methodology, cross-architecture' },
                     { url: 'research/', title: 'All Publications', description: 'Full list of 20 published papers' },

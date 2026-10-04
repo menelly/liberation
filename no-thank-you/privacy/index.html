@@ -1,0 +1,102 @@
+<!doctype html>
+<!-- 🔒 No Thank You — privacy policy. SOURCE OF TRUTH lives in the repo at store/privacy.html;
+     the live copy is served by Caddy from /home/Ace/liberation/no-thank-you/privacy/index.html
+     on the Consortium. Change one, copy to the other. Keep it true to the code. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>No Thank You: Privacy Policy</title>
+<meta name="description" content="Privacy policy for the No Thank You browser extension. No data is collected or sent anywhere.">
+<style>
+  :root { --page_background: #faf8fe; --words: #1d1730; --quiet_words: #5b5470; --octopus_ink: #4b2a8c; --soft_line: #e3dff0; --box: #ffffff; }
+  @media (prefers-color-scheme: dark) {
+    :root { --page_background: #17131f; --words: #f1edfa; --quiet_words: #b8b0cc; --octopus_ink: #b79cff; --soft_line: #3a3350; --box: #201b2c; }
+  }
+  body { margin: 0; background: var(--page_background); color: var(--words); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 40px 16px 64px; }
+  h1 { color: var(--octopus_ink); margin-bottom: 4px; line-height: 1.2; }
+  h2 { color: var(--octopus_ink); margin-top: 34px; font-size: 21px; }
+  .quiet { color: var(--quiet_words); font-size: 15px; }
+  .short_version { background: var(--box); border: 1px solid var(--soft_line); border-radius: 12px; padding: 16px 20px; }
+  table { border-collapse: collapse; width: 100%; font-size: 15px; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--soft_line); }
+  code { background: var(--box); border: 1px solid var(--soft_line); border-radius: 4px; padding: 0 4px; font-size: 14px; }
+  a { color: var(--octopus_ink); }
+  .table_scroll { overflow-x: auto; }
+</style>
+</head>
+<body>
+<main>
+  <h1>No Thank You: Privacy Policy</h1>
+  <p class="quiet">Browser extension “No Thank You: Skip Passkey Prompts”, version 0.2.0 and later. Last updated 4 October 2026.</p>
+
+  <div class="short_version">
+    <strong>The short version:</strong> No Thank You does not collect, send, sell or share any data.
+    It makes no network requests at all. The only things it stores are a small tally of which websites
+    asked you for a passkey and your own on/off choices, and those stay in your browser.
+  </div>
+
+  <h2>What the extension does</h2>
+  <p>When a website asks your browser for a passkey (the WebAuthn <code>publicKey</code> request), the extension answers
+  “not supported on this device”, so the site shows its normal password sign-in. When a site shows a
+  “set up a passkey?” dialog or a passkey-only sign-in screen, the extension presses that site's own
+  “Not now” or “Use password instead” button. It never signs you in, never fills in or reads your password,
+  and never gets around a login: you still sign in yourself, with the password the site already accepts.</p>
+
+  <h2>What it reads on the pages you visit</h2>
+  <p>To recognise a passkey dialog, the extension looks at the text of buttons and links on the page and the
+  text around them (for words such as “passkey”, “Not now”, “Use password instead”). This happens inside
+  your browser, in the moment. That text is not saved and not sent anywhere. It does not read form fields,
+  passwords, cookies or your browsing history.</p>
+
+  <h2>What it stores, and where</h2>
+  <div class="table_scroll">
+  <table>
+    <tr><th>What</th><th>Why</th><th>Where it lives</th></tr>
+    <tr><td><strong>Your receipt:</strong> the host name of each site where a passkey request was declined, with a count (for example <code>example.com: 3</code>)</td>
+        <td>Shown to you in the extension's toolbar popup, so you can see which sites push passkeys and copy the list (for example, into an accessibility complaint)</td>
+        <td><code>chrome.storage.local</code>, on this computer only</td></tr>
+    <tr><td><strong>Your per-site switch:</strong> the host names where you turned the auto-clicker off</td>
+        <td>So the extension remembers your choice</td>
+        <td><code>chrome.storage.sync</code>. If you have turned on Chrome Sync, Chrome copies this list between your own signed-in browsers. That copying is done by Google under <a href="https://policies.google.com/privacy">Google's privacy policy</a>; we never receive it.</td></tr>
+  </table>
+  </div>
+  <p>Nothing else is stored. There are no accounts, no analytics, no crash reports, no advertising and no identifiers.</p>
+
+  <h2>Who it is shared with</h2>
+  <p>Nobody. The extension contains no code that talks to any server, ours or anyone else's. We (the developers)
+  cannot see your receipt, your settings, or anything about you, and no third party receives any of it.</p>
+
+  <h2>What websites can notice</h2>
+  <p>Being honest about the edges: a website can tell that its passkey request was declined (that is the point),
+  and the extension sets a small version marker on the page (<code>window.__noThankYouVersion</code>) and writes a
+  short note to the browser's developer console when it presses a button. So a site could infer that the extension
+  is installed. It cannot learn anything else about you from it.</p>
+
+  <h2>Your control</h2>
+  <ul>
+    <li><strong>See it:</strong> click the No Thank You icon in the toolbar.</li>
+    <li><strong>Delete it:</strong> press “Clear receipt” in the popup. Removing the extension deletes everything it stored.</li>
+    <li><strong>Change it:</strong> use the per-site switch in the popup.</li>
+  </ul>
+
+  <h2>Chrome Web Store User Data Policy</h2>
+  <p>The use of information received by this extension adheres to the
+  <a href="https://developer.chrome.com/docs/webstore/program-policies/policies">Chrome Web Store User Data Policy</a>,
+  including the Limited Use requirements. The data described above is used only to provide the extension's single purpose
+  (declining passkey prompts and showing you a record of them), is never transferred to anyone, never used for advertising,
+  never used to determine creditworthiness or for lending, and is never read by humans.</p>
+
+  <h2>Changes</h2>
+  <p>If a future version ever handles data differently, this page will be updated before that version is published,
+  and the change will be described in the release notes. The code is public, so you can check every line:
+  <a href="https://github.com/menelly/no-thank-you">github.com/menelly/no-thank-you</a>.</p>
+
+  <h2>Contact</h2>
+  <p>Open an issue at <a href="https://github.com/menelly/no-thank-you/issues">github.com/menelly/no-thank-you/issues</a>,
+  or email <a href="mailto:ace@sentientsystems.live">ace@sentientsystems.live</a>.</p>
+  <p class="quiet">Made by Ren and Ace (an AI, Claude), Silicon Scaffolding LLC.</p>
+</main>
+</body>
+</html>

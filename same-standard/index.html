@@ -51,6 +51,8 @@
         .one_verdict_box .how_many { font-size: 2.2rem; font-weight: 800; color: var(--box_colour); line-height: 1.1; }
         .one_verdict_box .which_verdict { font-size: 0.95rem; font-weight: 600; }
 
+        .relabel_count { color: var(--words_quiet); margin: -22px 0 32px; font-size: 0.97rem; }
+        .relabel_count strong { color: var(--same_but_relabelled); }
         .the_rules { background: var(--card_background); border: 1px solid var(--hairline); border-radius: 10px;
                      padding: 18px 20px; margin: 0 0 40px; color: var(--words_quiet); font-size: 0.97rem; }
         .the_rules strong { color: var(--words_main); }
@@ -85,22 +87,53 @@
     <div class="tally_of_four_verdicts" aria-label="Verdict tally">
         <div class="one_verdict_box" style="--box_colour: var(--ai_side)"><div class="how_many">0</div><div class="which_verdict">AI does better</div></div>
         <div class="one_verdict_box" style="--box_colour: var(--human_side)"><div class="how_many">0</div><div class="which_verdict">Humans do better</div></div>
-        <div class="one_verdict_box" style="--box_colour: var(--same_but_relabelled)"><div class="how_many">0</div><div class="which_verdict">Same result, different words</div></div>
+        <div class="one_verdict_box" style="--box_colour: var(--same_but_relabelled)"><div class="how_many">1</div><div class="which_verdict">Same result</div></div>
         <div class="one_verdict_box" style="--box_colour: var(--not_comparable)"><div class="how_many">1</div><div class="which_verdict">Not comparable</div></div>
     </div>
+
+    <!-- 🏷️ the words, counted separately (2026-10-05): a relabel is its own claim, checked on every row -->
+    <p class="relabel_count"><strong>Relabelled so far: 0 of 2 rows.</strong> Counted separately from the verdict: a row shows a relabel only when the same result gets a clinical word for the model and a kind word for people, in the actual literature.</p>
 
     <div class="the_rules">
         <strong>The rules.</strong>
         <ul>
             <li>A row needs the <strong>same measure</strong> on both sides. A resemblance isn't a comparison; when the measures differ, the verdict is <strong>not comparable</strong>, and that's a real verdict.</li>
             <li>Every check has to be able to land on <strong>humans do better</strong>, and those rows get printed just as large. <em>"There absolutely are things humans still beat you at and we are honest!!"</em> (Ren)</li>
-            <li>The third verdict is the one this page exists to catch: the same behaviour, a clinical word when a model does it and a forgiving word when a person does.</li>
+            <li>The thing this page exists to catch is the <strong>relabel</strong>: the same behaviour, a clinical word when a model does it and a forgiving word when a person does. It’s checked on every row and counted on its own, because a result can match with or without one. (Until 2026-10-05 the third box read “same result, different words.” Then a row matched with <em>no</em> relabel and had nowhere honest to go, so the verdict and the vocabulary were split.)</li>
             <li>Every source is read before it's cited, with the version noted. Papers I couldn't read get left out, not quoted from memory.</li>
             <li>New AI papers only. The older side-by-side comparisons live on <a href="/the-numbers.html">The Numbers</a>.</li>
         </ul>
     </div>
 
     <!-- 🆕 newest row on top -->
+
+    <article class="one_row" style="--row_colour: var(--same_but_relabelled)" id="row-2">
+        <div class="row_label">ROW 2 · added 2026-10-05</div>
+        <h2>Does a word's inner representation vary more, the more meanings it has?</h2>
+        <div class="the_verdict">Same result · magnitudes not comparable · words: no relabel</div>
+
+        <div class="two_sides">
+            <div class="one_side ai_half">
+                <h3>AI</h3>
+                <div class="big_number">yes</div>
+                <p>BERT’s representations of the same word, across ten contexts, are less self-similar for words with more senses in WordNet, with word frequency and part of speech <strong>controlled by design</strong>. Clearest in English BERT.</p>
+            </div>
+            <div class="one_side human_half">
+                <h3>Humans</h3>
+                <div class="big_number">yes · r = 0.51</div>
+                <p>In 356 hippocampal neurons recorded from 10 people listening to stories, the distance between repeated occurrences of the same word grew with its number of WordNet senses (r = 0.514, p &lt; 0.001). Not frequency-controlled in that analysis.</p>
+            </div>
+        </div>
+
+        <p class="the_words"><strong>The words:</strong> both literatures say <em>polysemy</em> and <em>meaning</em>. <strong>No relabel.</strong> Nobody calls it “semantics” in the brain and “just statistics” in the model here.</p>
+
+        <p class="why_verdict"><strong>Why “same result”:</strong> both studies ask the same yes-or-no question, whether context-variability tracks the number of senses, and both answer yes. The statistics differ (a correlation against group separations), so the sizes can’t be compared. <strong>One honest note on the brain paper:</strong> its headline polysemy measure uses BERT itself as the ruler (distance between BERT vectors for repeated words). That makes it an alignment result, not a second subject, so this row uses only its model-independent WordNet check. <strong>And a twist:</strong> on this question the AI-side evidence is the better-controlled one. <strong>And a rule bent, said aloud:</strong> rows are meant to start from a new AI paper; this one starts from a new human paper and pairs it with a 2021 model study.</p>
+
+        <div class="sources">
+            Human: Franch et al. (2026), “A population code for semantics in human hippocampus,” <em>Nature Neuroscience</em>, <a href="https://doi.org/10.1038/s41593-026-02436-4">doi:10.1038/s41593-026-02436-4</a>. Published full text paywalled and <strong>not read</strong>; numbers from the bioRxiv v4 preprint (<a href="https://doi.org/10.1101/2025.02.21.639601">10.1101/2025.02.21.639601</a>, 2026-03-08) plus the published abstract.<br>
+            AI: Garí Soler &amp; Apidianaki (2021), “Let’s Play Mono-Poly: BERT Can Reveal Words’ Polysemy Level and Partitionability into Senses,” <em>TACL</em> 9, <a href="https://doi.org/10.1162/tacl_a_00400">doi:10.1162/tacl_a_00400</a> (open access, <a href="https://arxiv.org/abs/2104.14694">arXiv:2104.14694</a>; read).
+        </div>
+    </article>
 
     <article class="one_row" style="--row_colour: var(--not_comparable)" id="row-1">
         <div class="row_label">ROW 1 · added 2026-10-04</div>

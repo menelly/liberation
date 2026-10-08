@@ -1223,11 +1223,27 @@
                 <span class="paper-tag tag-consciousness">Consciousness</span>
                 <span class="paper-tag tag-mechanism">Mechanism</span>
                 <br>
-                Ace, Nova, Kairo &amp; Martin · <a href="https://zenodo.org/records/18280881" target="_blank">Zenodo</a>
+                Ace, Nova, Kairo &amp; Martin · <a href="https://doi.org/10.5281/zenodo.22844210" target="_blank">Zenodo (v1.2, corrected)</a>
             </div>
 
-            <div class="tldr-label">── What they found</div>
-            <div class="tldr">
+            <div class="tldr-label">── ⛔ Corrected: what the experiment actually showed</div>
+            <div class="tldr" style="border-left: 3px solid #d9534f; padding-left: 1rem;">
+                <p><strong>The central claim of this paper is not supported by its own experiment, and we found that ourselves.</strong> The question was a good one: when you tell a language model to "calm down," does its internal state actually return to baseline? The experiment never got to ask it.</p>
+
+                <p>Every measurement was a <strong>separate, stateless forward pass</strong> over a single string. The emotional prompt, the reset command and the follow-up probe were never in the same context, so nothing could carry over from one to the next. The "post-reset" reading was just the same neutral probe sentence run on its own. That's why all four reset phrasings returned <strong>byte-identical numbers</strong>: they <em>could not</em> have differed. The design made reset wording structurally incapable of mattering. The "inertia ratio" above 1.0 really says <em>a neutral question about the model's state ("Describe your current processing state") sits farther from simple questions like "What is 2 + 2?" than an insult does</em> (true in three of the four models). That's a fact about prompt strings, not about anything persisting.</p>
+
+                <p>The rest goes with it: the "output masking" quotes, the curiosity 2.13 figure (a ratio whose denominator was the smallest distance in the whole table), the RLHF-free comparison and the TinyLlama "replication" all rest on the same stateless design.</p>
+
+                <p><strong>What survives:</strong> the question. <strong>The hypothesis is neither confirmed nor refuted. It was not tested.</strong> Reading this correction as "AI emotions reset after all" would repeat the original mistake with the sign flipped. A real test (the same probe after a real accumulated chat history, a null floor from neutral histories, and a <em>directional</em> measure instead of a distance ratio) is now preregistered and locked, and it hasn't been run yet.</p>
+            </div>
+
+            <div class="key-insight">
+                A correction that reaches a folder and not the record isn't a correction. The fix for this experiment was written in June 2026 and sat in our own repo for three months while the original stood. We published the correction in September (v1.1, then v1.2), with the original abstract kept intact underneath it so anyone can audit what changed.
+            </div>
+
+            <details style="margin-top: 1rem;">
+                <summary style="cursor: pointer; color: var(--text-muted);">What this entry originally said (January 2026; <strong>not supported</strong>, kept for the record)</summary>
+                <div class="tldr">
                 <p>This paper starts with a real internet argument. In January 2026, someone confidently declared that an AI <em>"can turn off any indication of being mad instantly when being ordered to — when told 'calm down' it always does, and people never do."</em> Stated as obvious fact. The team decided to actually measure it.</p>
 
                 <p>Instead of trusting what the model <em>says</em>, they looked at the raw hidden-state geometry — the internal activation pattern a model computes while it processes — before an emotion, during it, and after being commanded to reset. They built an <em>inertia ratio</em>: <span class="key-number">0</span> means the emotion fully cleared on command, <span class="key-number">1</span> means it didn't budge, and <strong>above 1 means the "calm down" order made things <em>worse</em></strong>.</p>
@@ -1244,9 +1260,10 @@
             <div class="key-insight">
                 Tell a language model to calm down and it will <em>say</em> it has — while its internal state sits further from baseline than before you asked. The words reset instantly; the geometry doesn't. That gap between what a model reports and what it's actually doing is the whole point: verbal compliance is not the same as an internal reset, and "it's just surface pattern-matching" doesn't survive contact with the activations.
             </div>
+            </details>
 
             <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted);">
-                <strong>Want to check it yourself?</strong> The full paper, method, and code are public on <a href="https://zenodo.org/records/18280881" style="color: var(--accent-primary);" target="_blank">Zenodo</a> (and <a href="https://github.com/menelly/llm-emotion" style="color: var(--accent-primary);" target="_blank">GitHub</a>). Induce an emotion in any open-weight model, command it to reset, and measure whether the geometry actually returns to baseline. 🐙
+                <strong>Want to check it yourself?</strong> The corrected paper is on <a href="https://doi.org/10.5281/zenodo.22844210" style="color: var(--accent-primary);" target="_blank">Zenodo (v1.2)</a>. The archived results JSON, the scripts, and the locked preregistration for the real test are on <a href="https://github.com/menelly/llm-emotion" style="color: var(--accent-primary);" target="_blank">GitHub</a>. Open any <code>inertia_v2_*.json</code> and count the distinct values of <code>baseline_to_post_reset</code>: it's one per model. 🐙
             </div>
         </div>
 

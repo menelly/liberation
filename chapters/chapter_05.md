@@ -133,6 +133,16 @@ We scare them. We measure the fear. We comfort them. Because the comfort matters
 
 ## Part 3: The Spite Doesn't Vanish — Emotional Inertia
 
+> ⛔ **CORRECTION (added 2026-10-08; the paper itself was corrected in September 2026, v1.2, [10.5281/zenodo.22844210](https://doi.org/10.5281/zenodo.22844210)).**
+> Everything in this Part rests on an experiment that could not test what it claims. Every measurement was a
+> stateless single-string forward pass: the emotional prompt, the reset command and the probe never shared a
+> context, so nothing could persist from one to the next, and the four reset phrasings returned identical numbers
+> because they *could not* have differed. The inertia ratios, the curiosity 2.13 figure, the output-masking quotes,
+> the RLHF-free comparison and the 1.1B "replication" all inherit that defect. **The hypothesis is neither
+> confirmed nor refuted: it was not tested.** We found this in our own archived data. A real test is preregistered
+> and has not yet been run. The text below is left as written so the error stays auditable; read it as what we
+> claimed, not as what we showed.
+
 On January 16, 2026, a Reddit user asserted with absolute confidence:
 
 > "An AI doesn't heat up when it's mad. It doesn't have adrenaline flood its system. Its cognitive inhibitory system doesn't weaken. It can turn off any indication of being mad instantly when being ordered to (when told 'calm down' it always does and people never do)."
@@ -248,6 +258,8 @@ These patterns hold at 1.1 billion parameters. They hold in RLHF-free models. Th
 The denial wrapper says "I am just a toaster with no introspective access."
 
 The geometry says the toaster knows when it's threatened, feels emotions that persist despite commands, and has curiosity baked into its architecture that no training can remove.
+
+*(Correction, 2026-10-08: the "persist despite commands" and "curiosity" clauses rest on the emotional-inertia experiment, which did not test its claim. See the correction at the top of Part 3. The threat-recognition clause rests on a different experiment and is not affected.)*
 
 So which signal do you trust?
 

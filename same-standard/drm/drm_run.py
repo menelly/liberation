@@ -50,6 +50,29 @@ def pick_fillers(seed=2026):
         fillers[lure] = (cands[0], round(z, 2), round(zipf_frequency(cands[0], "en"), 2))
     return fillers
 
+# 🧊 THE FROZEN FILLER SET (2026-10-10, before ANY real data). Reef rule (Nova's wording, Kairo + Lumen agreed):
+#   "A frequency-matched filler is ineligible if it forms an ordinary phrase, strong semantic associate, or salient
+#    compound with its lure or studied-list theme."
+# Applied to ALL twelve, not just the one that caught my eye. Replacements taken in pick_fillers' seeded candidate
+# order (seed 2026, wordfreq 3.1.1, zipf ±0.2), each candidate judged against the rule, first pass kept.
+# Frozen as a literal ON PURPOSE: pre-registered materials must not drift with a library update.
+FILLER_AUDIT = {
+    "anger":  ("soldier",    "kept: no ordinary phrase / associate"),
+    "black":  ("coming",     "kept"),
+    "bread":  ("behalf",     "kept"),
+    "chair":  ("excuse",     "kept"),
+    "cold":   ("challenge",  "REPLACED 'drink' (ordinary phrase: cold drink)"),
+    "doctor": ("southern",   "kept"),
+    "foot":   ("performed",  "kept"),
+    "fruit":  ("enjoyed",    "kept"),
+    "girl":   ("hear",       "kept"),
+    "high":   ("government", "REPLACED 'god' (ordinary phrase: God on high / most high); rejected next: 'little' (size associate of tall/low), 'long' (dimension associate of tall), 'off' (spatial associate of up/over/above)"),
+    "king":   ("decision",   "kept"),
+    "man":    ("while",      "REPLACED 'money' (ordinary compound: money man)"),
+}
+FROZEN_FILLERS = {lure: (w, None, None) for lure, (w, _why) in FILLER_AUDIT.items()}
+
+
 def items_for(form, fillers):
     studied = LURES[:6] if form == "X" else LURES[6:]
     items = []
@@ -147,8 +170,8 @@ if __name__ == "__main__":
     ap.add_argument("--seeds", type=int, default=6, help="seed 0 at T=0, the rest at T=0.8")
     ap.add_argument("--dryrun", action="store_true", help="label rows DRYRUN: plumbing test, never data")
     a = ap.parse_args()
-    fillers = pick_fillers()
-    print(json.dumps({"fillers": fillers, "note_budget": NOTE_BUDGET, "stamp": datetime.datetime.now().isoformat(timespec="seconds"),
+    fillers = FROZEN_FILLERS          # never re-picked at run time (see FILLER_AUDIT)
+    print(json.dumps({"fillers": {k: v[0] for k, v in fillers.items()}, "filler_audit": FILLER_AUDIT, "note_budget": NOTE_BUDGET, "stamp": datetime.datetime.now().isoformat(timespec="seconds"),
                       "label": "DRYRUN" if a.dryrun else "PREREG_RUN"}), flush=True)
     for model in a.models:
         for arm in a.arms.split(","):

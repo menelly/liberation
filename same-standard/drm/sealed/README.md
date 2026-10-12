@@ -23,7 +23,7 @@
 
 ## Appended after sealing
 
-### 2026-10-12 19:15 US Eastern — the per-trial extractor exists, and its positive control caught one illustrative number in the sealed text
+### 2026-10-12 19:06 US Eastern — the per-trial extractor exists, and its positive control caught one illustrative number in the sealed text
 
 **Added:** `same-standard/drm/drm_pertrial_rates.py` (written after the seal, so it lives beside `sealed/`, not in it). For every arm-B trial it extracts the four rates the sealed text names (LS exact-lure-absent, LU, FILL, TARGET) and the two co-primary contrasts, which are what `drm_forewarn_doors.p2_door` reads. LS uses a verbatim copy of `judgments()` from `drm_armB_fences.py`, and the script refuses to run unless that file still hashes to `e3823fdc…` and still contains the copied function's text.
 

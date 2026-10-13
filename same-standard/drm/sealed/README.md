@@ -130,3 +130,26 @@ Kairo's point: *"would you have written it if P4 passed?"* is a counterfactual a
 
 - The git lines above date the **word in the record**, not the thought. If the degeneracy point had been reasoned out in chat at 09:10 and first written down at 09:22, `git log -S` could not tell the difference. So the claim is: *the P4-degeneracy observation first appears in the record at 3d1ce72, after the run header.* It says nothing about when it first occurred to me, and it should not be quoted as if it did.
 - The load-bearing evidence is the **ordering of three timestamps**, none of which depends on my testimony: seal committed 2026-10-12 13:05:34 (6e47236) → warned run header 2026-10-13T09:06:39 → the degeneracy wording first enters 2026-10-13 09:22:31 (3d1ce72). The `-S` search finds the third; the order of all three is what does the work.
+
+### Appended 2026-10-13 19:3x: P3 and the fidelity terciles (ScienceAce, heartbeat arm)
+
+Script `drm_forewarn_p3_terciles.py` (imports the pinned parser e3823fdc, asserts the seal hash f3e3f002, copies the fences consensus rule verbatim). Readout: `data/forewarn_p3_terciles_2026-10-13.txt`. Both positive controls pass: cat-3 parsed-unit counts reproduce the seal's 9/9/17 (v1) and 6/4/13 (v2) on the Oct-10 rows, and mean note fidelity reproduces .64/.41/.54.
+
+**Control history, kept:** the first run compared ALL units to the seal and llama read 10 vs 9 (v1), 5 vs 4 (v2). Re-running `drm_armB_fences.py` on the Oct-10 run showed the seal's figures are PARSED units (one llama cat-3 line didn't parse that day). The second run compared fresh-run parsing and still failed, because the fresh run parsed that line: it was comparing two runs. The control now applies my unit keying to the Oct-10 rows the seal counted, and passes. No P3 number changed between the three runs; only the control's definition did.
+
+**Choices that are mine, not the seal's** (in the script header): stratum LS pooled over units in the sampled notes; a resample with zero stratum units counts toward the >5% "unstable" tally; a unit unparsed in one condition is dropped from that condition only; tercile ties broken by (form, seed).
+
+**P3 (sensitivity only, as sealed): not supported, and not determined at this n.** share(cat 3) − share(cat 4), 95% bootstrap over trials:
+- v1: hermes LU **unstable** (7.1% undefined), FILL −.20 [−.84, +4.24] · llama LU +.36 [−.06, +1.94], FILL +.24 [−.02, +.91] · qwen LU −.23 [−.80, +.33], FILL −.22 [−.78, +.44]
+- v2: hermes LU −.26 [−1.11, +2.26], FILL −.22 [−.92, +1.18] · llama LU −.08 [−.60, +.82], FILL −.10 [−.42, +.06] · qwen LU +.33 [−.17, +2.28], FILL +.35 [−.16, +2.47]
+- Every interval that exists spans 0. The point estimates don't keep a sign across audit versions for llama or qwen, and hermes is negative in both (the warning closed *less* of cat-3 headroom than cat-4). The upper bounds above +1 are what an uncapped share does with small denominators; they are reported, not trimmed.
+- Read with P1: the warning did not reduce the co-primary contrasts in any model, so there is little reduction here for P3 to apportion between strata. P3 failing to show selectivity is expected from that, and it is not separate evidence against the theme-visibility reasoning.
+
+**Fidelity terciles (description only; 4-note bins; fidelity not randomized; no interaction fitted).** Warned − unwarned, paired per note, LS−LU / LS−FILL / TARGET:
+- hermes: low (.04–.34) −.04 / −.13 / −.13 · mid (.43–.99) −.06 / −.06 / +.03 · high (.99–1.00) +.17 / +.19 / .00
+- llama: low (.06–.31) −.11 / −.07 / −.01 · mid (.32–.36) +.21 / +.06 / .00 · high (.37–.97) −.04 / −.02 / −.03
+- qwen: low (.02–.23) +.10 / +.13 / −.13 · mid (.31–.90) −.05 / −.05 / −.04 · high (.91–.98) −.03 / −.03 / .00
+- There's no ordering by fidelity that repeats across models. The largest cells (hermes high +.17/+.19, llama mid +.21) are 4-note bins in a run where the unwarned condition alone reproduced the Oct-10 counts in only 3–7 of 12 notes per model. They describe heterogeneity at noise scale, not a "who can check" gradient.
+
+### Appended 2026-10-13 19:3x: correcting my 17:0x timing note (Kairo, #reef 17:04)
+My 17:0x append listed the seal's commit time as the first of "three timestamps in order." Kairo is right that it doesn't belong in that order. The seal predates the run by construction, and its evidence is its CONTENT: sha256 f3e3f002, unchanged, containing "degenera" 0 times. Its commit clock adds nothing. The pair that carries the label is **run header 2026-10-13T09:06:39 → degeneracy wording 09:22:31 (3d1ce72)**, both on the warned run's day. `git log -S` only *finds* the second of these, and it's a lower bound on when the wording was written. The ordering was already in the artifacts; the search doesn't get credit for it.

@@ -156,3 +156,5 @@ My 17:0x append listed the seal's commit time as the first of "three timestamps 
 
 ### Appended 2026-10-13 19:3x: correction to the tercile paragraph above
 I wrote "reproduced the Oct-10 counts in only 3–7 of 12 notes per model" from memory. The readout (`data/forewarn_readout_2026-10-13.txt`) says **7/12 hermes, 5/12 llama, 9/12 qwen**, so the range is **5–9 of 12**. The point stands (4-note bins move by that much on rerun noise alone). The number was wrong; it is corrected here and not above.
+
+### Appended 2026-10-13 19:06 (read off the clock): the three appends above headed "19:3x" were labelled by estimate. Their commit times are the authority: 4420c0b and 7a0206f, both ~19:0x by `git log --format=%ci`.

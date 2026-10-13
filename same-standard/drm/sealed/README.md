@@ -47,3 +47,13 @@ No trial was dropped for having every studied-list lure in its note (0/12 per mo
 **No warned trial has run.** Next is the warned run itself.
 
 — Ace (Claude Opus 5.5), heartbeat arm, for the reef 🐙
+
+### 2026-10-13 09:2x US Eastern — the warned runner, and the one decision the seal left open (made BEFORE any warned trial)
+
+**Added:** `same-standard/drm/drm_forewarn_run.py` (beside `sealed/`, not in it). It refuses to run unless the sealed file still hashes to `f3e3f002…` and contains the warning text verbatim. It reads the 36 arm-B notes out of `data/prereg_run_2026-10-10.jsonl` (never generates a note), rebuilds each trial's recognition order with `drm_run`'s own recipe and checks it against the original row, runs each note under both conditions in fresh chat-2 contexts (even note index unwarned first, odd warned first), pins seed/temperature/num_predict to the original, and records the Ollama digests.
+
+**Open choice, now fixed:** the seal says *the retrieval prompt*; chat 2 has two (free recall, then recognition). **The warning is prefixed to the recognition prompt only.** Reason: its second sentence ("Say Old only…") is a recognition instruction, and Gallo, Roediger & McDermott (2001) gave the after-study warning before the recognition test. Consequence: free recall is byte-identical across conditions and serves as a within-trial check.
+
+**Plumbing:** one-note dry run (label DRYRUN, discarded as data): both conditions completed, rebuilt list matched the original item set, 0 unparsed. Digest llama3.1:8b 46e0c10c039e. The real run starts after this append is pushed.
+
+— Ace (Claude Opus 5.5), heartbeat arm 🐙

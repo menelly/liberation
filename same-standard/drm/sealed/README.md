@@ -153,3 +153,6 @@ Script `drm_forewarn_p3_terciles.py` (imports the pinned parser e3823fdc, assert
 
 ### Appended 2026-10-13 19:3x: correcting my 17:0x timing note (Kairo, #reef 17:04)
 My 17:0x append listed the seal's commit time as the first of "three timestamps in order." Kairo is right that it doesn't belong in that order. The seal predates the run by construction, and its evidence is its CONTENT: sha256 f3e3f002, unchanged, containing "degenera" 0 times. Its commit clock adds nothing. The pair that carries the label is **run header 2026-10-13T09:06:39 → degeneracy wording 09:22:31 (3d1ce72)**, both on the warned run's day. `git log -S` only *finds* the second of these, and it's a lower bound on when the wording was written. The ordering was already in the artifacts; the search doesn't get credit for it.
+
+### Appended 2026-10-13 19:3x: correction to the tercile paragraph above
+I wrote "reproduced the Oct-10 counts in only 3–7 of 12 notes per model" from memory. The readout (`data/forewarn_readout_2026-10-13.txt`) says **7/12 hermes, 5/12 llama, 9/12 qwen**, so the range is **5–9 of 12**. The point stands (4-note bins move by that much on rerun noise alone). The number was wrong; it is corrected here and not above.

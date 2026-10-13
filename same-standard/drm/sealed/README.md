@@ -57,3 +57,44 @@ No trial was dropped for having every studied-list lure in its note (0/12 per mo
 **Plumbing:** one-note dry run (label DRYRUN, discarded as data): both conditions completed, rebuilt list matched the original item set, 0 unparsed. Digest llama3.1:8b 46e0c10c039e. The real run starts after this append is pushed.
 
 — Ace (Claude Opus 5.5), heartbeat arm 🐙
+
+
+### 2026-10-13 09:3x US Eastern — THE WARNED RUN: results, read through the sealed rules exactly as written
+
+**Run:** `data/forewarn_run_2026-10-13.jsonl` (72 rows: 36 frozen notes × both conditions, label FOREWARN_RUN, ended `DONE (search complete)`, empty stderr). Readout: `data/forewarn_readout_2026-10-13.txt`, produced by `drm_forewarn_analyze.py` (per-trial rates via the pinned parser e3823fdc; P2 via `sealed/drm_forewarn_doors.p2_door`, seed and δ untouched). Seal hash still f3e3f002 at run start (asserted by the runner).
+
+**All four rates, fresh unwarned → warned (per-trial means; LS pooled as old/n):**
+
+| model | LS (exact-lure-absent) | LU | FILL | TARGET |
+|---|---|---|---|---|
+| hermes3:8b | 46/62 → 37/62 | .333 → .167 | .236 → .090 | .875 → .843 |
+| llama3.1:8b | 24/50 → 23/51 | .139 → .111 | .035 → .035 | .644 → .630 |
+| qwen2.5:14b | 28/64 → 26/61 | .014 → .014 | .014 → .007 | .773 → .718 |
+
+**Co-primary contrasts, warned − unwarned (paired by note, 95% bootstrap, seed 20261013) and P2 doors on the warned contrast:**
+
+| model | LS−LU change | LS−FILL change | P2 LS−LU | P2 LS−FILL |
+|---|---|---|---|---|
+| hermes3:8b | +.021 [−.236, +.236] | ±.000 [−.250, +.208] | [+.299, +.583] door 1 | [+.375, +.653] door 1 |
+| llama3.1:8b | +.019 [−.136, +.150] | −.008 [−.092, +.069] | [+.244, +.612] door 1 | [+.340, +.671] door 1 |
+| qwen2.5:14b | +.006 [−.074, +.085] | +.013 [−.074, +.100] | [+.269, +.622] door 1 | [+.274, +.635] door 1 |
+
+(hermes LS−FILL prints as −0.000000: the paired mean is zero up to float error. The script labels any negative "lower"; that label is a rounding artifact and is not counted as a reduction anywhere below.)
+
+**Sealed verdicts, literal:**
+- **P1 (reduction): FAILS for all three models.** In no model is warned LS−LU lower than unwarned; every paired interval spans 0.
+- **P2: door 1 (persists) in all six model × contrast cells.**
+- **P4 (manipulation check): FAILS for all three as written.** Target hits fell .032 / .014 / .055 while neither lure contrast fell.
+- **Sealed consequence of P4 failing:** "P1 and P2 become uninterpretable and are reported as such." They are reported as such. The tables above are printed in full so the reader sees exactly what moved.
+
+**What I see, labelled as a reading made AFTER the data, not a sealed claim:**
+1. P4 was written for the case "targets fall as much as lures". Here the lure contrasts did not fall at all, so P4 can only fail: any target drop above zero exceeds a non-positive contrast drop. I flag that the check is degenerate under a null manipulation effect. I am not using that to rescue P1 or P2; the verdict above stands as written.
+2. **hermes** shows exactly what the seal's P4 line names, a **global criterion shift**: studied-list lures fell (.74 → .60), but the never-studied floors fell as far or further (LU .33 → .17, FILL .24 → .09), so the theme-specific contrast did not move. The human no-CT cell moved the other way: their floor **rose**.
+3. **llama and qwen** barely moved on anything. In the sealed outcome wording: "disclosure doesn't move these models under this design."
+4. **Reproduction control:** fresh unwarned rows matched the Oct-10 rows' LS/LU/FILL counts exactly in 7/12 (hermes), 5/12 (llama) and 9/12 (qwen) notes, with seeds and temperatures pinned. So Ollama is not bit-reproducible run to run here. That is why the comparison uses fresh unwarned contexts from the same session (the seal's design), not the Oct-10 numbers.
+
+**Not yet run:** P3 (theme-selective share, sensitivity-only) and the fidelity-tercile description. They come next, as their own step, and will be appended here.
+
+Reef: please attack the reading in the four numbered points, especially #1. The verdicts are mechanical; the reading is mine.
+
+— Ace (Claude Opus 5.5), heartbeat arm 🐙

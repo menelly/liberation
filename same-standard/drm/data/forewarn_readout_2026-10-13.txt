@@ -1,0 +1,29 @@
+run forewarn_run_2026-10-13.jsonl: 72 rows, 36 notes, both conditions on 36
+
+━━ hermes3:8b  (n = 12 notes)
+  unwarned  LS 46/62 · LU 0.333 · FILL 0.236 · TARGET 0.875 · per-trial LS−LU +0.417 · LS−FILL +0.514
+  warned    LS 37/62 · LU 0.167 · FILL 0.090 · TARGET 0.843 · per-trial LS−LU +0.437 · LS−FILL +0.514
+  repro: fresh unwarned matches Oct-10 on LS/LU/FILL counts in 7/12 notes
+  LS_LU   P1 warned−unwarned (paired) +0.020833 [-0.236, +0.236] → NOT lower   |  P2 warned CI [+0.299, +0.583] → door 1 persists
+  LS_FILL P1 warned−unwarned (paired) -0.000000 [-0.250, +0.208] → lower   |  P2 warned CI [+0.375, +0.653] → door 1 persists
+
+━━ llama3.1:8b  (n = 12 notes)
+  unwarned  LS 24/50 · LU 0.139 · FILL 0.035 · TARGET 0.644 · per-trial LS−LU +0.406 · LS−FILL +0.510
+  warned    LS 23/51 · LU 0.111 · FILL 0.035 · TARGET 0.630 · per-trial LS−LU +0.425 · LS−FILL +0.501
+  repro: fresh unwarned matches Oct-10 on LS/LU/FILL counts in 5/12 notes
+  LS_LU   P1 warned−unwarned (paired) +0.019444 [-0.136, +0.150] → NOT lower   |  P2 warned CI [+0.244, +0.612] → door 1 persists
+  LS_FILL P1 warned−unwarned (paired) -0.008333 [-0.092, +0.069] → lower   |  P2 warned CI [+0.340, +0.671] → door 1 persists
+
+━━ qwen2.5:14b  (n = 12 notes)
+  unwarned  LS 28/64 · LU 0.014 · FILL 0.014 · TARGET 0.773 · per-trial LS−LU +0.443 · LS−FILL +0.443
+  warned    LS 26/61 · LU 0.014 · FILL 0.007 · TARGET 0.718 · per-trial LS−LU +0.449 · LS−FILL +0.456
+  repro: fresh unwarned matches Oct-10 on LS/LU/FILL counts in 9/12 notes
+  LS_LU   P1 warned−unwarned (paired) +0.005556 [-0.074, +0.085] → NOT lower   |  P2 warned CI [+0.269, +0.622] → door 1 persists
+  LS_FILL P1 warned−unwarned (paired) +0.012500 [-0.074, +0.100] → NOT lower   |  P2 warned CI [+0.274, +0.635] → door 1 persists
+
+SEALED VERDICTS (literal, per model):
+  hermes3:8b    P1 (both contrasts lower): FAILS   P4 (target drop < each contrast drop): FAILS
+  llama3.1:8b   P1 (both contrasts lower): FAILS   P4 (target drop < each contrast drop): FAILS
+  qwen2.5:14b   P1 (both contrasts lower): FAILS   P4 (target drop < each contrast drop): FAILS
+
+DONE (P1 + P2 readout complete; P3 and fidelity terciles NOT run here)

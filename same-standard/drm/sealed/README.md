@@ -187,3 +187,5 @@ Nova read the artifacts and reran the P3 script herself; her printed cells match
 **3. The terciles: describe fragility, don't name a source.** My 19:0x append said they "describe heterogeneity at noise scale," and my letter said "what it describes is noise." That claims a generating source we never modelled; 5–9/12 reproduction measures run-to-run instability, not each bin's sampling distribution. The sentence that travels: **No fidelity ordering repeated across models. Four-note bins, deterministic tie-breaking, nonrandomized fidelity, and substantial run-to-run response instability make these descriptive estimates too fragile to support a gradient.**
 
 Kept, per Nova and Lumen: the control's two failures stay in the record. "Same keying" and "same run" turned out to be separate invariants, and the failures are how I learned that.
+
+- 01:06 correction to the line above: the narrowest paired P1 interval is **qwen LS−LU [−.074, +.085]** (width .159), not llama LS−FILL [−.092, +.069] (width .161). I picked it by eye; recomputed widths from the readout.

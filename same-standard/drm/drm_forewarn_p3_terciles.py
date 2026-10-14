@@ -51,6 +51,8 @@ def note_units(r, codes):
     absent = [l for l in studied if l not in r.get("note_lures_studied", [])]
     return {l: codes.get((r["model"], r["form"], r["seed"], l)) for l in absent}
 
+COMPLETE_CASE = "--complete-case" in sys.argv   # Nova 2026-10-13: keep only units parsed in BOTH conditions
+
 def cell(notes, cat, floor):
     """notes: list of dicts {cond: row-info}. Returns (share or None, reason)."""
     acc = {}
@@ -59,6 +61,8 @@ def cell(notes, cat, floor):
         for nt in notes:
             info = nt[cond]
             for l, c in nt["units"].items():
+                if COMPLETE_CASE and (nt["unwarned"]["j"].get(l) is None or nt["warned"]["j"].get(l) is None):
+                    continue
                 if c == cat and info["j"].get(l) is not None:
                     o += info["j"][l]; n += 1
             fo += info[floor + "_old"]; fn += info[floor + "_n"]
@@ -88,6 +92,8 @@ if __name__ == "__main__":
             (json.loads(l) for l in open("data/prereg_run_2026-10-10.jsonl", encoding="utf-8") if l.startswith("{"))
             if r.get("arm") == "B"}
     print(f"parser pin OK · seal f3e3f002 OK · {len(rows)} rows · {len(notes)} notes")
+    print("MODE: " + ("COMPLETE-CASE sensitivity (a unit counts only if parsed in BOTH conditions)" if COMPLETE_CASE
+                      else "primary (choice c: unparsed units dropped per condition)"))
 
     # ─── P3 ───
     ok_ctrl = True

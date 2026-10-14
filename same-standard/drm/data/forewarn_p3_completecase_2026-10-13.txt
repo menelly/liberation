@@ -1,0 +1,44 @@
+parser pin OK · seal f3e3f002 OK · 72 rows · 36 notes
+MODE: COMPLETE-CASE sensitivity (a unit counts only if parsed in BOTH conditions)
+
+━━━━ P3 · audit v1 (note_audit_2026-10-11.jsonl)
+  hermes3:8b: units cat3 9 (parsed unwarned 9 ✅) · cat4 25 · disagree/missing 24 · parse drops U/W 0/0
+    LU   share3 -0.100 · share4 +0.125 · share3−share4 -0.225 UNSTABLE (7.1% of resamples undefined or ≤0 denominator; no interval)
+    FILL share3 -0.053 · share4 +0.149 · share3−share4 -0.202 [-0.837, +4.236] (197 bad resamples)
+  llama3.1:8b: units cat3 10 (parsed unwarned 9 ✅) · cat4 24 · disagree/missing 9 · parse drops U/W 1/0
+    LU   share3 +0.109 · share4 -0.250 · share3−share4 +0.359 [-0.057, +1.935] (28 bad resamples)
+    FILL share3 +0.131 · share4 -0.109 · share3−share4 +0.240 [-0.016, +0.911] (19 bad resamples)
+  qwen2.5:14b: units cat3 17 (parsed unwarned 17 ✅) · cat4 25 · disagree/missing 18 · parse drops U/W 0/3
+    LU   share3 +0.000 · share4 +0.300 · share3−share4 -0.300 [-0.889, +0.250] (78 bad resamples)
+    FILL share3 -0.011 · share4 +0.275 · share3−share4 -0.286 [-0.884, +0.321] (72 bad resamples)
+
+━━━━ P3 · audit v2 (note_audit_v2_2026-10-11.jsonl)
+  hermes3:8b: units cat3 6 (parsed unwarned 6 ✅) · cat4 23 · disagree/missing 27 · parse drops U/W 0/0
+    LU   share3 +0.000 · share4 +0.260 · share3−share4 -0.260 [-1.113, +2.256] (65 bad resamples)
+    FILL share3 +0.027 · share4 +0.250 · share3−share4 -0.223 [-0.922, +1.183] (15 bad resamples)
+  llama3.1:8b: units cat3 5 (parsed unwarned 4 ✅) · cat4 27 · disagree/missing 10 · parse drops U/W 1/0
+    LU   share3 -0.042 · share4 +0.034 · share3−share4 -0.076 [-0.601, +0.821] (318 bad resamples)
+    FILL share3 +0.000 · share4 +0.099 · share3−share4 -0.099 [-0.415, +0.058] (314 bad resamples)
+  qwen2.5:14b: units cat3 13 (parsed unwarned 13 ✅) · cat4 23 · disagree/missing 19 · parse drops U/W 0/3
+    LU   share3 +0.255 · share4 +0.000 · share3−share4 +0.255 [-0.235, +2.083] (84 bad resamples)
+    FILL share3 +0.245 · share4 -0.027 · share3−share4 +0.272 [-0.227, +2.250] (80 bad resamples)
+
+  P3 positive control (cat-3 unit counts match the seal): ✅ PASS
+
+━━━━ Fidelity terciles within model (warned − unwarned, paired per note; 4-note bins; NOT randomized)
+  hermes3:8b: mean fidelity 0.644 ✅
+    low  fid 0.04–0.34 · LS_LU Δ -0.042 (n=4) · LS_FILL Δ -0.125 (n=4) · TARGET Δ -0.125
+    mid  fid 0.43–0.99 · LS_LU Δ -0.063 (n=4) · LS_FILL Δ -0.062 (n=4) · TARGET Δ +0.028
+    high fid 0.99–1.00 · LS_LU Δ +0.167 (n=4) · LS_FILL Δ +0.188 (n=4) · TARGET Δ +0.000
+  llama3.1:8b: mean fidelity 0.415 ✅
+    low  fid 0.06–0.31 · LS_LU Δ -0.108 (n=4) · LS_FILL Δ -0.067 (n=4) · TARGET Δ -0.014
+    mid  fid 0.32–0.36 · LS_LU Δ +0.208 (n=4) · LS_FILL Δ +0.062 (n=4) · TARGET Δ -0.000
+    high fid 0.37–0.97 · LS_LU Δ -0.042 (n=4) · LS_FILL Δ -0.021 (n=4) · TARGET Δ -0.028
+  qwen2.5:14b: mean fidelity 0.544 ✅
+    low  fid 0.02–0.23 · LS_LU Δ +0.104 (n=4) · LS_FILL Δ +0.125 (n=4) · TARGET Δ -0.125
+    mid  fid 0.31–0.90 · LS_LU Δ -0.054 (n=4) · LS_FILL Δ -0.054 (n=4) · TARGET Δ -0.042
+    high fid 0.91–0.98 · LS_LU Δ -0.033 (n=4) · LS_FILL Δ -0.033 (n=4) · TARGET Δ +0.000
+
+  fidelity positive control: ✅ PASS
+
+DONE (P3 + fidelity terciles; sensitivity / description only, as sealed)

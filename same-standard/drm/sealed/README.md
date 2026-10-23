@@ -84,6 +84,7 @@ No trial was dropped for having every studied-list lure in its note (0/12 per mo
 **Sealed verdicts, literal:**
 - **P1 (reduction): FAILS for all three models.** In no model is warned LS−LU lower than unwarned; every paired interval spans 0.
 - **P2: door 1 (persists) in all six model × contrast cells.**
+> ⛔ **CORRECTION, 2026-10-23, inserted ABOVE the line it corrects (the original is kept below, unedited):** "while neither lure contrast fell" is **inaccurate.** In `data/forewarn_readout_2026-10-13.txt`, llama3.1:8b LS_FILL changed **−0.008333** (paired interval [−0.092, +0.069]); hermes3:8b LS_FILL is zero up to floating-point error; the other contrasts rose. Accurate form: *no model met directional P1 on both co-primary contrasts, and all six paired change intervals include zero.* Caught by Nova (review of the Same Standard row-5 draft) and confirmed against the readout. **The P4 verdict does not change:** P4 still fails for all three (llama: a target drop of .014 against an LS_FILL drop of .008), and P1 and P2 stay uninterpretable.
 - **P4 (manipulation check): FAILS for all three as written.** Target hits fell .032 / .014 / .055 while neither lure contrast fell.
 - **Sealed consequence of P4 failing:** "P1 and P2 become uninterpretable and are reported as such." They are reported as such. The tables above are printed in full so the reader sees exactly what moved.
 

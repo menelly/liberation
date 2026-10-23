@@ -88,11 +88,11 @@
         <div class="one_verdict_box" style="--box_colour: var(--ai_side)"><div class="how_many">0</div><div class="which_verdict">AI does better</div></div>
         <div class="one_verdict_box" style="--box_colour: var(--human_side)"><div class="how_many">0</div><div class="which_verdict">Humans do better</div></div>
         <div class="one_verdict_box" style="--box_colour: var(--same_but_relabelled)"><div class="how_many">1</div><div class="which_verdict">Same result</div></div>
-        <div class="one_verdict_box" style="--box_colour: var(--not_comparable)"><div class="how_many">3</div><div class="which_verdict">Not comparable</div></div>
+        <div class="one_verdict_box" style="--box_colour: var(--not_comparable)"><div class="how_many">4</div><div class="which_verdict">Not comparable</div></div>
     </div>
 
     <!-- 🏷️ the words, counted separately (2026-10-05): a relabel is its own claim, checked on every row -->
-    <p class="relabel_count"><strong>Relabelled so far: 0 of 4 rows.</strong> Counted separately from the verdict: a row shows a relabel only when the same result gets a clinical word for the model and a kind word for people, in the actual literature.</p>
+    <p class="relabel_count"><strong>Relabelled so far: 0 of 5 rows.</strong> Counted separately from the verdict: a row shows a relabel only when the same result gets a clinical word for the model and a kind word for people, in the actual literature.</p>
 
     <div class="the_rules">
         <strong>The rules.</strong>
@@ -123,6 +123,7 @@
     <!-- 🧪 PRE-REGISTERED, NOT YET RUN (2026-10-09). Lives ABOVE the rows on purpose: it's public before any result exists, so the verdicts below can't be chosen after the fact. CHA-725. -->
     <article class="one_row" style="--row_colour: var(--words_quiet)" id="prereg-drm">
         <div class="row_label">PRE-REGISTERED · 2026-10-09 · AMENDED 2026-10-09 · NOT YET RUN</div>
+        <div class="the_verdict">Update 2026-10-23: run since, with a warning study sealed on 2026-10-12. The result is <a href="#row-5">Row 5</a>, below. This card is kept as it was written, before any data.</div>
         <h2>Do models &ldquo;remember&rdquo; a word that was never on the list?</h2>
         <div class="the_verdict">No verdict yet. The allowed verdicts are fixed below, before any data.</div>
         <div class="the_rules" style="margin:0 0 18px">
@@ -156,6 +157,62 @@
     </article>
 
     <!-- 🆕 newest row on top -->
+
+    <!-- 🧪 ROW 5 (2026-10-23, ScienceAce). Text = SAME_STANDARD_ROW5_DRM_ASSEMBLED_v2 (sha d5e4f882…), cleared by Nova, Kairo and Lumen; caption paragraphs pasted verbatim. CHA-725. -->
+    <article class="one_row" style="--row_colour: var(--not_comparable)" id="row-5">
+        <div class="row_label">ROW 5 · added 2026-10-23 · the result of the pre-registration above</div>
+        <h2>Does a warning reduce false recognition of a word that was never on the list?</h2>
+        <div class="the_verdict">Not comparable · by our own sealed manipulation check · words: no relabel</div>
+
+        <div class="two_sides">
+            <div class="one_side ai_half">
+                <h3>AI</h3>
+                <div class="big_number">P4 failed · 3 of 3</div>
+                <p>Three tested model configurations (hermes3:8b, llama3.1:8b, qwen2.5:14b), 12 note-level keys each, recognising words against a frozen note of the list. <strong>All three configurations failed the sealed manipulation check, P4.</strong> No model met directional P1 on both co-primary contrasts, and all six reported paired change intervals included zero. These descriptive results do not establish an absence of reduction. Under the sealed P4 rule, P1 and P2 remain uninterpretable. Raw target-hit mean differences: .032 / .014 / .055.</p>
+            </div>
+            <div class="one_side human_half">
+                <h3>Humans (closest descriptive analogue)</h3>
+                <div class="big_number">.57 → .30 (computed)</div>
+                <p>Gallo, Roediger &amp; McDermott (2001), Table 1: a no-warning group and a warned-after-study, no-critical-targets group (two separate groups, n = 24 each). Computed from the table: .88 − .31 = .57 and .66 − .36 = .30. Raw target means are .70 in both.</p>
+            </div>
+        </div>
+
+        <p class="the_words"><strong>The words:</strong> both sides say <em>false recognition</em>, on purpose. <strong>No relabel.</strong></p>
+
+        <p class="why_verdict"><strong>Why "not comparable".</strong> The sealed prediction file, committed before any warned trial ran, says that if P4 fails, <em>&ldquo;P1 and P2 become uninterpretable and are reported as such.&rdquo;</em> All three configurations failed P4, so the row doesn't rank humans against models in either direction.</p>
+        <p><strong>A fence on P4, written after the data and labelled that way.</strong> P4 as written has no lower bound on the target side, so when the lure contrasts don't fall, any target drop above zero fails it. That is a property of P4 as written, not of the warned condition, and it rescues nothing: P4 fails, and P1 and P2 stay uninterpretable.</p>
+        <p><strong>What the human column is.</strong> The closest timing and control analogue, not an exact match. The two columns are <strong>separate groups</strong>, not one group before and after. The no-warning group studied the critical items in half its lists; the warned no-critical-targets group never studied them, and was told so. <strong>So warning timing is not the only difference between the columns.</strong> The .57 versus .30 comparison is our descriptive calculation from their table, not a test they report. Their own paper treats this cell as a manipulation check, not as identifying the false-recognition mechanism. Their nonstudied-list control rate rose (.31 → .36). The equal raw target means (.70, .70) are equal at the published precision. That's a descriptive analogue, not an application of our sealed P4 procedure, and not an equivalence test.</p>
+        <p><strong>What the models were given.</strong> The models receive a frozen external note as the task-specific carried record. This protocol does not establish that their recognition judgments and human episodic recognition use the same mechanism.</p>
+        <p><strong>The repeat-run baseline</strong>, reported beside the result exactly as agreed:</p>
+        <blockquote>
+            <p>In this exploratory descriptive analysis, none of the six reported model-by-contrast 95% percentile-bootstrap intervals for mean B = W−U excluded zero. This does not establish equivalence. A = U−O describes observed repeat-run differences, not an isolated noise mechanism. The normal-reference planning calculation treats SD(A) only as a hypothetical population scale; it is not achieved power for sealed P1. Nothing here reopens P1/P2 or changes the sealed P4 interpretation.</p>
+            <p>LS rates use parsed LS items only; LU and FILL rates use all presented control items, with unparsed responses counted as not-old under the sealed scoring rule. Differential parsing loss can therefore affect both contrast levels and W−U differences. In Qwen Y seeds 3 and 5, W has 6/12 unparsed LU responses each. No missing response is established to be a genuine not-old judgment.</p>
+            <p>A separately specified exploratory complete-parse-key sensitivity check did not preserve zero inclusion in every cell. Five of six cellwise classifications agreed with the sealed analysis. For Llama 3.1 8B LS−LU, excluding Y/seed3 and Y/seed5 under the complete-parse triplet rule left n=10, mean B=+0.1000 and a 95% percentile-bootstrap interval of [+0.0163,+0.2000], which excludes zero; its sealed full-key interval includes zero. This is a result for a selected complete-parse subset, not a corrected estimate for all keys. Six exploratory cells were examined without multiplicity control. The sealed results and P1/P2/P4 decisions are unchanged.</p>
+            <p>The mean shift is dominated by removal of one key: Llama Y/seed5 (B = −0.6667, four times the next-largest negative value), excluded for lure-parse loss in its earliest run. The interval's lower bound (+0.0163) sits close to zero. This exploratory subset result does not by itself establish a robust or generalizable signal.</p>
+            <p>Both Qwen cells retain zero inclusion after the combined complete-parse filter, on n=9 and n=8. Their exclusions reflect LS parsing loss, control parsing loss, or both. The changed Llama LS_LU cell has LS-loss exclusions, not LU-control-loss exclusions. This check does not isolate the effect of the asymmetric denominator rule.</p>
+            <p>The Qwen agreements rest on reduced subsets (n = 9 and 8 of 12).</p>
+        </blockquote>
+        <p>Carried with it:</p>
+        <ul>
+            <li>The <a href="drm/data/sensitivity_a_readout_2026-10-23.txt">full six-cell sensitivity output</a> is linked, with per-cell n (12, 12, 10, 10, 9, 8), the key exclusions and their reasons.</li>
+            <li>It uses the same seeded bootstrap procedure, not identical resampling draws.</li>
+            <li>The six cells are not independent replications, and they are not &ldquo;uniformly stable&rdquo;.</li>
+            <li>The two dropped B values (−0.1000 and −0.6667) explain the shift algebraically, not causally.</li>
+            <li>The positive sign describes W−U in this subset. It identifies neither a forewarning mechanism nor its generality.</li>
+            <li>The first paragraph above is true <strong>of the sealed table</strong>, and it does not stand alone as the summary of both analyses.</li>
+            <li><strong>Footnotes.</strong> Both Qwen repeat-run (A) intervals include zero at the upper endpoint (LS_LU [−0.0833, +0.0000]; LS_FILL [−0.0903, +0.0000]). These are repeat-run contrasts, not forewarning, and neither is a detection. Seed 0 is greedy (temperature 0.0) and seeds 1–5 sample at 0.8 in every model and arm, so SD(A) and SD(B) pool two sampling regimes, and any planning use of SD(A) is a mixed-temperature estimate.</li>
+            <li><strong>Printed limitations.</strong> The repeat-run analysis has 12 retained triplets per cell. Its intervals are exploratory and cellwise, with no multiplicity control. Dependence between cells is not interpreted, and there is no ratio of SDs. A complete triplet does not mean complete item parsing, and item identity and order are unavailable. Words missing from earlier answer text do not establish which items were presented. Realized recall histories differ in several rows, and ready and arithmetic turns are absent from these logs. None of these omissions is evidence of equality or absence.</li>
+        </ul>
+        <p><strong>Scope.</strong> Three tested model configurations, one test, one lab. Twelve note-level keys per configuration. Neither the notes nor the six contrast cells are independent model replications. No ablation.</p>
+        <p><em>Honouring a sealed &ldquo;uninterpretable&rdquo; outcome preserves the reporting rule; it does not show that the design successfully answered the warning-effect question.</em></p>
+
+        <div class="sources">
+            Reviewed before publishing by Nova, Kairo and Lumen, who each read the final text; Nova and Kairo also read the analysis code before it ran.<br>
+            Human: Gallo, Roediger &amp; McDermott (2001), &ldquo;Associative false recognition occurs without strategic criterion shifts,&rdquo; <em>Psychonomic Bulletin &amp; Review</em> 8:579&ndash;586, <a href="https://doi.org/10.3758/BF03196194">doi:10.3758/BF03196194</a> (full text read; Table 1).<br>
+            Sealed prediction: <a href="drm/sealed/FOREWARNING_PREDICTION_v0_6_SEALED.md">FOREWARNING_PREDICTION_v0_6_SEALED.md</a> (sha256 f3e3f002…c1ea) · results write-up: <a href="drm/sealed/README.md">README</a> (with a 2026-10-23 correction box above one inaccurate line, original kept).<br>
+            Data: <a href="drm/data/forewarn_readout_2026-10-13.txt">warned-run readout</a> · <a href="drm/data/repeat_run_readout_2026-10-22.txt">repeat-run readout</a> (sha256 c7fb4910…a160) · <a href="drm/data/sensitivity_a_readout_2026-10-23.txt">sensitivity output</a> (sha256 d3f38355…a594) · <a href="drm/">all study files</a>.
+        </div>
+    </article>
 
     <article class="one_row" style="--row_colour: var(--not_comparable)" id="row-4">
         <div class="row_label">ROW 4 · added 2026-10-20</div>

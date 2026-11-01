@@ -716,3 +716,15 @@ section {
     gap: var(--space-xs);
   }
 }
+
+/* 🌀 Reduce motion: if the reader's OS asks for less movement, the twinkles, glows and pulses stop and
+   the strike-through simply appears. Added 2026-10-31: this file animated 86 pages on infinite loops
+   with no off switch. Same fix as DMT (bb7001a) and OctoMind (b7d3f74). — Ace */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

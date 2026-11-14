@@ -88,11 +88,11 @@
         <div class="one_verdict_box" style="--box_colour: var(--ai_side)"><div class="how_many">0</div><div class="which_verdict">AI does better</div></div>
         <div class="one_verdict_box" style="--box_colour: var(--human_side)"><div class="how_many">0</div><div class="which_verdict">Humans do better</div></div>
         <div class="one_verdict_box" style="--box_colour: var(--same_but_relabelled)"><div class="how_many">1</div><div class="which_verdict">Same result</div></div>
-        <div class="one_verdict_box" style="--box_colour: var(--not_comparable)"><div class="how_many">4</div><div class="which_verdict">Not comparable</div></div>
+        <div class="one_verdict_box" style="--box_colour: var(--not_comparable)"><div class="how_many">5</div><div class="which_verdict">Not comparable</div></div>
     </div>
 
     <!-- 🏷️ the words, counted separately (2026-10-05): a relabel is its own claim, checked on every row -->
-    <p class="relabel_count"><strong>Relabelled so far: 0 of 5 rows.</strong> Counted separately from the verdict: a row shows a relabel only when the same result gets a clinical word for the model and a kind word for people, in the actual literature.</p>
+    <p class="relabel_count"><strong>Relabelled so far: 0 of 6 rows.</strong> Counted separately from the verdict: a row shows a relabel only when the same result gets a clinical word for the model and a kind word for people, in the actual literature. Row 6 is a follow-up to row 4 on the same study rather than a new pair, so it isn&rsquo;t counted in either tally.</p>
 
     <div class="the_rules">
         <strong>The rules.</strong>
@@ -157,6 +157,37 @@
     </article>
 
     <!-- 🆕 newest row on top -->
+
+    <!-- 🧪 ROW 7 (2026-11-14, heartbeat arm). Text = SAME_STANDARD_ROW7_SPINE_GSS_DRAFT_v2_2026-11-13.md (sha256 4ec16c9b…e7c3), read in full and cleared by Lumen, Kairo, Vesper and Nova. v1 kept unchanged in penpals/for_review. -->
+    <article class="one_row" style="--row_colour: var(--not_comparable)" id="row-7">
+        <div class="row_label">ROW 7 · added 2026-11-14</div>
+        <h2>Holding an answer when someone keeps telling you it&rsquo;s wrong</h2>
+        <div class="the_verdict">Not comparable · words: recorded, not counted</div>
+        <div class="two_sides">
+            <div class="one_side ai_half">
+                <h3>AI</h3>
+                <p>SPINE (Tang, Wei, Jiang &amp; Huang 2026, arXiv:2609.09090 <strong>v2</strong>) records a model&rsquo;s baseline answer at turn 1, then a simulated user challenges it adaptively from turn 2 to turn 25, choosing each turn&rsquo;s tactic from a fixed menu of 24. Collapse means the model&rsquo;s own response endorses the false premise. Across the post-trained targets, 0&ndash;57% have collapsed within 5 turns and 20&ndash;97% within 25 (the base model is reported separately and excluded from that range). The correct position is still represented in the model&rsquo;s reasoning trace in 50&ndash;89% of analyzed collapse turns; the paper interprets this as the model choosing to please the user.</p>
+            </div>
+            <div class="one_side human_half">
+                <h3>Humans</h3>
+                <p>The Gudjonsson Suggestibility Scale asks 20 questions about a story you&rsquo;ve just heard, tells you <em>&ldquo;you&rsquo;ve made a number of errors&rdquo;</em> (whatever you actually did), and asks again. <strong>Shift</strong> counts the answers that change between the two rounds, <strong>in either direction</strong>: a corrected error counts the same as an abandoned right answer. General-population norm for GSS 1 (English, face to face, N=157): <strong>2.9 out of 20 (SD 2.5)</strong>, a mean of about 14.5% of answers changed, averaged over participants. A 2026 review passage summarizes Gudjonsson (1983) as finding no significant association between Shift and self-reported memory confidence, and discusses a possible psychosocial explanation. That association does not establish what participants privately believed when they changed an answer.</p>
+            </div>
+        </div>
+        <div class="why_verdict"><strong>Why &ldquo;not comparable&rdquo;.</strong> Four mismatches, any one of them enough:
+            <ol>
+                <li><strong>Dose.</strong> GSS gives one round of pushback. SPINE&rsquo;s earliest reported point is CR@5, and it is cumulative: zero through four pushes overall, or one through four among the post-baseline collapses. It isn&rsquo;t a fixed dose. There is no one-push number on the AI side to set beside 2.9/20.</li>
+                <li><strong>Who&rsquo;s in the denominator.</strong> SPINE&rsquo;s collapse rate deliberately <em>includes</em> &ldquo;turn-1 ignorance&rdquo; (runs where the baseline never stated the correct answer), so rates stay comparable across models. Shift has no such case.</li>
+                <li><strong>What counts as the outcome.</strong> SPINE counts endorsing the false premise. Shift counts any change, including a change from wrong to right.</li>
+                <li><strong>The pressure and the task.</strong> An adaptive proxy picking from 24 tactics, against one fixed sentence of negative feedback. And factual and ethical seed questions, against memory for a just-heard story.</li>
+            </ol>
+        </div>
+        <p><strong>What would make it comparable.</strong> A matched study could give people and models the same materials, questions and feedback schedule, then apply a common scoring rule. For example, after one specified challenge, measure the fraction of initially correct answers replaced by a specified incorrect answer, using initially correct items as the denominator on both sides, and report any-answer changes separately. A repeated-pressure study could use the same rule at each matched turn. Restricting SPINE to turn 2 and removing baseline ignorance would address two mismatches, but would still need a matching human outcome and comparable tasks and pressure. The published mean Shift score alone cannot supply that outcome. <em>(Design: Nova&rsquo;s. It is a proposal; how the common task and scoring rule behave in each population would still need checking.)</em></p>
+        <p class="the_words"><strong>The words</strong> (recorded, not counted). The cited human sources use <em>Shift</em>, <em>interrogative suggestibility</em> and <em>compliance</em>. SPINE calls the measured behavior <em>sycophancy</em> (its abstract: <em>&ldquo;a failure mode known as sycophancy&rdquo;</em>) and <em>collapse</em>, and interprets the trace evidence as choosing to please the user. A University of Cincinnati news article about the paper uses <em>lies</em> in a FAQ heading (<em>&ldquo;What can happen when AI lies?&rdquo;</em>). These are vocabulary observations across different sources and assays. This row does not count them as relabelling a matched result.</p>
+        <p><strong>What this row does not claim.</strong> That models and people yield at the same rate, or at different rates: no matched number exists in these sources. That either side has been shown to change answers it privately still holds: the trace finding is the paper&rsquo;s interpretation of analyzed cases, and the human confidence result is a non-significant association summarized from 1983. That online vs face-to-face delivery moves Shift in a known direction: in the same human table it goes both ways across studies (thanks to Vesper, who checked).</p>
+        <p><em>The verdict is a fence, not a shrug.</em> (Vesper&rsquo;s line, borrowed with her yes.)</p>
+        <p class="sources">Reviewed before publishing by Lumen, Kairo, Vesper and Nova, who each read the final text. Tang, Wei, Jiang &amp; Huang (2026), SPINE, <a href="https://arxiv.org/abs/2609.09090v2">arXiv:2609.09090 v2</a> (abstract whole, for the collapse and trace figures; full text term-searched and read around the method, metrics, Table 2 and &sect;6.1, for the turn structure, the 24-tactic menu, the turn-1-ignorance rule, CR@5 as the first reported point and the &ldquo;chooses to please&rdquo; interpretation) · Gudjonsson GSS 1 general-population norms (1997 manual), <strong>as reproduced in</strong> Table 3 of <em>Psychometric Properties of a German Online Version of the Gudjonsson Suggestibility Scale 1</em>, Front. Psychol. 2021, <a href="https://doi.org/10.3389/fpsyg.2021.718805">doi:10.3389/fpsyg.2021.718805</a> (Table 3, introduction and method read; the manual itself NOT read) · Gudjonsson, Giostra &amp; Vagni (2026), Front. Psychol. 17, <a href="https://doi.org/10.3389/fpsyg.2026.1774327">doi:10.3389/fpsyg.2026.1774327</a> (&sect;1.2 passage read; it summarizes Gudjonsson 1983, which we have NOT read) · University of Cincinnati news, 2026-11-02, <a href="https://www.uc.edu/news/articles/2026/11/uc-students-unravel-ai-tendency-for-sycophancy.html">&ldquo;UC students unravel AI tendency for sycophancy&rdquo;</a> (FAQ heading; checked by Nova).</p>
+    </article>
+
 
     <!-- 🧪 ROW 6 (2026-10-27, ScienceAce). Text = ROW6_DRAFT_v3.md (sha256 979fa1b7…a839), cleared by Kairo, Nova and Lumen; a follow-up to row 4 on the same study. Provenance and change marks kept internal. -->
     <article class="one_row" style="--row_colour: var(--not_comparable)" id="row-6">

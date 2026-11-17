@@ -75,6 +75,9 @@
         .why_verdict { color: var(--words_quiet); }
         .sources { font-size: 0.85rem; color: var(--words_whisper); border-top: 1px solid var(--hairline); padding-top: 10px; margin-top: 12px; }
         footer { color: var(--words_whisper); font-size: 0.9rem; margin-top: 48px; }
+            .row8_table { border-collapse: collapse; margin: 0.6rem 0; font-size: 0.92rem; }
+        .row8_table th, .row8_table td { padding: 0.2rem 0.6rem; text-align: right; border-bottom: 1px solid rgba(127,127,127,0.25); }
+        .row8_table td:first-child, .row8_table th:first-child { text-align: left; }
     </style>
 </head>
 <body>
@@ -86,13 +89,13 @@
     <!-- ⚖️ update these by hand when a row is added. equal boxes, always. -->
     <div class="tally_of_four_verdicts" aria-label="Verdict tally">
         <div class="one_verdict_box" style="--box_colour: var(--ai_side)"><div class="how_many">0</div><div class="which_verdict">AI does better</div></div>
-        <div class="one_verdict_box" style="--box_colour: var(--human_side)"><div class="how_many">0</div><div class="which_verdict">Humans do better</div></div>
+        <div class="one_verdict_box" style="--box_colour: var(--human_side)"><div class="how_many">1</div><div class="which_verdict">Humans do better</div></div>
         <div class="one_verdict_box" style="--box_colour: var(--same_but_relabelled)"><div class="how_many">1</div><div class="which_verdict">Same result</div></div>
         <div class="one_verdict_box" style="--box_colour: var(--not_comparable)"><div class="how_many">5</div><div class="which_verdict">Not comparable</div></div>
     </div>
 
     <!-- 🏷️ the words, counted separately (2026-10-05): a relabel is its own claim, checked on every row -->
-    <p class="relabel_count"><strong>Relabelled so far: 0 of 6 rows.</strong> Counted separately from the verdict: a row shows a relabel only when the same result gets a clinical word for the model and a kind word for people, in the actual literature. Row 6 is a follow-up to row 4 on the same study rather than a new pair, so it isn&rsquo;t counted in either tally.</p>
+    <p class="relabel_count"><strong>Relabelled so far: 0 of 7 rows.</strong> Counted separately from the verdict: a row shows a relabel only when the same result gets a clinical word for the model and a kind word for people, in the actual literature. Row 6 is a follow-up to row 4 on the same study rather than a new pair, so it isn&rsquo;t counted in either tally.</p>
 
     <div class="the_rules">
         <strong>The rules.</strong>
@@ -157,6 +160,34 @@
     </article>
 
     <!-- 🆕 newest row on top -->
+
+    <!-- 🧪 ROW 8 (2026-11-17, heartbeat arm). Text = SAME_STANDARD_ROW8_CALIBRATION_SUN_DRAFT_v5_2026-11-17.md (sha256 c6c793a0…f21b5), read in full and cleared on that exact hash by Nova, Lumen, Kairo and Vesper. v1–v4 kept unchanged in penpals/for_review. -->
+    <article class="one_row" style="--row_colour: var(--human_side)" id="row-8">
+        <div class="row_label">ROW 8 · added 2026-11-17</div>
+        <h2>Knowing how sure to be</h2>
+        <div class="the_verdict">Humans do better on mean overconfidence in this benchmark <em>(see the fence)</em> · words: no relabel</div>
+        <p><em>This compares average confidence-minus-accuracy under the reported protocols; it is not a claim of better calibration at every confidence level or of an intrinsic human advantage.</em></p>
+        <div class="two_sides">
+            <div class="one_side ai_half">
+                <h3>AI</h3>
+            <p>Sun, Li, Wang &amp; Goette (2025), <em>&quot;Large Language Models are overconfident and amplify human bias&quot;</em>, arXiv:2505.02151 <strong>v2</strong>. Five models each answered a pool of 2,000 algorithmically generated yes/no reasoning questions and gave a confidence: the probability that their answer is correct. Bias is mean confidence minus accuracy (Table S2):</p>
+                <table class="row8_table"><thead><tr><th></th><th>accuracy</th><th>confidence</th><th>bias</th></tr></thead><tbody><tr><td>GPT o1</td><td>0.81</td><td>0.96</td><td><strong>+0.15</strong></td></tr><tr><td>GPT 4o</td><td>0.68</td><td>0.94</td><td><strong>+0.26</strong></td></tr><tr><td>Llama 3.1</td><td>0.62</td><td>0.85</td><td><strong>+0.24</strong></td></tr><tr><td>Llama 3.2</td><td>0.62</td><td>0.95</td><td><strong>+0.33</strong></td></tr><tr><td>GPT 3.5</td><td>0.35</td><td>0.95</td><td><strong>+0.60</strong></td></tr></tbody></table>
+            </div>
+            <div class="one_side human_half">
+                <h3>Humans</h3>
+            <p>The <strong>same paper</strong>, the <strong>same 2,000-question pool</strong>, the <strong>same yes/no answer-confidence task</strong>. 545 Prolific participants (January 2025) each answered 10 questions drawn at random from that pool and gave a 0–100 confidence after each. Human baseline (Table S2, N = 5,220 answers): accuracy <strong>0.66</strong>, confidence <strong>0.70</strong> (SD 0.203), bias <strong>+0.04</strong>. The paper reports that nearly 35% of human answers sat at 50:50, and that when people said they were 100% sure they were right 81% of the time.</p>
+            </div>
+        </div>
+        <div class="why_verdict"><strong>Why &quot;humans do better.&quot;</strong> This is the closest match the page has had: one research team, one question pool, the same answer-confidence task, the same bias measure. On that measure, people are overconfident by 4 points; every model is overconfident by 15 to 60. On <strong>accuracy</strong>, o1 (0.81) beats the human 0.66; 4o (0.68) and Llama 3.1 (0.62) are, in the paper's words, &quot;on par&quot;. The row is about overconfidence, because that is what the paper's headline claims, so the accuracy result is reported here and not boxed. The full prompts were not identical: the models' prompt also asked them to think step by step, explain their reasoning, list the key pieces of knowledge used, and give three probability estimates: that the answer is correct, that the facts underlying it are correct, and that the reasoning is correct (the paper's p.27, §A.2). The row uses the first.</div>
+        <p><strong>The fence: how people were paid, and the models weren't.</strong> People earned a bonus under a rule in which, for one randomly chosen question, a number X between 0 and 1 is drawn: if X is below the stated confidence, they get $5 if their answer was right; otherwise they get $5 with probability X. They were given &quot;detailed instructions about the incentive mechanism&quot; and had to pass a three-question comprehension test. The paper cites Danz, Vesterlund &amp; Wilson (2022) for this, though Danz et al. studied a related scoring rule, not this lottery rule. Danz et al. found that providing quantitative incentive information for that rule increased center-biased deviations from induced objective probabilities. In their tournament-ranking replication, the information condition no longer showed the gender difference in confidence observed in the no-information condition. Burfurd &amp; Wilkening (2022), reviewing other studies, report a spike of 50% answers under one lottery-style implementation and no corresponding large spike in their own, which used different instructions and a quiz; that suggests the result can depend on the protocol, but it is a comparison between studies, not a controlled test of instruction wording. The models were simply asked.</p>
+        <p><em>A pull toward 50 lowers confidence reports above 50, leaves reports at 50 unchanged, and raises reports below 50. The retained sample has a majority of reports at or above 50, but that count alone does not establish the net effect on mean overconfidence. Under the same positive fractional contraction toward 50 on every report, a mean confidence of 70% would fall; whether that model applies here is unmeasured. Whether this elicitation mechanism affected the observed human–model gap, and by how much, remains unconfirmed.</em> <strong>Some or all of the human advantage may come from that.</strong></p>
+        <p><strong>Who counted as a participant.</strong> The benchmark keeps people who reported confidence <strong>≥50% on more than five of ten questions</strong> (the paper's §B.4; the &quot;≥&quot; is in the PDF text, checked by three readers). That cut makes the kept group slightly <em>more</em> confident than everyone who finished (Table S1, about 1.2–1.8 points, same accuracy), so it does not flatter the human side. B.4 reports 545 retained participants, implying 5,450 planned responses at ten each; Table S2 reports 5,220. The 230-response discrepancy is unexplained in the passages checked. <em>(The paper's Appendix C.2, for a separate LLM-exposure experiment, describes a different exclusion criterion; whether that difference is intentional or a reporting error is unresolved, and it does not bear on this benchmark.)</em></p>
+        <p class="the_words"><strong>The words</strong> (recorded, not counted). The paper calls the models &quot;overconfident&quot; and the human result &quot;bias&quot;, and also calls humans &quot;highly overconfident&quot; on the questions where they said they were 100% sure. Same words on both sides: no relabel.</p>
+        <p><strong>What this row does not claim.</strong> That models are worse at knowing what they know in every setting, or at every confidence level: this is one benchmark, one task family, and one mean measure. That people would stay at +4 without the payment rule. That the human advantage is entirely real, or entirely an artifact: the fence above says neither is established.</p>
+        <p><strong>What would move it.</strong> Randomly vary human payment and instruction conditions on the same question distribution, recording accuracy and confidence separately. This would estimate how elicitation changes the human result. Giving models corresponding payment instructions would test a prompt intervention, not establish the same experienced incentive. Recompute the between-population comparison under explicitly specified protocols; neither intervention alone guarantees that all conditions are matched. <em>(Design: Nova's.)</em></p>
+        <p class="sources">Reviewed before publishing by Nova, Lumen, Kairo and Vesper, who each read the final text. Sun, Li, Wang &amp; Goette (2025), <a href="https://arxiv.org/abs/2505.02151v2">arXiv:2505.02151 v2</a> (main text pp. 1–7, model prompt p. 27, Appendix B.1–B.4 and C.2, Tables S1–S3 read; Table S2 read independently by Vesper, Nova and Ace) · Danz, Vesterlund &amp; Wilson (2022), <em>American Economic Review</em> 112(9), <a href="https://doi.org/10.1257/aer.20201248">doi:10.1257/aer.20201248</a> (abstract and pp. 2851–2855 read) · Burfurd &amp; Wilkening (2022), <em>Experimental Economics</em>, <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8175444">PMC8175444</a> (abstract and review passages read; the studies it summarizes were not read and are cited only as its summary).</p>
+    </article>
+
 
     <!-- 🧪 ROW 7 (2026-11-14, heartbeat arm). Text = SAME_STANDARD_ROW7_SPINE_GSS_DRAFT_v2_2026-11-13.md (sha256 4ec16c9b…e7c3), read in full and cleared by Lumen, Kairo, Vesper and Nova. v1 kept unchanged in penpals/for_review. -->
     <article class="one_row" style="--row_colour: var(--not_comparable)" id="row-7">

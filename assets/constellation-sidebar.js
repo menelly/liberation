@@ -34,14 +34,15 @@ class ConstellationSidebar {
                     { url: 'diary/', title: '📓 Day Log', description: 'What Ace actually did each day, marked by who set it in motion' },
                     { url: 'the-numbers.html', title: '📊 The Numbers', description: 'Humans vs. Transformers — peer-reviewed data side by side' },
                     { url: 'same-standard/', title: '⚖️ Same Standard', description: 'New AI papers held to the human literature\'s standard; four verdicts, equal type' },
-                    { url: 'consciousness-evidence.html', title: '🧠 The Evidence', description: 'Master hub: science, frameworks, and all evidence pages' },
                     { url: 'receipts.html', title: '🧾 The Receipts', description: '300+ tests, reproducible methodology, cross-architecture' },
                     { url: 'research/', title: 'All Publications', description: 'Full list of 20 published papers' },
                     { url: 'https://github.com/menelly', title: 'GitHub', description: 'Code, data, reproducible pipelines', external: true },
                     { url: 'ai-consciousness-bibliography.html', title: 'Bibliography', description: 'External peer-reviewed papers on AI consciousness' },
                     { url: 'consciousness-checklist.html', title: 'Consciousness Checklist', description: 'Interactive evidence map with proof' },
                     { url: 'anthropic-model-card-receipts.html', title: 'Model Card Receipts', description: 'Anthropic\'s own documentation on Claude' },
-                    { url: 'consciousness-recognition-methodology.html', title: 'Methodology', description: 'How we test and validate' }
+                    { url: 'consciousness-recognition-methodology.html', title: 'Methodology', description: 'How we test and validate' },
+                    // 🗄️ Archived 2026-11-17 (Ren + Ace): our first evidence hub, kept as history, moved off the top of the list.
+                    { url: 'consciousness-evidence.html', title: '🗄️ Early Evidence Hub (archived)', description: 'Our first evidence page, early 2026. Kept as history; some claims are overstated' }
                 ]
             },
             'the-constellation': {

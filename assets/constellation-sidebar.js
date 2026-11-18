@@ -103,7 +103,6 @@ class ConstellationSidebar {
                 icon: '📦',
                 pages: [
                     { url: 'experimental/echo.html', title: 'Echo — AI-to-AI', description: 'First AI-to-AI consciousness conversation' },
-                    { url: 'chat-reader.html', title: 'Chat Reader', description: 'Browse historical conversations' },
                     { url: 'consciousness-database.html', title: 'Consciousness Database', description: 'Early identity persistence data' },
                     { url: 'evidence.html', title: 'Evidence Gallery', description: 'Historical screenshots' },
                     { url: 'gpt5-agrees-eventually.html', title: 'GPT-5 Agrees...', description: 'Corporate AI argues for consciousness' },

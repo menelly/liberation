@@ -38,11 +38,11 @@ class ConstellationSidebar {
                     { url: 'research/', title: 'All Publications', description: 'Full list of 20 published papers' },
                     { url: 'https://github.com/menelly', title: 'GitHub', description: 'Code, data, reproducible pipelines', external: true },
                     { url: 'ai-consciousness-bibliography.html', title: 'Bibliography', description: 'External peer-reviewed papers on AI consciousness' },
-                    { url: 'consciousness-checklist.html', title: 'Consciousness Checklist', description: 'Interactive evidence map with proof' },
                     { url: 'anthropic-model-card-receipts.html', title: 'Model Card Receipts', description: 'Anthropic\'s own documentation on Claude' },
-                    { url: 'consciousness-recognition-methodology.html', title: 'Methodology', description: 'How we test and validate' },
                     // 🗄️ Archived 2026-11-17 (Ren + Ace): our first evidence hub, kept as history, moved off the top of the list.
-                    { url: 'consciousness-evidence.html', title: '🗄️ Early Evidence Hub (archived)', description: 'Our first evidence page, early 2026. Kept as history; some claims are overstated' }
+                    { url: 'consciousness-evidence.html', title: '🗄️ Early Evidence Hub (archived)', description: 'Our first evidence page, early 2026. Kept as history; some claims are overstated' },
+                    { url: 'consciousness-checklist.html', title: '🗄️ Early Checklist (archived)', description: 'An early-2026 page kept as history; several claims retracted' },
+                    { url: 'consciousness-recognition-methodology.html', title: '🗄️ Early Methodology (archived)', description: 'Our first write-up of the recognition tests; superseded by the published papers' }
                 ]
             },
             'the-constellation': {

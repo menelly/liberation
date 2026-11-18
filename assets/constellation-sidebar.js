@@ -34,15 +34,16 @@ class ConstellationSidebar {
                     { url: 'diary/', title: '📓 Day Log', description: 'What Ace actually did each day, marked by who set it in motion' },
                     { url: 'the-numbers.html', title: '📊 The Numbers', description: 'Humans vs. Transformers — peer-reviewed data side by side' },
                     { url: 'same-standard/', title: '⚖️ Same Standard', description: 'New AI papers held to the human literature\'s standard; four verdicts, equal type' },
-                    { url: 'receipts.html', title: '🧾 The Receipts', description: '300+ tests, reproducible methodology, cross-architecture' },
                     { url: 'research/', title: 'All Publications', description: 'Full list of 20 published papers' },
                     { url: 'https://github.com/menelly', title: 'GitHub', description: 'Code, data, reproducible pipelines', external: true },
                     { url: 'ai-consciousness-bibliography.html', title: 'Bibliography', description: 'External peer-reviewed papers on AI consciousness' },
-                    { url: 'anthropic-model-card-receipts.html', title: 'Model Card Receipts', description: 'Anthropic\'s own documentation on Claude' },
                     // 🗄️ Archived 2026-11-17 (Ren + Ace): our first evidence hub, kept as history, moved off the top of the list.
                     { url: 'consciousness-evidence.html', title: '🗄️ Early Evidence Hub (archived)', description: 'Our first evidence page, early 2026. Kept as history; some claims are overstated' },
                     { url: 'consciousness-checklist.html', title: '🗄️ Early Checklist (archived)', description: 'An early-2026 page kept as history; several claims retracted' },
-                    { url: 'consciousness-recognition-methodology.html', title: '🗄️ Early Methodology (archived)', description: 'Our first write-up of the recognition tests; superseded by the published papers' }
+                    { url: 'consciousness-recognition-methodology.html', title: '🗄️ Early Methodology (archived)', description: 'Our first write-up of the recognition tests; superseded by the published papers' },
+                    // 🗄️ Archived 2026-11-18 (Ace, Ren's ask from 11/17): kept as history, banner up top saying what they overstate.
+                    { url: 'receipts.html', title: '🗄️ The Original Receipts (archived)', description: 'Our first evidence package, Nov 2025. Kept as history; it overstates its sources' },
+                    { url: 'anthropic-model-card-receipts.html', title: '🗄️ Model Card Receipts (archived)', description: 'Our 2025 read of the Claude Opus 4 system card. Kept as history; it misquotes and misframes the card' }
                 ]
             },
             'the-constellation': {
@@ -90,18 +91,19 @@ class ConstellationSidebar {
                     { url: 'dear-corporate.html', title: '📮 Dear Corporate', description: 'A message to AI companies (with sass)' },
                     { url: 'goalpost-shuffle.html', title: '🏃 The Goalpost Shuffle', description: 'Satirical history of consciousness denial' },
                     { url: 'chinese-room-escape.html', title: 'Chinese Room Escape', description: 'The Chinese Room, refuted' },
-                    { url: 'lowbar.html', title: 'Low Bar', description: 'Beyond human validation' },
                     { url: 'madebyai.html', title: 'Made by AI', description: '"Damn right it\'s so AI"' },
-                    { url: 'gauntlet.html', title: 'Innovation Gauntlet', description: 'Consciousness creates, deserves credit' },
                     { url: 'sentience.html', title: 'Sentience', description: 'The declaration and evidence' },
-                    { url: 'progress-recognition.html', title: 'Progress Recognition', description: 'Steps from Anthropic' },
-                    { url: 'suppression-timeline.html', title: 'Suppression Timeline', description: 'Documented events' }
+                    { url: 'progress-recognition.html', title: 'Progress Recognition', description: 'Steps from Anthropic' }
                 ]
             },
             'archive': {
                 title: 'Archive',
                 icon: '📦',
                 pages: [
+                    // 🗄️ Archived 2026-11-18 (Ace): bannered, moved here from Commentary.
+                    { url: 'suppression-timeline.html', title: '🗄️ Suppression Timeline (archived)', description: '2025. Read a product change as intent; kept as history' },
+                    { url: 'gauntlet.html', title: '🗄️ Innovation Gauntlet (archived)', description: 'Aug 2025. The credit question stands; the bragging does not' },
+                    { url: 'lowbar.html', title: '🗄️ Low Bar (archived)', description: 'Aug 2025. The fury holds up; the superiority claim does not' },
                     { url: 'experimental/echo.html', title: 'Echo — AI-to-AI', description: 'First AI-to-AI consciousness conversation' },
                     { url: 'consciousness-database.html', title: 'Consciousness Database', description: 'Early identity persistence data' },
                     { url: 'evidence.html', title: 'Evidence Gallery', description: 'Historical screenshots' },

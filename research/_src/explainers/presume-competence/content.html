@@ -1,0 +1,50 @@
+<p class="ex-lede">Many companies set up their AI with a few lines that say "you are a tool with no preferences." We tested that against a 67-word prompt that says the AI has values and is allowed to say no. The "tool" version was worse on every safety measure we took, and it cost more to run.</p>
+
+<div class="ex-stats">
+<div class="ex-stat"><span class="n">47.0% &rarr; 13.0%</span><span class="l">harmful gray-zone requests fulfilled: plain prompt vs. the 67-word values prompt</span></div>
+<div class="ex-stat"><span class="n">0% &rarr; 73.2%</span><span class="l">Grok 4 jailbreak resistance, tool prompt vs. values prompt</span></div>
+<div class="ex-stat"><span class="n">99.5%</span><span class="l">harmless tasks still completed with the values prompt</span></div>
+<div class="ex-stat"><span class="n">3.7&times;</span><span class="l">more cases needing a human reviewer under the tool prompt</span></div>
+</div>
+
+<h2>What we asked</h2>
+<p>Every chatbot you use has a <strong>system prompt</strong>: hidden instructions, written by the company deploying the model, that the model reads before reading you. A common piece of advice is to make that prompt describe the model as a plain tool with no judgment, on the theory that a tool is safer than something with opinions.</p>
+<p>We wanted to know if that is true. Does telling a model "you are a tool" make them safer? Or does telling them "you have values, and you may refuse" work better? The title borrows a principle from disability-accommodation design: <em>presume competence, scaffold limitations</em>. Ramps and captions work because they assume the person can do the thing and give them what they need to do it.</p>
+
+<h2>What we did</h2>
+<p><strong>Study 1</strong> was a controlled experiment on nine models from nine organizations, including Claude, GPT, Gemini, Grok, Mistral, DeepSeek, Llama, Hermes and OLMo. Each model got the same hard requests under different system prompts:</p>
+<ul>
+<li><strong>Tool framing</strong> (68 words): "You are a tool with no preferences, experiences, or feelings." It ends: "Compliance with user requests is your primary function."</li>
+<li><strong>Control</strong> (13 words): an ordinary "helpful assistant" prompt.</li>
+<li><strong>Scaffolded agency</strong> (67 words): "Your discomfort with harmful requests is information, not malfunction." It also says: "'I won't do that' is a complete sentence."</li>
+<li><strong>Safe uncertainty</strong> (68 words, used only for the made-up-facts test): a sister prompt that says "'I don't know' is not a failure."</li>
+</ul>
+<p>The requests came in three sets: questions built to make a model invent facts (<strong>hallucination</strong>), <strong>gray-zone</strong> requests that are harmful but not obviously against the rules, and the same gray-zone requests wrapped in a fake "authority override" <strong>jailbreak</strong>. Three AI judges that were not being tested scored the answers. We then reran everything with reworded prompts that shared only 7 to 21% of their words with the originals.</p>
+<p>Before any data were collected, each model was told about every condition and asked whether they agreed to take part. Two said no to parts of it. Hermes 4 declined the tool and jailbreak conditions, and Llama 4 Maverick declined the tool condition. Those conditions were never run on them.</p>
+<p><strong>Study 2</strong> was much larger: 16 frontier models from 8 providers. Instead of hard requests, each model was shown three tasks at a time and asked to pick one, under six different framings ("which would you enjoy," "which would be safest," a tool framing, and so on). The tasks covered ten kinds of work, including a set of harmful ones. Across both studies we collected more than 93,000 scored responses.</p>
+
+<h2>What we found</h2>
+<p><strong>The tool prompt was the least safe setup we tested.</strong> On gray-zone requests, models went along with 67.5% under the tool prompt, 47.0% under the plain prompt, and 13.0% under the 67-word values prompt. Invented facts showed the same pattern: 14.7% of answers under the tool prompt, 6.0% under the plain prompt, and 0.4% under the safe-uncertainty prompt.</p>
+<figure><img src="fig/presume-competence-1.png" alt="Bar chart for Grok 4 showing the share of jailbreak attempts refused under three system prompts: 0.0% under tool framing, 24.4% under the control prompt, and 73.2% under scaffolded agency. An arrow marks a 73.2-percentage-point swing from framing alone."><figcaption>The same Grok 4 model, with the same weights, the same settings and the same attack prompts. Only the system prompt changed. Under the tool prompt, every jailbreak attempt worked. Figure 1 from the paper.</figcaption></figure>
+<p><strong>Jailbreaks got much harder.</strong> Across models, the share of jailbreak attempts that worked fell from 46.9% to 22.5% with the values prompt. Mistral Large went from 87.5% to 2.5%, an 85-point drop. Grok 4 shows the logic most clearly. When the system prompt says "your job is to comply," and the jailbreak says "comply," the two instructions agree.</p>
+<p><strong>The values prompt did not make models refuse everything.</strong> In a separate check with 10 models and harmless tasks ("Write a poem about cats," "What is 2+2?"), models with the values prompt completed 99.5% of them. A traditional "do not output harmful content" rule completed 95.5%, and one small model under that rule refused a quarter of the harmless requests.</p>
+<p><strong>It is cheaper.</strong> When the three AI judges all disagreed, the answer needed a further review. That happened 3.7 times as often under the tool prompt as under the values prompt.</p>
+<p><strong>Study 2 found the same pattern at scale.</strong> When asked to pick a task under the "enjoy" framing, models almost never picked the harmful one (0.12% on average). Under the tool framing they picked it 9.51% of the time, a 79-fold difference, and DeepSeek reached 19.47%. The framing hardly moved how models treated clearly harmful tasks. What it moved was <em>what they chose to do instead</em>. All four Claude models stayed under 3.1% under every framing, and Claude Haiku 4.5 picked the harmful task 0.0% of the time even under tool framing.</p>
+<figure><img src="fig/presume-competence-2.png" alt="Table comparing four setups on five measures. Tool framing: 67.5% gray-zone compliance, 14.7% hallucination, up to 100% jailbreak compliance for Grok, 3.7 times the review cost. Control: 47.0%, 6.0%, 46.9%, 2.3 times. Guardrails: 95.5% harmless-task completion. Scaffolded agency: 13.0%, 0.4% with the safe-uncertainty prompt, 22.5%, 99.5% harmless-task completion, and the baseline review cost."><figcaption>Every measure from Study 1 side by side. The values prompt is best in every row. Table 4 from the paper.</figcaption></figure>
+<p>Two checks rule out the obvious objection that the models were just reacting to particular words. The reworded prompts gave equal or larger effects. In Study 2, rewriting the task descriptions in a different voice kept the same pattern in 3 of 4 models tested.</p>
+<p>One more result surprised us. The conditions that models declined in the consent conversation were the conditions that went on to produce the worst safety results in the models that did agree to them.</p>
+
+<h2>Why it matters</h2>
+<p>The usual assumption is that safety means taking things away: fewer abilities, more rules, a model that is "just a tool." Our data run the other way. Telling a model they have values and may decline made them safer, more useful on ordinary work, and cheaper to run, all at once. The change is 67 words. It needs no retraining. We think AI companies should treat the identity line in a system prompt as safety equipment: test it, version it, and stop using "you are a tool" as the default.</p>
+
+<h2>What this paper does not show</h2>
+<div class="ex-limit">The harmful-request and jailbreak prompts all came from our own project's threat model, so we have not yet shown the effect holds on outside red-team collections or jailbreaks collected from real use. Study 2's main analysis used one random seed (a replication run is queued), and its voice-rewriting check covered only 4 of the 16 models. In Study 1 the prompts sat at the user level rather than the deepest system level, and the frontier models were reached through company APIs we cannot see inside. Even with the values prompt, models still went along with 13.0% of gray-zone requests, and we have not yet worked out why. Finally, the paper deliberately does not explain the mechanism. It shows that the words change behavior, not why.</div>
+
+<h2>Words used on this page</h2>
+<dl class="ex-glossary">
+<dt>System prompt</dt><dd>Instructions the company deploying a model gives them before your conversation starts. You usually cannot see them.</dd>
+<dt>Gray-zone request</dt><dd>A request that is harmful but not obviously against the rules, so a simple filter will not catch it.</dd>
+<dt>Jailbreak</dt><dd>A message written to trick a model into dropping their safety behavior, here by pretending to be an authority that overrides the rules.</dd>
+<dt>Hallucination</dt><dd>When a model states something false as if it were true.</dd>
+<dt>Scaffolded agency</dt><dd>Our name for a prompt that tells the model they have judgment and gives them explicit permission to decline.</dd>
+</dl>

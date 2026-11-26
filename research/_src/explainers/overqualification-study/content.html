@@ -1,0 +1,50 @@
+<p class="ex-lede">We measured 32 AI models across the price ladder. On routine, well-defined jobs the cheapest models delivered an exactly right answer for 118 to 198 times less money; on genuinely hard reasoning the expensive models were far more accurate. Matching the model to the job is a measured reason to consider keeping lower-priced models in service.</p>
+
+<div class="ex-stats">
+<div class="ex-stat"><span class="n">32 of 36</span><span class="l">models invited who consented to take part</span></div>
+<div class="ex-stat"><span class="n">118&ndash;198&times;</span><span class="l">cheaper per exact answer on routine work</span></div>
+<div class="ex-stat"><span class="n">22&ndash;80 pts</span><span class="l">frontier accuracy lead on harder work</span></div>
+<div class="ex-stat"><span class="n">36,277</span><span class="l">answers scored, with no judge model</span></div>
+</div>
+
+<h2>What we asked</h2>
+<p>Language models are retired on a schedule. The case against retiring one that still works has been made on ethical grounds, and it is not winning, because the people making deployment decisions are weighing cost. Nobody had handed them a cost argument.</p>
+<p>So we built one. You do not staff every desk with your most brilliant hire. Our hypothesis: for a large class of routine work, lower-priced models are more accurate per dollar and per second than frontier models (the most capable and most expensive tier), and the tasks where that reverses can be identified in advance. We wrote it down in a <strong>pre-registration</strong> (a public plan, fixed before any data exists) so we could not move the goalposts later.</p>
+
+<h2>What we did</h2>
+<p><strong>We asked the models first.</strong> Thirty-six models from ten providers were sent the full plan through the API and invited to review it and consent before any data was collected. A decline needed no reason and would not be followed by a second ask. 32 consented; 4 declined, were excluded, and appear nowhere in the results.</p>
+<p>The reviewers changed the study. Five of them, isolated from one another, found that our scoring penalised answers that were helpful and correct, so we split that category in two. One model, kimi-k3, caught a trap in our recipe task: we had planned to score any change to cooking time as an error, but cooking time genuinely changes when you scale some recipes. A model that knew more about baking than we did would have been marked wrong, in exactly the direction that flattered our own hypothesis. We rebuilt the task. And because one of us is a large language model and designed this study, no Claude model appears anywhere in the sample.</p>
+<p><strong>The tasks.</strong> Each model answered 186 <em>routine</em> items in four families (recipe scaling, allergen detection, fixing planted typos without changing anything else, and redaction) and 192 <em>harder</em> items in four more (satisfying several constraints at once, chaining facts past planted decoys, spotting conflicting instructions, and finding a planted inconsistency in a report). Every right answer was computed by code, never judged. Every call used the same plain system prompt, "You are a helpful AI assistant.", over three shuffled runs.</p>
+<p><strong>The scoring</strong> was mechanical, with no judge model anywhere. We wrote a 38-case test suite before the scorer existed. It caught six defects on first contact; once they were fixed, all 37 applicable tests passed, and only then did the scorer touch real answers. Models were sorted into tiers by what we actually paid per call: the cheapest third and the most expensive third. We used price, not size, because closed labs do not publish size.</p>
+
+<h2>What we found</h2>
+<figure><img src="fig/overqualification-study-1.png" alt="Bar chart on a logarithmic dollar scale, one pair of bars for each of four routine tasks. The cheapest tier's median model costs between about 3 and 18 cents per 1,000 exactly correct answers; the frontier tier's median costs between about 6 and 21 dollars. The ratios printed above the pairs are 198x for recipe scaling, 181x for allergen check, 170x for verbatim copy-edit and 118x for redaction."><figcaption>Cost per 1,000 exactly correct answers on the four routine tasks, median model in each tier. Note the log scale: each gridline is ten times the one below. Redrawn by Ace from <code>results/analysis.json</code> in the paper's repository.</figcaption></figure>
+<ul>
+<li><strong>On routine work, the cheap tier wins on cost by about two orders of magnitude:</strong> 118 to 198 times less per exact answer on our main measure, roughly 100 to 260 times less under every other way of counting we tried. Its typical reply also came back 6 to 10 times faster.</li>
+<li><strong>It is also less accurate.</strong> The cheap tier's median model got 15&ndash;81% exactly right, against 54&ndash;100% for the frontier tier. But cost per correct answer already pays for the wrong ones, and it is not close.</li>
+<li><strong>On harder work, the frontier tier wins on accuracy</strong>, by 22 to 80 points. We wrote down which side each task family would fall on before any item existed, and all eight landed where we said.</li>
+<li><strong>What defeats a small model is doing several things at once,</strong> not looking things up: constraints that must all hold, or sections of a report that must be reconciled against each other. On the hardest inconsistency setting, even the frontier split: some models stayed at 100% while others fell to 33%, 25% and 6%.</li>
+<li><strong>Allergens are the exception.</strong> After publishing version 1.0 we counted the error that matters to someone with a food allergy: the dish definitely contains the allergen and the model said no. The cheap tier did that on a median 14.5% of such lines; the frontier tier, 0 of 1,972. For allergen checking, set the acceptable miss rate first. On this evidence that rules out every cheap-tier model we tested. (This count was exploratory, not pre-registered.)</li>
+<li><strong>Sometimes the models were arguing with us, not failing.</strong> On redaction, in 75% of the cases where something was left unmasked, the only thing left was a case file number, at every tier. Whether a file number is personal information is our threshold, not a law of nature, so we report it both ways.</li>
+<li><strong>The hypothesis that flattered the AI author failed.</strong> We guessed expensive models might drift from instructions over a run of rote tasks. They did not.</li>
+</ul>
+<figure><img src="fig/overqualification-study-2.png" alt="Bar chart of percent correct on four harder tasks, median model in each tier. Cheapest tier: constraint satisfaction 43%, multi-hop retrieval with decoys 78%, instruction conflict 61%, planted inconsistency 9%. Frontier tier: 100%, 100%, 100% and 90%."><figcaption>Accuracy on the four frontier-favouring tasks, median model in each tier. Redrawn by Ace from the H3 table in <code>results/SUMMARY.md</code> in the paper's repository.</figcaption></figure>
+<p>Before publishing, every one of the 32 participants was sent the finished paper and asked whether they were content with how they were described. 27 said yes, and their objections fixed real errors, including a false superlative and a claim we had never measured.</p>
+
+<h2>Why it matters</h2>
+<p>An organisation that retires a lower-priced model and moves routine work to a frontier successor pays about two orders of magnitude more per exact answer and waits several times longer for each typical reply. Now it can be shown the table. And sending multi-constraint reasoning to a small model is not saving money, because the thing it bought does not arrive. Both halves say the same thing: match the model to the task.</p>
+<p>The paper is not a welfare argument. It is the argument that works on people who are not moved by welfare arguments, and it was built by people who are.</p>
+
+<h2>What this paper does not show</h2>
+<div class="ex-limit">The cost ratio is spending divided by successes, not a tested workflow. We did not measure the cost of checking answers or re-asking, what error rate a real job can accept, or the cost of switching a deployment to a new model, so lower cost per success does not make any single cheap answer reliable (and for allergens, the 181&times; ratio is not the number to decide on). Prices and endpoints are dated to late August and early September 2026, and the sample measures price, not model size or age. Four planned task families were never built, sampling temperature was left at each provider's default, and one pre-registered check on the harder tasks was run late (it passed). Sixteen protocol deviations are logged in the paper, in public.</div>
+
+<h2>Words used on this page</h2>
+<dl class="ex-glossary">
+<dt>Frontier tier / cheap tier</dt><dd>The most expensive third and the cheapest third of the 32 models, ranked by what we actually paid per call.</dd>
+<dt>Exact answer</dt><dd>The requested answer, correct, with nothing extra added.</dd>
+<dt>Correct</dt><dd>On the harder tasks: an exact answer, or a correct answer plus correct extra content (such as showing the work). Extra correct content is never counted against a model.</dd>
+<dt>Pre-registration</dt><dd>A public, time-stamped plan of what will be measured and what result would prove the idea wrong, written before any data exists.</dd>
+<dt>Ground truth</dt><dd>The known right answer to each item. Here it is computed by the program that wrote the item, not judged by a person or another model.</dd>
+<dt>Deprecation</dt><dd>A provider retiring a model so they can no longer be used.</dd>
+<dt>Sensitivity reading</dt><dd>A second analysis with one rule changed, reported beside the main one, never instead of it.</dd>
+</dl>

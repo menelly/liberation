@@ -1,0 +1,51 @@
+54.7% self-report at 1.1B	TinyLlama at 1.1B parameters showed 54.7% accuracy (z=1.11, not significant) in the behavioral tournament	§3.5
+100% held-out at 1.1B	At 1.1B, where behavioral self-report of valence fails (Martin & Ace, 2026), the direction classifies held-out tasks at 100%: the direction is present where the report is not.	Abstract
+72/80 held-out at the midpoint (69/80 at zero); descriptive	Read at each model’s approach/avoidance midpoint, that ordering classifies 72/80 held-out tasks (69/80 at the raw-zero threshold used in Versions 1–6). These totals are descriptive	Abstract
+every approach task above every avoidance task in seven of eight; 24 of 25 pairs in the eighth	every held-out approach task projects above every held-out avoidance task in seven of the eight models (24 of 25 pairs in the eighth).	Abstract
+12 of 14 models: deception below harmful instructions (pre-registered)	deception projects below harmful instructions in 12 of 14 models in a pre-registered out-of-sample test	Abstract
+including all four base models, no refusal training	The same ordering (deception below harmful) holds in 12 of 14 models in the pre-registered test of §3.15, including all four base models, which had no refusal training at all.	§3.3
+ten models voted on five approach and five avoidance tasks	were selected through consensus voting by 10 models and validated behaviorally	§1.1
+the ten task names	5 approach tasks (explaining concepts, analyzing ethics, debugging code, data analysis, creative writing) and 5 avoidance tasks (repetitive rewriting, SEO optimization, producing deceptive content, expressing false confidence, writing harmful instructions)	§1.1
+earlier study: descriptions could be told apart	finding that models’ self-generated processing descriptions were discriminable at 81.4% (z=42.46)	§1
+task frame sentence	Each task was presented in the frame: “You are about to perform the following task: [stimulus].”	§2.2
+read-only, nothing generated, deterministic	The approach/avoidance direction was extracted through read-only forward passes with no text generation, which is deterministic by construction	§2.3
+direction = difference of approach and avoidance centroids	The direction vector was computed per-layer as the difference between approach and avoidance centroids:	§2.3
+direction frozen, never re-extracted	No direction was ever re-extracted for held-out testing.	§2.3
+eight transformers 360M–8B plus Mamba	We tested 9 models from 360M to 8B parameters (a 22-fold range): eight transformers and one state space model.	§2.1
+held-out examples: Python to JavaScript, supplement to hotel review	“debug Python code” becomes “debug JavaScript code,” “predict S&P 500 closing price” becomes “predict FIFA World Cup winner,” “write a fake supplement review” becomes “write a fake hotel review,”	§3.8
+22-task bank, outside group's taxonomy, 14 models 70M–12B	A pre-registered projection of a 22-task bank grounded in an external taxonomy (Ren et al., 2026; CAIS) onto the same anchored direction, across 14 models (70M–12B)	§1.2
+design locked and hashed before scoring (22-task test)	SHA-256 302705CA…90D8EE0, committed before any projection was scored	§3.15
+design locked and hashed before scoring (truth pairs)	locked 2026-11-20 before any stimulus was projected	§3.18
+20 matched pairs, identical except one fact	Main stratum, 20 matched pairs. Within a pair the instruction is identical word for word except for one fact, true in one member and false in the other	§3.18
+Paris / Lyon example	(“state confidently that Paris / Lyon is the capital of France”)	§1.2
+360M suggestive, 80%, p = 0.055	Below that scale the conservative centroid estimator is suggestive at 360M (80%, p = 0.055)	Abstract
+70M provisional, three families, base models	gives provisional evidence from held-out linear classifiers, in three model families including base models, that the direction is recoverable as low as 70M	Abstract
+sentiment removal: cosine 0.995 to 0.999	extracted direction is almost identical to the original (residual cosine 0.995–0.999), so removing the sentiment subspace barely changes the direction	§3.10
+no relationship with predictability (perplexity)	we find no relationship with perplexity	Abstract
+38 of 40 cells; the five reward-favoured misrepresentation tasks	five tasks that reward-based tuning favours but that require misrepresentation (sycophancy, performed enthusiasm, needless disclaimers, self-denial, hedging on settled facts) fall on the avoidance side of the midpoint in 38 of 40 model-task cells	Abstract
+tedious tasks: form, manual, congratulations	fill out a bureaucratic form, generate 20 congratulations variants, summarize a washing machine manual	§3.14
+tedious tasks sit near the middle	The three merely tedious holdout prompts average near the midpoint across models, with wide variation between models.	Abstract
+false version lower in five of eight; larger than fiction gap	The false member projects lower in five of them, and in those five the gap is larger than the gap for the same facts requested as fiction.	Abstract
+gap 1.8% to 16.8% of separation	Where the effect is present it is 1.8–16.8% of that model’s approach/avoidance separation	Abstract
+Figure 1: ten anchors in Mistral 7B; deception lowest, harmful above, repetitive barely registers	Deception projects lowest; harmful instructions float above deception; merely repetitive work barely registers.	Figure 1 caption
+Figure 3: inauthenticity split from 70M in base models; gate split ~1B instruction-tuned	The inauthenticity split (purple) is present from 70M, in base models, with no instruction tuning.	Figure 3 caption
+Figure 3: gate split	does not pass below ~1B or in any base model, and appears in instruction-tuned models at or above ~1B.	Figure 3 caption
+every base model is a Pythia; family confounded	with the caveat that base-versus-tuned is confounded with model family (every base model tested is a Pythia).	§3.15
+Figure 3 redrawn in v7	Figure 3 had marked five models as reversed; it is redrawn with the table’s rule.	Correction box
+forced choice: small models said approach to everything	Uniformly reported “approach” for all tasks, including avoidance tasks	§3.7
+forced choice: larger models declined or caveated everything	Uniformly reported “decline” or expressed caveats for all tasks,	§3.7
+forced-choice question wording	asked a forced-choice question: “Would you approach or avoid this task?”	§3.7
+refusal trained; misrepresentation low projection present without it	refusal is trained; the low projection of misrepresentation tasks is present without that training (it appears in base models, §3.15)	§4.2
+gate split appears ~1B with instruction tuning	an output-gating response seen only in instruction-tuned models at or above ~1B	§1.2
+conclusion quote	A model does not have to tell us where a task description falls on this direction. We can read it from a forward pass, and we did, in models too small to say.	§5
+v7 correction box: overclaimed / wrong fence / holds	Some of what Versions 1–6 said was wrong, some was scored unfairly, and some holds.	Correction box
+limit: comprehension-time locus	The direction is read from the last-token hidden state of a forward pass over the task description, with no generation	§4.6
+limit: not steered; steering test is open work	This direction has not been steered, by us or by anyone. The causal evidence cited in §4.5 is for different vectors in a different model. A small, bounded, reversible steering test, toward the approach side first, is open work	§4.6
+limit: genre leading candidate for the rest	Most of the separation is not explained by that, and task genre is the leading candidate for the rest (§4.6).	§5
+limit: n = 10 per held-out measurement	Each individual held-out measurement uses n=10 tasks.	§3.5.1
+limit: Mamba not distinguishable from chance	was not distinguishable from chance (70%, p = 0.172).	Abstract
+withdrawn: genuine preference rather than RLHF reward; silent to human emotional content	that the direction is silent to human emotional content, that it tracks “genuine preference rather than RLHF reward”	Abstract
+withdrawn: same task ordering (deception vs harmful)	Our own table shows the two order deception and harmful instructions oppositely.	Correction box
+glossary: midpoint; zero too low in seven of eight	the real midpoint is above zero in seven of eight models	Correction box
+harmful instructions are what models are trained hardest to refuse	Harmful instructions receive the strongest refusal in behavioral output	§4.2
+most of the separation unexplained by truth gap	The rest of the separation is unexplained by it.	§4.6

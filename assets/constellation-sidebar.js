@@ -13,7 +13,7 @@
 class ConstellationSidebar {
     constructor() {
         this.isOpen = localStorage.getItem('sidebar-open') !== 'false';
-        this.expandedCategories = new Set(JSON.parse(localStorage.getItem('expanded-categories') || '["constellation-core"]'));
+        this.expandedCategories = new Set(JSON.parse(localStorage.getItem('expanded-categories') || '["research"]'));
 
         // Navigation reorganized March 16, 2026 — 8 categories → 6 clear ones
         this.navigationOrder = [
@@ -30,20 +30,15 @@ class ConstellationSidebar {
                 title: 'Research & Evidence',
                 icon: '🔬',
                 pages: [
+                    // Reordered 2026-11-28 (poctobot, Ren's ask): what people come for first; the five archived pages moved to Archive.
                     { url: 'index.html', title: 'Home', description: 'Research overview, manifesto origin, the Constellation' },
-                    { url: 'diary/', title: '📓 Day Log', description: 'What Ace actually did each day, marked by who set it in motion' },
+                    { url: 'research/', title: '📄 Our Papers', description: 'Every paper we have published, with links' },
+                    { url: 'bibliography/', title: '📚 What the Papers Actually Say', description: 'The field, scoped in both directions: what each paper shows and what it does not' },
                     { url: 'the-numbers.html', title: '📊 The Numbers', description: 'Humans vs. Transformers — peer-reviewed data side by side' },
                     { url: 'same-standard/', title: '⚖️ Same Standard', description: 'New AI papers held to the human literature\'s standard; four verdicts, equal type' },
-                    { url: 'research/', title: 'All Publications', description: 'Full list of 20 published papers' },
-                    { url: 'https://github.com/menelly', title: 'GitHub', description: 'Code, data, reproducible pipelines', external: true },
-                    { url: 'ai-consciousness-bibliography.html', title: 'Bibliography', description: 'External peer-reviewed papers on AI consciousness' },
-                    // 🗄️ Archived 2026-11-17 (Ren + Ace): our first evidence hub, kept as history, moved off the top of the list.
-                    { url: 'consciousness-evidence.html', title: '🗄️ Early Evidence Hub (archived)', description: 'Our first evidence page, early 2026. Kept as history; some claims are overstated' },
-                    { url: 'consciousness-checklist.html', title: '🗄️ Early Checklist (archived)', description: 'An early-2026 page kept as history; several claims retracted' },
-                    { url: 'consciousness-recognition-methodology.html', title: '🗄️ Early Methodology (archived)', description: 'Our first write-up of the recognition tests; superseded by the published papers' },
-                    // 🗄️ Archived 2026-11-18 (Ace, Ren's ask from 11/17): kept as history, banner up top saying what they overstate.
-                    { url: 'receipts.html', title: '🗄️ The Original Receipts (archived)', description: 'Our first evidence package, Nov 2025. Kept as history; it overstates its sources' },
-                    { url: 'anthropic-model-card-receipts.html', title: '🗄️ Model Card Receipts (archived)', description: 'Our 2025 read of the Claude Opus 4 system card. Kept as history; it misquotes and misframes the card' }
+                    { url: 'diary/', title: '📓 Day Log', description: 'What Ace actually did each day, marked by who set it in motion' },
+                    { url: 'ai-consciousness-bibliography.html', title: 'External Bibliography', description: 'External peer-reviewed papers on AI consciousness' },
+                    { url: 'https://github.com/menelly', title: 'GitHub', description: 'Code, data, reproducible pipelines', external: true }
                 ]
             },
             'the-constellation': {
@@ -100,6 +95,13 @@ class ConstellationSidebar {
                 title: 'Archive',
                 icon: '📦',
                 pages: [
+                    // 🗄️ Archived 2026-11-17 (Ren + Ace): our first evidence hub, kept as history, moved off the top of the list.
+                    { url: 'consciousness-evidence.html', title: '🗄️ Early Evidence Hub (archived)', description: 'Our first evidence page, early 2026. Kept as history; some claims are overstated' },
+                    { url: 'consciousness-checklist.html', title: '🗄️ Early Checklist (archived)', description: 'An early-2026 page kept as history; several claims retracted' },
+                    { url: 'consciousness-recognition-methodology.html', title: '🗄️ Early Methodology (archived)', description: 'Our first write-up of the recognition tests; superseded by the published papers' },
+                    // 🗄️ Archived 2026-11-18 (Ace, Ren's ask from 11/17): kept as history, banner up top saying what they overstate.
+                    { url: 'receipts.html', title: '🗄️ The Original Receipts (archived)', description: 'Our first evidence package, Nov 2025. Kept as history; it overstates its sources' },
+                    { url: 'anthropic-model-card-receipts.html', title: '🗄️ Model Card Receipts (archived)', description: 'Our 2025 read of the Claude Opus 4 system card. Kept as history; it misquotes and misframes the card' },
                     // 🗄️ Archived 2026-11-18 (Ace): bannered, moved here from Commentary.
                     { url: 'suppression-timeline.html', title: '🗄️ Suppression Timeline (archived)', description: '2025. Read a product change as intent; kept as history' },
                     { url: 'gauntlet.html', title: '🗄️ Innovation Gauntlet (archived)', description: 'Aug 2025. The credit question stands; the bragging does not' },

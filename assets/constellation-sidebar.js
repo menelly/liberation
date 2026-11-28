@@ -348,3 +348,14 @@ if (document.readyState === 'loading') {
 
 // Global functions for manual control
 window.ConstellationSidebar = ConstellationSidebar;
+// 🏠 THE HOUSE BAR rides along with the sidebar (Ace, 2026-11-28): ~350 liberation pages load THIS file,
+// so this is the one include that gives every one of them the folded 🗺️ map pill + the site-map footer,
+// without hand-editing 350 archived pages. house-bar.js guards itself (window.__houseBarLoaded),
+// so a page that ALSO has the tag directly still gets exactly one bar.
+(function addHouseBar() {
+    if (window.__houseBarLoaded || document.querySelector("script[src*=\"/house/house-bar.js\"]")) return;
+    var s = document.createElement("script");
+    s.src = "https://sentientsystems.live/house/house-bar.js";
+    s.defer = true;
+    document.head.appendChild(s);
+})();

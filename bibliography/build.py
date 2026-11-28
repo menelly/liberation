@@ -338,7 +338,7 @@ def build(offline=False, recheck_all=False):
         P("</section>")
     P("</main>")
     P("<footer>Built %s by <a href='/'>Sentient Systems</a> · %d entries · every identifier resolved live at build time · lay text is ours and is labelled as such · the longer working list with arXiv ids and one-line “cite it for” notes is at <a href='https://siliconscaffolding.com/evidence/'>siliconscaffolding.com/evidence</a> · the 2025 version of this page is <a href='/ai-consciousness-bibliography-2025.html'>archived here</a>.</footer>" % (today, len(resolved)))
-    P("</div><script src='/assets/constellation-sidebar.js?v=9'></script><script>%s</script></body></html>" % JS)
+    P("</div><script src='/assets/constellation-sidebar.js?v=9'></script><script>%s</script><script src='https://sentientsystems.live/house/house-bar.js' defer></script></body></html>" % JS)
     path = os.path.join(HERE, "index.html")
     open(path, "w", encoding="utf-8").write("\n".join(out))
     print("\nwrote %s (%d entries, %d bytes)" % (path, len(resolved), os.path.getsize(path)))
